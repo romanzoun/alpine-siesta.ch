@@ -10,8 +10,12 @@ const aktivitaeten = (await getCollection('aktivitaeten')).sort((a, b) => a.data
   <section class="section container">
     <h1>Was tun in Leukerbad?</h1>
     <p class="lead">Unsere Tipps für jede Jahreszeit – vom Thermalbad bis zum Gemmipass.</p>
-    <div class="grid">
+    <div class="karten">
       {aktivitaeten.map((a) => <AktivitaetKarte aktivitaet={a} />)}
     </div>
   </section>
 </Base>
+
+<style>
+  .karten { display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); margin-top: 2.5rem; }
+</style>

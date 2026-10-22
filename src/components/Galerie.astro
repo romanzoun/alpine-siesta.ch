@@ -10,17 +10,24 @@ const { bilder } = Astro.props;
 
 <ul class="galerie">
   {bilder.map((b, i) => (
-    <li class={i === 0 ? 'gross' : undefined}>
+    <li>
       <a href={b.bild.src}>
-        <Image src={b.bild} alt={b.alt} widths={[480, 800, 1200]} sizes="(min-width: 60rem) 50vw, 100vw" loading={i === 0 ? 'eager' : 'lazy'} />
+        <Image src={b.bild} alt={b.alt} widths={[480, 800, 1400]} sizes={i === 0 ? '(min-width: 48rem) 66vw, 100vw' : '(min-width: 48rem) 33vw, 50vw'} loading={i === 0 ? 'eager' : 'lazy'} />
       </a>
+      {b.raum && <span class="raum">{b.raum}</span>}
     </li>
   ))}
 </ul>
 
 <style>
-  .galerie { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(min(45%, 16rem), 1fr)); }
-  .galerie .gross { grid-column: 1 / -1; }
-  @media (min-width: 48rem) { .galerie .gross { grid-column: span 2; grid-row: span 2; } }
-  .galerie img { width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); }
+  .galerie { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; grid-template-columns: repeat(2, 1fr); }
+  .galerie li { position: relative; overflow: hidden; border-radius: var(--radius); }
+  .galerie li:first-child { grid-column: 1 / -1; }
+  @media (min-width: 48rem) {
+    .galerie { grid-template-columns: repeat(3, 1fr); }
+    .galerie li:first-child { grid-column: span 2; grid-row: span 2; }
+  }
+  .galerie img { width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .6s var(--ease-out); }
+  .galerie a:hover img { transform: scale(1.03); }
+  .raum { position: absolute; left: .75rem; bottom: .6rem; color: #fff; font-size: .9rem; font-weight: 600; text-shadow: 0 1px 6px rgb(0 0 0 / .5); pointer-events: none; }
 </style>

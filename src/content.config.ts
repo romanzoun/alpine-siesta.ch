@@ -43,7 +43,7 @@ const seiten = defineCollection({
       title: z.string(),
       description: z.string(),
       hero: z
-        .object({ titel: z.string(), untertitel: z.string(), bild: image(), alt: z.string() })
+        .object({ titel: z.array(z.string()).min(1), untertitel: z.string(), bild: image().optional(), alt: z.string().optional() })
         .optional(),
       highlights: z.array(z.object({ titel: z.string(), text: z.string() })).default([]),
       vorteile: z.array(z.string()).default([]),

@@ -37,7 +37,7 @@ const schema = {
   <section class="section container">
     <h1>{w.name}</h1>
     <p class="lead">{w.claim}</p>
-    <Fakten fakten={w.fakten} />
+    <Fakten fakten={w.fakten} hoehe={w.lage.hoehe_m} />
   </section>
 
   <section class="container">
@@ -48,7 +48,7 @@ const schema = {
     <div class="prose">
       <Content />
     </div>
-    <aside class="card buchen">
+    <aside class="buchen band">
       <h3>Verfügbarkeit prüfen</h3>
       <p class="muted">Direkt bei uns buchen – zum besten Preis.</p>
       <a class="btn" href={site.buchungUrl}>Jetzt anfragen</a>
@@ -57,9 +57,9 @@ const schema = {
 
   <section class="section container">
     <h2>Ausstattung</h2>
-    <div class="grid">
+    <div class="liste">
       {w.ausstattung.map((k) => (
-        <div class="card">
+        <div>
           <h3>{k.kategorie}</h3>
           <ul>{k.items.map((i) => <li>{i}</li>)}</ul>
         </div>
@@ -69,7 +69,7 @@ const schema = {
 
   <section class="section container">
     <h2>Lage</h2>
-    <p>{w.lage.ort} · {w.lage.hoehe_m} m ü. M.</p>
+    <p class="lead">{w.lage.ort}, {w.lage.hoehe_m} m ü. M.</p>
     <ul class="distanzen">
       {w.lage.distanzen.map((d) => (
         <li><strong>{d.ziel}</strong> <span class="muted">{d.minuten} min {d.wie}</span></li>
@@ -96,9 +96,12 @@ const schema = {
     .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; }
     .buchen { position: sticky; top: 6rem; }
   }
-  .card ul { padding-left: 1.1rem; margin: 0; }
+  .buchen { padding: 1.75rem; border-radius: var(--radius); }
+  .buchen p { margin-top: 0; }
+  .liste ul { list-style: none; padding: 0; margin: 0; }
+  .liste li { padding-block: .2rem; }
   .distanzen { list-style: none; padding: 0; display: grid; gap: .5rem; max-width: 30rem; }
-  .distanzen li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: .5rem; }
+  .distanzen li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: .5rem; }
   .regeln { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.5rem; }
   .regeln dt { color: var(--muted); }
   .regeln dd { margin: 0; }

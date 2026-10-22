@@ -2,10 +2,13 @@
 title: Alpine Siesta – Ferienwohnung in Leukerbad
 description: "[TODO] Ferienwohnung in Leukerbad direkt buchen – nahe Therme und Gemmibahn. Bestpreis bei Direktbuchung."
 hero:
-  titel: Thermalwasser, Gemmiwand, Siesta.
-  untertitel: Der schönste Ort der Schweiz zum Abschalten – und deine Wohnung mittendrin.
-  bild: ../../assets/hero-platzhalter.jpg
-  alt: "[TODO] Leukerbad mit Gemmiwand im Abendlicht"
+  # Jede Zeile wird einzeln eingeblendet.
+  titel: [Thermalwasser., Gemmiwand., Siesta.]
+  untertitel: Eine Ferienwohnung in Leukerbad, wenige Schritte von den Thermalquellen. Hier wird ausgeruht.
+  # Ohne Foto zeigt der Hero eine Illustration der Gemmiwand.
+  # Mit Foto: Bild nach src/assets/ legen und hier eintragen.
+  # bild: ../../assets/hero.jpg
+  # alt: Leukerbad mit Gemmiwand im Abendlicht
 highlights:
   - titel: Europas grösster alpiner Thermalort
     text: Über 3,9 Millionen Liter Thermalwasser sprudeln täglich aus den Quellen von Leukerbad.

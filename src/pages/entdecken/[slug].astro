@@ -55,14 +55,14 @@ const schema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <article class="section container">
-    <p class="muted"><a href="/entdecken/">Entdecken</a> · {L.pillars[a.pillar]}</p>
-    <h1>{a.title}</h1>
+    <nav class="pfad muted" aria-label="Brotkrumen"><a href="/entdecken/">Entdecken</a> / {L.pillars[a.pillar]}</nav>
+    <h1 style={`view-transition-name: titel-${eintrag.id}`}>{a.title}</h1>
     <p class="lead">{a.kurz}</p>
-    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" />}
+    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
 
     <div class="zweispaltig">
       <div class="prose"><Content /></div>
-      <aside class="card">
+      <aside class="fakten">
         <dl>
           {fakten.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
         </dl>
@@ -75,12 +75,15 @@ const schema = {
   {aehnlich.length > 0 && (
     <section class="section container">
       <h2>Das könnte dir auch gefallen</h2>
-      <div class="grid">{aehnlich.map((x) => <AktivitaetKarte aktivitaet={x} />)}</div>
+      <div class="karten">{aehnlich.map((x) => <AktivitaetKarte aktivitaet={x} />)}</div>
     </section>
   )}
 </Base>
 
 <style>
+  .pfad { margin-bottom: 1rem; }
+  .fakten { border-top: 2px solid var(--text); padding-top: 1rem; }
+  .karten { display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
   .titelbild { border-radius: var(--radius); margin-block: 1.5rem; width: 100%; }
   .zweispaltig { display: grid; gap: 2rem; margin-top: 1.5rem; }
   @media (min-width: 60rem) { .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; } }

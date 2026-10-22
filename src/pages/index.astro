@@ -2,7 +2,9 @@
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
 import Fakten from '../components/Fakten.astro';
+import Faq from '../components/Faq.astro';
 import { site } from '../config';
 
 const seite = (await getEntry('seiten', 'startseite'))!.data;
@@ -23,20 +25,17 @@ const faqSchema = {
 <Base title={seite.title} description={seite.description}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-  <section class="hero">
-    <Image src={hero.bild} alt={hero.alt} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" class="hero-bild" />
-    <div class="container hero-text">
-      <h1>{hero.titel}</h1>
-      <p class="lead">{hero.untertitel}</p>
-      <a class="btn" href={site.buchungUrl}>Verfügbarkeit anfragen</a>
-    </div>
+  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={site.buchungUrl} ctaLabel="Verfügbarkeit anfragen" />
+
+  <section class="container fakten-zeile">
+    <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} />
   </section>
 
-  <section class="section container">
+  <section class="section container zweispaltig">
     <h2>Warum Leukerbad</h2>
-    <div class="grid">
+    <div class="liste">
       {seite.highlights.map((h) => (
-        <article class="card">
+        <article>
           <h3>{h.titel}</h3>
           <p class="muted">{h.text}</p>
         </article>
@@ -45,67 +44,69 @@ const faqSchema = {
   </section>
 
   <section class="section container">
-    <h2>Die Wohnung</h2>
-    <p class="lead">{wohnung.claim}</p>
-    <Fakten fakten={wohnung.fakten} />
-    <ul class="vorschau">
-      {wohnung.galerie.slice(0, 3).map((b) => (
-        <li><Image src={b.bild} alt={b.alt} widths={[480, 800]} sizes="(min-width: 48rem) 33vw, 100vw" /></li>
-      ))}
-    </ul>
-    <a class="btn btn--ghost" href="/wohnung/">Wohnung ansehen</a>
+    <div class="wohnung">
+      <ul class="mosaik">
+        {wohnung.galerie.slice(0, 3).map((b, i) => (
+          <li><Image src={b.bild} alt={b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
+        ))}
+      </ul>
+      <div>
+        <h2>Die Wohnung</h2>
+        <p class="lead">{wohnung.claim}</p>
+        <a class="btn btn--ghost" href="/wohnung/">Wohnung ansehen</a>
+      </div>
+    </div>
   </section>
 
-  <section class="section direkt">
-    <div class="container">
+  <section class="section band">
+    <div class="container zweispaltig">
       <h2>Direkt buchen lohnt sich</h2>
-      <ul class="vorteile">
-        {seite.vorteile.map((v) => <li>{v}</li>)}
-      </ul>
-      <a class="btn" href={site.buchungUrl}>Jetzt buchen</a>
+      <div>
+        <ul class="vorteile">
+          {seite.vorteile.map((v) => <li>{v}</li>)}
+        </ul>
+        <a class="btn" href={site.buchungUrl}>Verfügbarkeit anfragen</a>
+      </div>
     </div>
   </section>
 
   {seite.bewertungen.length > 0 && (
     <section class="section container">
       <h2>Das sagen unsere Gäste</h2>
-      <div class="grid">
+      <div class="liste">
         {seite.bewertungen.map((b) => (
-          <figure class="card">
+          <figure>
             <blockquote>«{b.text}»</blockquote>
-            <figcaption class="muted">{b.name} · {b.quelle}</figcaption>
+            <figcaption class="muted">{b.name}, {b.quelle}</figcaption>
           </figure>
         ))}
       </div>
     </section>
   )}
 
-  <section class="section container">
+  <section class="section container zweispaltig">
     <h2>Häufige Fragen</h2>
-    <div class="faq">
-      {seite.faq.map((f) => (
-        <details>
-          <summary>{f.frage}</summary>
-          <p>{f.antwort}</p>
-        </details>
-      ))}
-    </div>
+    <Faq eintraege={seite.faq} />
   </section>
 </Base>
 
 <style>
-  .hero { position: relative; min-height: min(85vh, 46rem); display: grid; align-items: end; color: #fff; }
-  .hero-bild { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .55), transparent 60%); }
-  .hero-text { position: relative; z-index: 1; padding-block: 3rem; }
-  .hero .lead { color: rgb(255 255 255 / .9); }
-  .vorschau { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
-  .vorschau img { border-radius: var(--radius); aspect-ratio: 3 / 2; object-fit: cover; width: 100%; }
-  .direkt { background: var(--surface); border-block: 1px solid var(--border); }
-  .vorteile { padding-left: 1.2rem; margin: 0 0 1.5rem; }
-  blockquote { margin: 0 0 .75rem; font-size: 1.1rem; }
+  .fakten-zeile { padding-block: 2.5rem 0; }
+  .zweispaltig { display: grid; gap: 1.5rem 3rem; }
+  @media (min-width: 60rem) {
+    .zweispaltig { grid-template-columns: 22rem 1fr; align-items: start; }
+    .zweispaltig > h2 { position: sticky; top: 6rem; }
+  }
+  .zweispaltig .liste { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  .wohnung { display: grid; gap: 2rem 3rem; align-items: end; }
+  @media (min-width: 60rem) { .wohnung { grid-template-columns: 3fr 2fr; } }
+  .mosaik { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: .5rem; aspect-ratio: 16 / 10; }
+  .mosaik li:first-child { grid-row: span 2; }
+  .mosaik li { overflow: hidden; border-radius: var(--radius); }
+  .mosaik img { width: 100%; height: 100%; object-fit: cover; }
+  .vorteile { list-style: none; padding: 0; margin: 0 0 2rem; font-size: 1.2rem; }
+  .vorteile li { padding-block: .8rem; border-bottom: 1px solid rgb(245 248 247 / .2); }
+  .vorteile li::before { content: '✓'; color: var(--glut); font-weight: 800; margin-right: .75rem; }
   figure { margin: 0; }
-  .faq { max-width: 46rem; }
-  details { border-bottom: 1px solid var(--border); padding-block: 1rem; }
-  summary { cursor: pointer; font-weight: 600; }
+  blockquote { margin: 0 0 1rem; font-size: 1.35rem; line-height: 1.4; }
 </style>

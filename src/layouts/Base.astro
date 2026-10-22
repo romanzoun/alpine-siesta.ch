@@ -36,7 +36,7 @@ const path = Astro.url.pathname;
             <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
           ))}
         </nav>
-        <a class="btn" href={site.buchungUrl}>Jetzt buchen</a>
+        <a class="btn" href={site.buchungUrl}>Anfragen</a>
       </div>
     </header>
     <main>
@@ -44,8 +44,8 @@ const path = Astro.url.pathname;
     </main>
     <footer class="site-footer">
       <div class="container">
-        <p><strong>{site.name}</strong> · Ferienwohnung in Leukerbad, Wallis</p>
-        <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p class="footer-name">{site.name}</p>
+        <p>Ferienwohnung in Leukerbad, Wallis<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
       </div>
     </footer>
   </body>
@@ -58,7 +58,7 @@ const path = Astro.url.pathname;
     z-index: 10;
     background: color-mix(in srgb, var(--bg) 88%, transparent);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--rule);
   }
   .bar {
     display: grid;
@@ -68,14 +68,17 @@ const path = Astro.url.pathname;
     gap: .5rem 1.5rem;
     padding-block: .75rem;
   }
-  .logo { grid-area: logo; white-space: nowrap; font-family: var(--font-head); font-size: 1.35rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  .logo { grid-area: logo; white-space: nowrap; font-stretch: 62%; font-size: 1.7rem; font-weight: 800; color: var(--text); text-decoration: none; }
   nav { grid-area: nav; display: flex; justify-content: flex-end; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; }
   nav a { color: var(--text); text-decoration: none; white-space: nowrap; }
-  nav a[aria-current='page'] { color: var(--accent); }
+  nav a { padding-block: .25rem; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size .25s var(--ease-out); }
+  nav a:hover, nav a[aria-current='page'] { background-size: 100% 2px; }
   .bar .btn { grid-area: btn; padding: .55rem 1.1rem; white-space: nowrap; }
   @media (max-width: 40rem) {
     .bar { grid-template-columns: 1fr auto; grid-template-areas: 'logo btn' 'nav nav'; }
     nav { justify-content: flex-start; font-size: .95rem; }
   }
-  .site-footer { border-top: 1px solid var(--border); padding-block: 2.5rem; color: var(--muted); font-size: .95rem; }
+  .site-footer { background: var(--band); color: var(--band-text); padding-block: 3rem 4rem; font-size: .95rem; }
+  .site-footer a { color: inherit; }
+  .footer-name { font-stretch: 62%; font-weight: 800; font-size: clamp(3rem, 10vw, 6rem); line-height: .9; margin: 0 0 1rem; }
 </style>

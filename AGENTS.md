@@ -16,3 +16,12 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 - `zielgruppen`: nur Gruppen, für die die Aktivität wirklich passt. Lieber weniger, dafür treffend – davon hängen die Empfehlungen ab.
 - `pillar`: das Pillar-Thema, auf dessen Seite die Aktivität verlinkt wird.
 - `anreise_min` / `anreise_wie`: ab der Wohnung im Dorfzentrum von Leukerbad.
+
+## Design
+
+Gestaltet nach `.claude/skills/frontend-design/SKILL.md`. Festgelegtes System – bei neuen Seiten beibehalten:
+
+- **Farben** (`src/styles/global.css`): Dampf `#F5F8F7` (Hintergrund), Kalk `#DCE3E0` (Linien), Nacht `#16233A` (Text, dunkle Bänder), Thermal `#0F7470` (Links, Buttons), Glut `#F0B38C` (Alpenglühen – nur Hero und Buttons auf dunklem Grund).
+- **Schrift**: nur Archivo. Titel extrem schmal (`font-stretch: 62%`, Gewicht 800) im Stil Schweizer Reiseplakate, Fliesstext normal breit.
+- **Struktur**: gleichrangige Einträge mit Linie oben (`.liste`) statt Karten. Linksbündig. Keine Grossbuchstaben-Labels, keine Mittelpunkte als Trenner.
+- **Bewegung**: Ein Höhepunkt – der Hero (Dampf + Titel Zeile für Zeile). Sonst nur Bewegung als Reaktion auf Aktionen (Seitenübergänge, FAQ öffnen, Hover auf Bildern). `prefers-reduced-motion` wird respektiert.
