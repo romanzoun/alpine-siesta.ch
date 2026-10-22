@@ -167,11 +167,20 @@ Startumfang: **30–40 Aktivitäten**, damit jede Kombination aus Monat × Zielg
 
 ### Sortiment (Start)
 
-| Linie | Produkte |
-|---|---|
-| **Alpine Siesta** | T-Shirt, Hoodie, Cap, Tasse, Tote Bag mit Logo/Claim («Siesta auf 1411 m») |
-| **Leukerbad** | Illustrations-Poster (Gemmiwand, Thermalbad), Postkarten-Set, Tasse |
-| **Grand-Tour-Poster** | Vintage-Posterserie der Schweizer Tour-Etappen (Leukerbad als Hauptmotiv, Serie erweiterbar) |
+| Produkt | Beschaffung | Anbieter |
+|---|---|---|
+| T-Shirts | Print-on-Demand | Gelato |
+| Tassen | Print-on-Demand | Gelato |
+| Metallplatten (Alu-Druck, Poster-Motive) | Print-on-Demand | Gelato (Alu-Prints) |
+| Bilderrahmen (gerahmte Poster) | Print-on-Demand | Gelato (Framed Posters) |
+| Magnete | **Eigenes Kleinlager** | Kleinserie bei Schweizer Druckerei |
+| Holzkugelschreiber (graviert) | **Eigenes Kleinlager** | Kleinserie Lasergravur, Schweizer Werbeartikel-Anbieter |
+
+Motive über alle Produkte: **Alpine Siesta** (Logo/Claim «Siesta auf 1411 m»), **Leukerbad** (Gemmiwand, Thermalbad) und **Grand-Tour-Poster** (Vintage-Serie, siehe Rechtliches unten).
+
+**Warum Magnete und Kugelschreiber nicht POD:** Graviertes Holz und Magnete gibt es bei den grossen POD-Anbietern kaum, und wenn, dann nicht aus CH. Da alle Stücke dasselbe Motiv tragen (keine Personalisierung), ist eine Kleinserie (z. B. 100–250 Stück) pro Stück viel günstiger. Beide Produkte passen in einen Briefumschlag → Versand als B-Post-Brief, ohne Lagerlogistik. Zusätzlich in der Wohnung als Mitnahme-Artikel verkaufen (QR-Code → Shop oder TWINT).
+
+**Gemischte Bestellungen:** Der Stripe-Webhook trennt den Warenkorb: POD-Artikel → Gelato-API, Lagerartikel → Bestell-Mail mit Packliste an dich. Bei Bestellungen nur mit Lagerartikeln reduzierte Versandkosten (Brief statt Paket).
 
 ### Anbieter & Routing CH / EU
 
