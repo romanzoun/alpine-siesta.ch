@@ -275,7 +275,7 @@ Reihenfolge festgelegt: zuerst alles auf Dateibasis, Integrationen danach.
 |---|---|---|
 | **1 – Wohnung (Dateibasis)** | Astro-Grundgerüst, Layout, Startseite, Wohnungsseite. Texte und Bilder als Dateien in `src/content/` und `src/assets/` | ✅ Grundgerüst steht, Inhalte (`[TODO]`) folgen |
 | **2 – Pillar Pages** | 5 Pillar-Pages, danach 25 Unterseiten als Markdown | ⏳ |
-| **3 – Discovery mit CMS** | Aktivitäten werden über ein CMS gepflegt. Empfehlung: git-basiertes CMS (z. B. Keystatic oder Decap), das die Einträge weiterhin als Dateien im Repo speichert – kein Server, keine Datenbank | ⏳ |
+| **3 – Discovery** | Aktivitäten als Markdown-Dateien mit festen Labels (`src/lib/labels.ts`), per KI erstellt nach `AGENTS.md`. Das Schema lehnt unbekannte Labels beim Build ab. Kein CMS nötig. Danach Filter-UI (Monat × Gästetyp) | 🟡 Schema, Vorlage und Detailseiten stehen; Filter und 30–40 Aktivitäten folgen |
 | **4 – Beds24** | Verfügbarkeit + Preise live, Weiterleitung zur Beds24-Buchung; ersetzt die Mail-Anfrage hinter «Jetzt buchen» | ⏳ |
 | **5 – Shop** | POD (Gelato) + Kleinlager, Stripe Checkout, Webhooks | ⏳ |
 | **6 – Ausbau** | Integrierter Checkout (Beds24 Stufe 2), EN/FR, Events, Gäste-Gutscheine | ⏳ |
