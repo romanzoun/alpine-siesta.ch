@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Fakten from '../components/Fakten.astro';
+import { site } from '../config';
+
+const seite = (await getEntry('seiten', 'startseite'))!.data;
+const wohnung = (await getEntry('wohnung', 'alpine-siesta'))!.data;
+const hero = seite.hero!;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: seite.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.frage,
+    acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+  })),
+};
+---
+
+<Base title={seite.title} description={seite.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="hero">
+    <Image src={hero.bild} alt={hero.alt} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" class="hero-bild" />
+    <div class="container hero-text">
+      <h1>{hero.titel}</h1>
+      <p class="lead">{hero.untertitel}</p>
+      <a class="btn" href={site.buchungUrl}>Verfügbarkeit anfragen</a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Warum Leukerbad</h2>
+    <div class="grid">
+      {seite.highlights.map((h) => (
+        <article class="card">
+          <h3>{h.titel}</h3>
+          <p class="muted">{h.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Die Wohnung</h2>
+    <p class="lead">{wohnung.claim}</p>
+    <Fakten fakten={wohnung.fakten} />
+    <ul class="vorschau">
+      {wohnung.galerie.slice(0, 3).map((b) => (
+        <li><Image src={b.bild} alt={b.alt} widths={[480, 800]} sizes="(min-width: 48rem) 33vw, 100vw" /></li>
+      ))}
+    </ul>
+    <a class="btn btn--ghost" href="/wohnung/">Wohnung ansehen</a>
+  </section>
+
+  <section class="section direkt">
+    <div class="container">
+      <h2>Direkt buchen lohnt sich</h2>
+      <ul class="vorteile">
+        {seite.vorteile.map((v) => <li>{v}</li>)}
+      </ul>
+      <a class="btn" href={site.buchungUrl}>Jetzt buchen</a>
+    </div>
+  </section>
+
+  {seite.bewertungen.length > 0 && (
+    <section class="section container">
+      <h2>Das sagen unsere Gäste</h2>
+      <div class="grid">
+        {seite.bewertungen.map((b) => (
+          <figure class="card">
+            <blockquote>«{b.text}»</blockquote>
+            <figcaption class="muted">{b.name} · {b.quelle}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section container">
+    <h2>Häufige Fragen</h2>
+    <div class="faq">
+      {seite.faq.map((f) => (
+        <details>
+          <summary>{f.frage}</summary>
+          <p>{f.antwort}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; min-height: min(85vh, 46rem); display: grid; align-items: end; color: #fff; }
+  .hero-bild { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .55), transparent 60%); }
+  .hero-text { position: relative; z-index: 1; padding-block: 3rem; }
+  .hero .lead { color: rgb(255 255 255 / .9); }
+  .vorschau { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .vorschau img { border-radius: var(--radius); aspect-ratio: 3 / 2; object-fit: cover; width: 100%; }
+  .direkt { background: var(--surface); border-block: 1px solid var(--border); }
+  .vorteile { padding-left: 1.2rem; margin: 0 0 1.5rem; }
+  blockquote { margin: 0 0 .75rem; font-size: 1.1rem; }
+  figure { margin: 0; }
+  .faq { max-width: 46rem; }
+  details { border-bottom: 1px solid var(--border); padding-block: 1rem; }
+  summary { cursor: pointer; font-weight: 600; }
+</style>

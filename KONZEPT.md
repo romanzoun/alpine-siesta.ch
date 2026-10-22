@@ -269,14 +269,16 @@ Nur die Dateien unter `pages/api/` laufen serverseitig (`export const prerender 
 
 ## 11. Roadmap
 
-| Phase | Inhalt | Ergebnis |
+Reihenfolge festgelegt: zuerst alles auf Dateibasis, Integrationen danach.
+
+| Phase | Inhalt | Status |
 |---|---|---|
-| **0 – Fundament** (1 Woche) | Astro-Setup, Design-System (Farben, Typo, Komponenten), Layouts, i18n, Deploy auf Cloudflare | Leere, schnelle Website online |
-| **1 – Buchen** (1–2 Wochen) | Startseite, Wohnungsseite, Beds24-Verfügbarkeit + Weiterleitung, Rechtstexte | Direktbuchungen möglich ✅ |
-| **2 – Discovery** (1–2 Wochen) | Collection + 30 Aktivitäten, Filter-Island, Aktivitätsseiten | Inspirationstool live |
-| **3 – SEO** (laufend, 4–8 Wochen) | 5 Pillars, danach 25 Unterseiten (≈ 2–3 pro Woche), Schema, Search Console | Organischer Traffic baut sich auf |
-| **4 – Shop** (2 Wochen) | Designs, POD-Anbindung, Stripe, Webhooks | Merch-Verkauf live |
-| **5 – Ausbau** | Integrierter Checkout (Beds24 Stufe 2), FR-Version, Events, Gäste-Gutscheine | |
+| **1 – Wohnung (Dateibasis)** | Astro-Grundgerüst, Layout, Startseite, Wohnungsseite. Texte und Bilder als Dateien in `src/content/` und `src/assets/` | ✅ Grundgerüst steht, Inhalte (`[TODO]`) folgen |
+| **2 – Pillar Pages** | 5 Pillar-Pages, danach 25 Unterseiten als Markdown | ⏳ |
+| **3 – Discovery mit CMS** | Aktivitäten werden über ein CMS gepflegt. Empfehlung: git-basiertes CMS (z. B. Keystatic oder Decap), das die Einträge weiterhin als Dateien im Repo speichert – kein Server, keine Datenbank | ⏳ |
+| **4 – Beds24** | Verfügbarkeit + Preise live, Weiterleitung zur Beds24-Buchung; ersetzt die Mail-Anfrage hinter «Jetzt buchen» | ⏳ |
+| **5 – Shop** | POD (Gelato) + Kleinlager, Stripe Checkout, Webhooks | ⏳ |
+| **6 – Ausbau** | Integrierter Checkout (Beds24 Stufe 2), EN/FR, Events, Gäste-Gutscheine | ⏳ |
 
 ## 12. Offene Fragen
 

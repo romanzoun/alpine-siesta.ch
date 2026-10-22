@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  fakten: CollectionEntry<'wohnung'>['data']['fakten'];
+}
+const { fakten } = Astro.props;
+const items = [
+  { wert: fakten.personen, label: 'Personen' },
+  { wert: fakten.schlafzimmer, label: 'Schlafzimmer' },
+  { wert: fakten.badezimmer, label: 'Bad' },
+  { wert: `${fakten.flaeche_m2} m²`, label: 'Fläche' },
+];
+---
+
+<dl class="fakten">
+  {items.map((i) => (
+    <div>
+      <dt>{i.label}</dt>
+      <dd>{i.wert}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .fakten { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 1rem; margin: 0; }
+  .fakten div { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; background: var(--surface); }
+  dt { color: var(--muted); font-size: .9rem; }
+  dd { margin: 0; font-family: var(--font-head); font-size: 1.6rem; }
+</style>
