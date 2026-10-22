@@ -173,10 +173,29 @@ Startumfang: **30–40 Aktivitäten**, damit jede Kombination aus Monat × Zielg
 | **Leukerbad** | Illustrations-Poster (Gemmiwand, Thermalbad), Postkarten-Set, Tasse |
 | **Grand-Tour-Poster** | Vintage-Posterserie der Schweizer Tour-Etappen (Leukerbad als Hauptmotiv, Serie erweiterbar) |
 
-### Anbieter
+### Anbieter & Routing CH / EU
 
-- **Gelato** (bevorzugt): produziert in über 30 Ländern, prüfen, ob Poster und Textil für Schweizer Kunden lokal oder im EU-Nahraum produziert werden → kürzere Lieferzeit, weniger Zollärger.
-- **Printful**: grösseres Textilsortiment, aber Versand aus der EU → für Schweizer Kunden Zoll + MWST bei der Einfuhr. **Vor dem Entscheid Probebestellung in die Schweiz machen.**
+Ziel: Schweizer Bestellungen in der Schweiz produzieren, EU-Bestellungen in der EU – keine Zollgebühren und kurze Lieferzeiten.
+
+**Variante A – ein Anbieter, automatisches Routing (Start):**
+**Gelato** führt die Schweiz als eigenen Produktionsstandort und leitet jede Bestellung selbst an die nächstgelegene Druckerei weiter. Wir schicken nur die Lieferadresse, Gelato wählt CH oder EU. Eine API, ein Katalog, ein Mockup-Set.
+Vorbehalt: Nicht jedes Produkt wird an jedem Standort hergestellt. Pro Produkt prüfen, ob es in CH produziert wird (sonst kommt es aus der EU, mit Zoll).
+
+**Variante B – zwei Anbieter, eigenes Routing:**
+Schweizer Anbieter (z. B. **Dropshirt.ch**, API + White-Label-Versand) für Lieferungen in die Schweiz, **Gelato/Printful/Prodigi** für die EU.
+Der Stripe-Webhook entscheidet anhand des Lieferlandes:
+
+```ts
+const provider = order.shipping.country === 'CH' || order.shipping.country === 'LI'
+  ? swissProvider   // z. B. Dropshirt
+  : euProvider;     // z. B. Gelato
+```
+
+Nachteil: Zwei Kataloge, zwei Mockup-Sets, unterschiedliche Druckqualität, Produkte müssen bei beiden Anbietern existieren.
+
+**Empfehlung:** Mit Gelato starten (Variante A). Nur wenn Probebestellungen zeigen, dass wichtige Produkte nicht in CH produziert werden, einen Schweizer Anbieter für diese Produkte dazunehmen. Vor dem Launch Probebestellungen nach CH und in ein EU-Land machen (Farbe, Lieferzeit, Zoll).
+
+**MWST beim Verkauf in die EU:** Als Schweizer Verkäufer an EU-Privatkunden fällt EU-Mehrwertsteuer an (ggf. Registrierung über IOSS). Vor dem EU-Launch mit Treuhänder klären. Alternativ zum Start nur CH + LI beliefern.
 
 ### Architektur
 
@@ -256,7 +275,7 @@ Nur die Dateien unter `pages/api/` laufen serverseitig (`export const prerender 
 2. Sprachen zum Start: nur DE + EN oder direkt auch FR?
 3. Beds24: Gibt es schon einen API-v2-Zugang (Refresh-Token) und ist eine Zahlungsart (Stripe) in Beds24 aktiv?
 4. Direktbuchungsrabatt: Wie viel günstiger als auf den Plattformen?
-5. Shop: Gelato oder Printful – oder zuerst Probebestellungen bei beiden?
+5. Shop: Mit Gelato starten (Routing CH/EU automatisch) oder direkt Schweizer Anbieter + EU-Anbieter? Shop zum Start nur CH/LI oder auch EU?
 6. Grand-Tour-Poster: Lizenz bei Schweiz Tourismus anfragen oder eigener Name?
 7. Bildmaterial: Eigene Fotos vorhanden oder Fotograf/Leukerbad Tourismus (Bildrechte)?
 8. Domain-Setup: `alpine-siesta.ch` bereits bei Cloudflare oder anderem Registrar?
