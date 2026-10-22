@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import * as L from './lib/labels';
 
 const wohnung = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/wohnung' }),
@@ -51,4 +52,31 @@ const seiten = defineCollection({
     }),
 });
 
-export const collections = { wohnung, seiten };
+const aktivitaeten = defineCollection({
+  loader: glob({ pattern: '[^_]*.md', base: './src/content/aktivitaeten' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(70),
+      description: z.string().min(70).max(160),
+      kurz: z.string().max(120),
+      monate: z.array(z.number().int().min(1).max(12)).min(1),
+      zielgruppen: z.array(z.enum(L.keys(L.zielgruppen))).min(1),
+      kategorien: z.array(z.enum(L.keys(L.kategorien))).min(1),
+      pillar: z.enum(L.keys(L.pillars)),
+      wetter: z.enum(L.keys(L.wetter)),
+      dauer: z.enum(L.keys(L.dauer)),
+      anstrengung: z.enum(L.keys(L.anstrengung)),
+      preis: z.enum(L.keys(L.preis)),
+      anreise_min: z.number().int().nonnegative(),
+      anreise_wie: z.enum(['zu Fuss', 'Auto', 'Bus', 'Bahn']),
+      kinderwagen: z.boolean(),
+      hund: z.boolean(),
+      geheimtipp: z.boolean().default(false),
+      website: z.url().optional(),
+      bild: image().optional(),
+      bild_alt: z.string().optional(),
+      geprueft: z.boolean().default(false),
+    }),
+});
+
+export const collections = { wohnung, seiten, aktivitaeten };

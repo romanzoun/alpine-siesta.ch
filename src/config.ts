@@ -6,5 +6,6 @@ export const site = {
   buchungUrl: 'mailto:hallo@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
   nav: [
     { href: '/wohnung/', label: 'Wohnung' },
+    { href: '/entdecken/', label: 'Entdecken' },
   ],
 };

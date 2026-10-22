@@ -35,8 +35,8 @@ const path = Astro.url.pathname;
           {site.nav.map((item) => (
             <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
           ))}
-          <a class="btn" href={site.buchungUrl}>Jetzt buchen</a>
         </nav>
+        <a class="btn" href={site.buchungUrl}>Jetzt buchen</a>
       </div>
     </header>
     <main>
@@ -60,12 +60,22 @@ const path = Astro.url.pathname;
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
   }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; }
-  .logo { white-space: nowrap; font-family: var(--font-head); font-size: 1.35rem; font-weight: 600; color: var(--text); text-decoration: none; }
-  nav { display: flex; align-items: center; gap: 1.25rem; }
-  nav a:not(.btn) { color: var(--text); text-decoration: none; }
+  .bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'logo nav btn';
+    align-items: center;
+    gap: .5rem 1.5rem;
+    padding-block: .75rem;
+  }
+  .logo { grid-area: logo; white-space: nowrap; font-family: var(--font-head); font-size: 1.35rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  nav { grid-area: nav; display: flex; justify-content: flex-end; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; }
+  nav a { color: var(--text); text-decoration: none; white-space: nowrap; }
   nav a[aria-current='page'] { color: var(--accent); }
-  nav .btn { padding: .55rem 1.1rem; white-space: nowrap; }
-  @media (max-width: 30rem) { nav { gap: .75rem; } nav .btn { padding: .45rem .9rem; font-size: .95rem; } }
+  .bar .btn { grid-area: btn; padding: .55rem 1.1rem; white-space: nowrap; }
+  @media (max-width: 40rem) {
+    .bar { grid-template-columns: 1fr auto; grid-template-areas: 'logo btn' 'nav nav'; }
+    nav { justify-content: flex-start; font-size: .95rem; }
+  }
   .site-footer { border-top: 1px solid var(--border); padding-block: 2.5rem; color: var(--muted); font-size: .95rem; }
 </style>

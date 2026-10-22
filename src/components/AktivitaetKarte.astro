@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import * as L from '../lib/labels';
+
+interface Props {
+  aktivitaet: CollectionEntry<'aktivitaeten'>;
+}
+const { id, data: a } = Astro.props.aktivitaet;
+---
+
+<article class="karte card">
+  {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 100vw" />}
+  <h3><a href={`/entdecken/${id}/`}>{a.title}</a></h3>
+  <p class="muted">{a.kurz}</p>
+  <ul class="labels">
+    <li>{L.dauer[a.dauer]}</li>
+    <li>{L.wetter[a.wetter]}</li>
+    <li>{a.anreise_min} min {a.anreise_wie}</li>
+  </ul>
+</article>
+
+<style>
+  .karte { display: flex; flex-direction: column; gap: .5rem; }
+  .karte img { border-radius: calc(var(--radius) - 4px); aspect-ratio: 3 / 2; object-fit: cover; width: 100%; }
+  .karte h3 { margin: 0; }
+  .karte h3 a { color: inherit; text-decoration: none; }
+  .karte h3 a::after { content: ''; position: absolute; inset: 0; }
+  .karte { position: relative; }
+  .karte p { margin: 0; }
+  .labels { list-style: none; padding: 0; margin: auto 0 0; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .85rem; }
+  .labels li { border: 1px solid var(--border); border-radius: 999px; padding: .15rem .6rem; color: var(--muted); }
+</style>

@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
+import * as L from '../../lib/labels';
+import { site } from '../../config';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('aktivitaeten');
+  return alle.map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag, alle } }));
+}
+
+interface Props {
+  eintrag: CollectionEntry<'aktivitaeten'>;
+  alle: CollectionEntry<'aktivitaeten'>[];
+}
+const { eintrag, alle } = Astro.props;
+const a = eintrag.data;
+const { Content } = await render(eintrag);
+
+const aehnlich = alle
+  .filter((x) => x.id !== eintrag.id)
+  .map((x) => ({ x, score: x.data.kategorien.filter((k) => a.kategorien.includes(k)).length + (x.data.pillar === a.pillar ? 1 : 0) }))
+  .filter((s) => s.score > 0)
+  .sort((p, q) => q.score - p.score)
+  .slice(0, 3)
+  .map((s) => s.x);
+
+const fakten = [
+  ['Saison', a.monate.length === 12 ? 'Ganzjährig' : a.monate.map((m) => L.monatsnamen[m - 1]).join(', ')],
+  ['Für', a.zielgruppen.map((z) => L.zielgruppen[z]).join(', ')],
+  ['Dauer', L.dauer[a.dauer]],
+  ['Anstrengung', L.anstrengung[a.anstrengung]],
+  ['Preis', L.preis[a.preis]],
+  ['Wetter', L.wetter[a.wetter]],
+  ['Ab der Wohnung', `${a.anreise_min} min ${a.anreise_wie}`],
+  ['Kinderwagen', a.kinderwagen ? 'Ja' : 'Nein'],
+  ['Hunde', a.hund ? 'Erlaubt' : 'Nicht erlaubt'],
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'TouristAttraction',
+  name: a.title,
+  description: a.description,
+  url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
+  isAccessibleForFree: a.preis === 'gratis',
+  address: { '@type': 'PostalAddress', addressLocality: 'Leukerbad', addressCountry: 'CH' },
+  ...(a.website && { sameAs: a.website }),
+};
+---
+
+<Base title={`${a.title} | Alpine Siesta Leukerbad`} description={a.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <article class="section container">
+    <p class="muted"><a href="/entdecken/">Entdecken</a> · {L.pillars[a.pillar]}</p>
+    <h1>{a.title}</h1>
+    <p class="lead">{a.kurz}</p>
+    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" />}
+
+    <div class="zweispaltig">
+      <div class="prose"><Content /></div>
+      <aside class="card">
+        <dl>
+          {fakten.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+        </dl>
+        {a.website && <p><a href={a.website} rel="noopener">Offizielle Website</a></p>}
+        <a class="btn" href={site.buchungUrl}>Unterkunft anfragen</a>
+      </aside>
+    </div>
+  </article>
+
+  {aehnlich.length > 0 && (
+    <section class="section container">
+      <h2>Das könnte dir auch gefallen</h2>
+      <div class="grid">{aehnlich.map((x) => <AktivitaetKarte aktivitaet={x} />)}</div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .titelbild { border-radius: var(--radius); margin-block: 1.5rem; width: 100%; }
+  .zweispaltig { display: grid; gap: 2rem; margin-top: 1.5rem; }
+  @media (min-width: 60rem) { .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; } }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0 0 1rem; font-size: .95rem; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+</style>

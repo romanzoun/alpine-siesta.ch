@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
+
+const aktivitaeten = (await getCollection('aktivitaeten')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'de'));
+---
+
+<Base title="Entdecken – Was tun in Leukerbad? | Alpine Siesta" description="Aktivitäten in Leukerbad für jeden Monat und jeden Gast: Thermen, Wandern, Skifahren, Ausflüge und Geheimtipps.">
+  <section class="section container">
+    <h1>Was tun in Leukerbad?</h1>
+    <p class="lead">Unsere Tipps für jede Jahreszeit – vom Thermalbad bis zum Gemmipass.</p>
+    <div class="grid">
+      {aktivitaeten.map((a) => <AktivitaetKarte aktivitaet={a} />)}
+    </div>
+  </section>
+</Base>
