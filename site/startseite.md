@@ -6,8 +6,8 @@ hero:
   titel: [Thermalwasser., Gemmiwand., Siesta.]
   untertitel: Eine Ferienwohnung in Leukerbad, wenige Schritte von den Thermalquellen. Hier wird ausgeruht.
   # Ohne Foto zeigt der Hero eine Illustration der Gemmiwand.
-  # Mit Foto: Bild nach src/assets/ legen und hier eintragen.
-  # bild: ../../assets/hero.jpg
+  # Mit Foto: site/bilder/hero.jpg ablegen und die zwei Zeilen aktivieren.
+  # bild: ./bilder/hero.jpg
   # alt: Leukerbad mit Gemmiwand im Abendlicht
 highlights:
   - titel: Europas grösster alpiner Thermalort

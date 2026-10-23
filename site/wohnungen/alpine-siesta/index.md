@@ -1,7 +1,8 @@
 ---
 # ─────────────────────────────────────────────────────────────
 # Alle Angaben zur Wohnung. Werte mit [TODO] bitte ersetzen.
-# Bilder: in src/assets/wohnung/ ablegen und hier eintragen.
+# Bilder liegen in diesem Ordner. Platzhalter einfach durch eigene
+# Fotos mit GLEICHEM Dateinamen ersetzen – oder neue eintragen.
 # ─────────────────────────────────────────────────────────────
 name: Alpine Siesta
 reihenfolge: 1
@@ -50,12 +51,12 @@ hausregeln:
     - Nachtruhe ab 22:00
 
 galerie:
-  - { bild: ../../assets/wohnung/platzhalter-1.jpg, alt: "[TODO] Wohnzimmer mit Blick auf die Gemmiwand", raum: Wohnzimmer }
-  - { bild: ../../assets/wohnung/platzhalter-2.jpg, alt: "[TODO] Küche", raum: Küche }
-  - { bild: ../../assets/wohnung/platzhalter-3.jpg, alt: "[TODO] Schlafzimmer", raum: Schlafzimmer }
-  - { bild: ../../assets/wohnung/platzhalter-4.jpg, alt: "[TODO] Kinderzimmer", raum: Schlafzimmer }
-  - { bild: ../../assets/wohnung/platzhalter-5.jpg, alt: "[TODO] Badezimmer", raum: Bad }
-  - { bild: ../../assets/wohnung/platzhalter-6.jpg, alt: "[TODO] Balkon mit Bergsicht", raum: Balkon }
+  - { bild: ./wohnzimmer.jpg, alt: "[TODO] Wohnzimmer mit Blick auf die Gemmiwand", raum: Wohnzimmer }
+  - { bild: ./kueche.jpg, alt: "[TODO] Küche", raum: Küche }
+  - { bild: ./schlafzimmer-1.jpg, alt: "[TODO] Schlafzimmer", raum: Schlafzimmer }
+  - { bild: ./schlafzimmer-2.jpg, alt: "[TODO] Kinderzimmer", raum: Schlafzimmer }
+  - { bild: ./bad.jpg, alt: "[TODO] Badezimmer", raum: Bad }
+  - { bild: ./balkon.jpg, alt: "[TODO] Balkon mit Bergsicht", raum: Balkon }
 ---
 
 [TODO] Hier kommt der ausführliche Beschreibungstext der Wohnung (Markdown).

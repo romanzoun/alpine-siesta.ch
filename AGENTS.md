@@ -2,11 +2,13 @@
 
 Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Beim Build wird jedes Feld geprüft – ungültige Labels brechen den Build ab.
 
+**Alles Website-spezifische liegt in `site/`** (Einstellungen in `site/site.config.ts`, Inhalte, Bilder, `public/`). Übersicht: `site/README.md`. Der Code in `src/` muss für jede Website funktionieren: keine Namen, Orte oder Texte von Alpine Siesta in `src/` fest einbauen, sondern aus `site` lesen. Offene Punkte: `npm run checkliste`.
+
 ## Neue Aktivität anlegen
 
 Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-import/` verarbeitet – Eingang in `inbox/aktivitaeten/`.
 
-1. `src/content/aktivitaeten/_vorlage.md` kopieren nach `src/content/aktivitaeten/<slug>/index.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet/index.md`), Bilder in denselben Ordner. Der Ordnername wird zur URL `/entdecken/<slug>/`.
+1. `site/aktivitaeten/_vorlage.md` kopieren nach `site/aktivitaeten/<slug>/index.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet/index.md`), Bilder in denselben Ordner. Der Ordnername wird zur URL `/entdecken/<slug>/`.
 2. Für alle Labels **nur Werte aus `src/lib/labels.ts`** verwenden. Keine neuen Werte erfinden. Wenn ein Wert fehlt, im Text darauf hinweisen statt ihn einzutragen.
 3. `geprueft: false` setzen. Fakten, die sich ändern können (Preise, Öffnungszeiten, Fahrpläne), im Text mit `[PRÜFEN]` markieren statt Zahlen zu raten.
 4. Text: Deutsch mit Schweizer Rechtschreibung (ss statt ß), du-Form, persönlich aus Gastgeber-Sicht. Abschnitte wie in der Vorlage.
@@ -14,10 +16,17 @@ Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-im
 
 ## Neue Wohnung anlegen
 
-1. `src/content/wohnungen/alpine-siesta.md` kopieren nach `src/content/wohnungen/<slug>.md`. URL wird `/wohnungen/<slug>/`.
-2. Bilder in einen eigenen Ordner `src/assets/<slug>/` legen und in `galerie` eintragen.
+1. Ordner `site/wohnungen/alpine-siesta/` kopieren nach `site/wohnungen/<slug>/`. URL wird `/wohnungen/<slug>/`.
+2. Bilder im selben Ordner ersetzen bzw. ergänzen und in `galerie` eintragen.
 3. `reihenfolge` setzen und unter `beds24` die `propertyId` und `roomId` aus Beds24 eintragen. Der Beds24-Token in `.env` gilt für alle Wohnungen.
 4. Startseite, Navigation («Wohnung» → «Wohnungen») und Übersicht `/wohnungen/` passen sich automatisch an.
+
+## Pillar Pages
+
+- Pillar: `site/pillars/<pillar>/index.md` → `/<seoPfad>/<pillar>/`; Unterseite: `site/pillars/<pillar>/<artikel>/index.md` mit Bildern im selben Ordner.
+- Pillar-Schlüssel müssen in `site/site.config.ts` unter `pillars` stehen.
+- `entwurf: true`, bis der Text fertig ist (im Build ausgeblendet, in `npm run dev` sichtbar).
+- Unterseiten und passende Aktivitäten werden automatisch verlinkt. FAQ im Frontmatter erzeugt FAQPage-Daten.
 
 ## Labels richtig wählen
 

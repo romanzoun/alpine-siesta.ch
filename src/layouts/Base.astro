@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
 import { site } from '../config';
+import { getCollection } from 'astro:content';
 import { wohnungenNav } from '../lib/wohnungen';
+import { allePillars, hubUrl } from '../lib/pillars';
 
 interface Props {
   title: string;
@@ -10,11 +12,16 @@ interface Props {
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
-const nav = [await wohnungenNav(), ...site.nav];
+const nav = [
+  await wohnungenNav(),
+  ...((await allePillars()).length ? [{ href: hubUrl(), label: site.ort }] : []),
+  ...site.nav,
+];
+const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang={site.sprache}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,7 +54,8 @@ const nav = [await wohnungenNav(), ...site.nav];
     <footer class="site-footer">
       <div class="container">
         <p class="footer-name">{site.name}</p>
-        <p>Ferienwohnung in Leukerbad, Wallis<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>Ferienwohnung in {site.ort}, {site.region}<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <ul class="footer-links">{rechtliches.map((r) => <li><a href={`/${r.id}/`}>{r.data.title}</a></li>)}</ul>
       </div>
     </footer>
   </body>
@@ -80,7 +88,8 @@ const nav = [await wohnungenNav(), ...site.nav];
     .bar { grid-template-columns: 1fr auto; grid-template-areas: 'logo btn' 'nav nav'; }
     nav { justify-content: flex-start; font-size: .95rem; }
   }
-  .site-footer { background: var(--band); color: var(--band-text); padding-block: 3rem 4rem; font-size: .95rem; }
+  .site-footer { background: var(--band); color: var(--band-text); padding-block: 3rem 4rem; font-size: .95rem; border-top: 1px solid rgb(245 248 247 / .12); }
   .site-footer a { color: inherit; }
+  .footer-links { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
   .footer-name { font-stretch: 62%; font-weight: 800; font-size: clamp(3rem, 10vw, 6rem); line-height: .9; margin: 0 0 1rem; }
 </style>

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { site } from '../config';
 
 interface Props {
   titel: string[];
@@ -17,7 +18,7 @@ const { titel, untertitel, bild, alt, ctaHref, ctaLabel } = Astro.props;
   {bild ? (
     <Image src={bild} alt={alt ?? ''} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" class="hintergrund" />
   ) : (
-    <svg class="hintergrund" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration: die Gemmiwand über Leukerbad im Abendlicht">
+    <svg class="hintergrund" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" role="img" aria-label={`Illustration: Berge über ${site.ort} im Abendlicht`}>
       <defs>
         <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#16233a" />

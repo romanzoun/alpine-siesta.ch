@@ -4,11 +4,12 @@ import Base from '../../layouts/Base.astro';
 import Fakten from '../../components/Fakten.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { alleWohnungen, wohnungUrl } from '../../lib/wohnungen';
+import { site } from '../../config';
 
 const wohnungen = await alleWohnungen();
 ---
 
-<Base title="Unsere Ferienwohnungen in Leukerbad | Alpine Siesta" description="Alle Ferienwohnungen von Alpine Siesta in Leukerbad im Überblick – direkt beim Gastgeber buchen.">
+<Base title={`Unsere Ferienwohnungen in ${site.ort} | ${site.name}`} description={`Alle Ferienwohnungen von ${site.name} in ${site.ort} im Überblick – direkt beim Gastgeber buchen.`}>
   <section class="section container">
     <Breadcrumbs pfad={[{ name: 'Wohnungen', href: '/wohnungen/' }]} />
     <h1>Unsere Wohnungen</h1>

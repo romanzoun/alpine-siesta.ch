@@ -1,3 +1,5 @@
+import { site } from '../../site/site.config';
+
 // Einziges Vokabular für alle Labels der Website.
 // Neue Werte nur hier ergänzen – das Schema in content.config.ts übernimmt sie automatisch.
 
@@ -23,13 +25,8 @@ export const kategorien = {
   aussicht: 'Aussicht',
 } as const;
 
-export const pillars = {
-  thermen: 'Thermen & Wellness',
-  familie: 'Familienferien',
-  sommer: 'Wandern & Sommer',
-  winter: 'Winter & Ski',
-  reisetipps: 'Anreise & Wallis-Ausflüge',
-} as const;
+// Pillar-Themen sind pro Website verschieden und stehen in site/site.config.ts
+export const pillars = site.pillars;
 
 export const wetter = { outdoor: 'Draussen', indoor: 'Drinnen', beides: 'Drinnen & draussen' } as const;
 export const dauer = { kurz: 'Bis 2 Stunden', halbtag: 'Halber Tag', ganztag: 'Ganzer Tag' } as const;

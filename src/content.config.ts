@@ -3,8 +3,12 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import * as L from './lib/labels';
 
+// Alle Inhalte liegen in site/ (pro Website verschieden), siehe site/README.md.
+// Ordner/index.md → ID ist der Ordnerpfad ohne «/index.md»
+const ordnerId = ({ entry }: { entry: string }) => entry.replace(/\/index\.md$/, '');
+
 const wohnungen = defineCollection({
-  loader: glob({ pattern: '[^_]*.md', base: './src/content/wohnungen' }),
+  loader: glob({ pattern: '[^_]*/index.md', base: './site/wohnungen', generateId: ordnerId }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -41,7 +45,7 @@ const wohnungen = defineCollection({
 });
 
 const seiten = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/seiten' }),
+  loader: glob({ pattern: 'startseite.md', base: './site' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -57,7 +61,7 @@ const seiten = defineCollection({
 });
 
 const aktivitaeten = defineCollection({
-  loader: glob({ pattern: '[^_]*/index.md', base: './src/content/aktivitaeten', generateId: ({ entry }) => entry.split('/')[0] }),
+  loader: glob({ pattern: '[^_]*/index.md', base: './site/aktivitaeten', generateId: ordnerId }),
   schema: ({ image }) =>
     z.object({
       title: z.string().max(70),
@@ -87,7 +91,7 @@ const aktivitaeten = defineCollection({
 
 // Optionaler eigener Text für Themenseiten, Dateiname = <dimension>-<wert>.md (z. B. saison-winter.md)
 const themenseiten = defineCollection({
-  loader: glob({ pattern: '[^_]*.md', base: './src/content/themenseiten' }),
+  loader: glob({ pattern: '[^_]*.md', base: './site/themenseiten' }),
   schema: z.object({
     title: z.string().max(70).optional(),
     description: z.string().min(70).max(160).optional(),
@@ -96,4 +100,43 @@ const themenseiten = defineCollection({
   }),
 });
 
-export const collections = { wohnungen, seiten, aktivitaeten, themenseiten };
+// Pillar Pages: site/pillars/<pillar>/index.md
+const pillars = defineCollection({
+  loader: glob({ pattern: '*/index.md', base: './site/pillars', generateId: ordnerId }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(70),
+      description: z.string().min(70).max(160),
+      h1: z.string(),
+      lead: z.string(),
+      bild: image().optional(),
+      bild_alt: z.string().optional(),
+      entwurf: z.boolean().default(true),
+    }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt', path: ['bild_alt'] }),
+});
+
+// Unterseiten: site/pillars/<pillar>/<artikel>/index.md
+const artikel = defineCollection({
+  loader: glob({ pattern: '*/*/index.md', base: './site/pillars', generateId: ordnerId }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(70),
+      description: z.string().min(70).max(160),
+      h1: z.string(),
+      kurz: z.string().max(160),
+      reihenfolge: z.number().int().default(0),
+      aktualisiert: z.coerce.date().optional(),
+      bild: image().optional(),
+      bild_alt: z.string().optional(),
+      faq: z.array(z.object({ frage: z.string(), antwort: z.string() })).default([]),
+      entwurf: z.boolean().default(true),
+    }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt', path: ['bild_alt'] }),
+});
+
+// Impressum, Datenschutz, AGB: site/rechtliches/<seite>.md → /<seite>/
+const rechtliches = defineCollection({
+  loader: glob({ pattern: '[^_]*.md', base: './site/rechtliches' }),
+  schema: z.object({ title: z.string(), description: z.string(), reihenfolge: z.number().int().default(0) }),
+});
+
+export const collections = { wohnungen, seiten, aktivitaeten, themenseiten, pillars, artikel, rechtliches };

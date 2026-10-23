@@ -23,7 +23,7 @@ const schema = {
   name: w.name,
   description: w.beschreibung,
   url: new URL(wohnungUrl(eintrag.id), Astro.site).href,
-  address: { '@type': 'PostalAddress', addressLocality: 'Leukerbad', addressRegion: 'VS', addressCountry: 'CH' },
+  address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
   containsPlace: {
     '@type': 'Accommodation',
     occupancy: { '@type': 'QuantitativeValue', value: w.fakten.personen },
@@ -39,7 +39,7 @@ const schema = {
 };
 ---
 
-<Base title={`Die Wohnung – ${w.name} in Leukerbad`} description={w.beschreibung}>
+<Base title={`Die Wohnung – ${w.name} in ${site.ort}`} description={w.beschreibung}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <section class="section container">

@@ -1,0 +1,20 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  id: string;
+}
+const eintrag = await getEntry('rechtliches', Astro.props.id);
+if (!eintrag) throw new Error(`site/rechtliches/${Astro.props.id}.md fehlt`);
+const { Content } = await render(eintrag);
+---
+
+<Base title={eintrag.data.title} description={eintrag.data.description}>
+  <article class="section container">
+    <Breadcrumbs pfad={[{ name: eintrag.data.title, href: `/${eintrag.id}/` }]} />
+    <h1>{eintrag.data.title}</h1>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>

@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "checkliste": "node scripts/checkliste.mjs",
+    "build:entwuerfe": "PUBLIC_ENTWUERFE=true astro build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

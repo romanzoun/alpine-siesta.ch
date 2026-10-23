@@ -123,7 +123,7 @@ Gast wählt **Monat** und **wer er ist** – die Seite zeigt passende Aktivität
 ### Datenmodell (Content Collection `aktivitaeten`)
 
 ```yaml
-# src/content/aktivitaeten/gemmipass.md
+# site/aktivitaeten/gemmipass/index.md
 title: Gemmipass mit Seilbahn und Daubensee
 kurz: Mit der Gondel auf 2350 m, Spaziergang zum Daubensee.
 monate: [6, 7, 8, 9, 10]          # wann sinnvoll
@@ -273,7 +273,7 @@ Reihenfolge festgelegt: zuerst alles auf Dateibasis, Integrationen danach.
 
 | Phase | Inhalt | Status |
 |---|---|---|
-| **1 – Wohnung (Dateibasis)** | Astro-Grundgerüst, Layout, Startseite, Wohnungsseite. Texte und Bilder als Dateien in `src/content/` und `src/assets/` | ✅ Grundgerüst steht, Inhalte (`[TODO]`) folgen |
+| **1 – Wohnung (Dateibasis)** | Astro-Grundgerüst, Layout, Startseite, Wohnungsseite. Texte, Bilder und Einstellungen pro Website im Ordner `site/` | ✅ Grundgerüst steht, Inhalte (`[TODO]`) folgen |
 | **2 – Pillar Pages** | 5 Pillar-Pages, danach 25 Unterseiten als Markdown | ⏳ |
 | **3 – Discovery** | Aktivitäten als Ordner (Markdown + Bilder) mit festen Labels. Rohinhalte in `inbox/aktivitaeten/` → Skill `aktivitaeten-import` erzeugt die Einträge. Filter (Monat, Für wen, Thema, Extras) mit teilbarer URL, Themenseiten pro Saison/Zielgruppe/Thema, Brotkrumen, JSON-LD | 🟡 Technik fertig, 30–40 Aktivitäten folgen |
 | **4 – Beds24** | Verfügbarkeit + Preise live, Weiterleitung zur Beds24-Buchung; ersetzt die Mail-Anfrage hinter «Jetzt buchen» | ⏳ |

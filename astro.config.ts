@@ -1,9 +1,10 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { site } from './site/site.config';
 
 export default defineConfig({
-  site: 'https://alpine-siesta.ch',
+  site: site.domain,
+  publicDir: './site/public',
   trailingSlash: 'always',
   integrations: [sitemap()],
 });

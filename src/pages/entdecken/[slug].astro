@@ -62,7 +62,7 @@ const schema = {
 };
 ---
 
-<Base title={`${a.title} | Alpine Siesta Leukerbad`} description={a.description}>
+<Base title={`${a.title} | ${site.name} ${site.ort}`} description={a.description}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <article class="section container">

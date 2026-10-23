@@ -1,0 +1,15 @@
+---
+// Dunkles Band mit Buchungsaufruf am Ende von Inhaltsseiten.
+import { site } from '../config';
+import { alleWohnungen } from '../lib/wohnungen';
+
+const anzahl = (await alleWohnungen()).length;
+---
+
+<section class="section band">
+  <div class="container">
+    <h2>Deine Unterkunft in {site.ort}</h2>
+    <p class="lead">{anzahl === 1 ? 'Unsere Ferienwohnung' : 'Unsere Ferienwohnungen'} – direkt bei uns gebucht zum besten Preis.</p>
+    <a class="btn" href={site.buchungUrl}>Verfügbarkeit anfragen</a>
+  </div>
+</section>

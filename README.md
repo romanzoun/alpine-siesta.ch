@@ -12,11 +12,9 @@ npm run build    # statische Seite in dist/
 
 ## Inhalte bearbeiten
 
-| Was | Datei |
-|---|---|
-| Wohnungen (je eine Datei: Fakten, Ausstattung, Lage, Hausregeln, Galerie, Beschreibung, Beds24-IDs) | `src/content/wohnungen/` |
-| Startseite (Hero, Highlights, Vorteile, Bewertungen, FAQ) | `src/content/seiten/startseite.md` |
-| Bilder der Wohnungen | `src/assets/wohnung/` (Dateiname dann in der Galerie eintragen) |
-| E-Mail, Buchungslink, Navigation | `src/config.ts` |
+Alle Inhalte und Einstellungen dieser Website liegen in **`site/`** – siehe [site/README.md](site/README.md) für die Übersicht, welches Bild und welcher Text wohin gehört. Der Code in `src/` ist für alle Websites gleich.
 
-Alle Stellen mit `[TODO]` müssen noch mit echten Angaben gefüllt werden. Bilder werden beim Build automatisch verkleinert und als WebP ausgeliefert – Originale in voller Auflösung ablegen.
+```sh
+npm run checkliste        # was fehlt noch? (Platzhalter, [TODO], Pillar Pages, Rechtliches …)
+npm run build:entwuerfe   # Build inklusive Entwürfe zur Kontrolle
+```

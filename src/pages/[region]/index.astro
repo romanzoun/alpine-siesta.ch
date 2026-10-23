@@ -1,0 +1,36 @@
+---
+// Übersicht des SEO-Bereichs, z. B. /leukerbad/
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { allePillars, artikelVon, pillarUrl, artikelUrl, hubUrl } from '../../lib/pillars';
+import { site } from '../../config';
+
+export async function getStaticPaths() {
+  return (await allePillars()).length ? [{ params: { region: site.seoPfad } }] : [];
+}
+
+const pillars = await Promise.all((await allePillars()).map(async (p) => ({ p, artikel: await artikelVon(p.id) })));
+---
+
+<Base title={`${site.ort} Reiseführer: Tipps von deinen Gastgebern | ${site.name}`} description={`Alles für deine Ferien in ${site.ort}: ${Object.values(site.pillars).join(', ')} – persönlich zusammengestellt von deinen Gastgebern.`.slice(0, 160)}>
+  <section class="section container">
+    <Breadcrumbs pfad={[{ name: site.ort, href: hubUrl() }]} />
+    <h1>{site.ort} entdecken</h1>
+    <p class="lead">Unser Reiseführer für {site.ort} – von Gastgebern, die hier zu Hause sind.</p>
+    <div class="liste">
+      {pillars.map(({ p, artikel }) => (
+        <article>
+          <h2 class="h3"><a href={pillarUrl(p.id)}>{p.data.h1}</a></h2>
+          <p class="muted">{p.data.lead}</p>
+          {artikel.length > 0 && <ul>{artikel.map((a) => <li><a href={artikelUrl(a.id)}>{a.data.h1}</a></li>)}</ul>}
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .h3 { font-size: 1.8rem; }
+  h2 a { color: inherit; text-decoration: none; }
+  ul { padding-left: 1.1rem; margin: 0; }
+</style>
