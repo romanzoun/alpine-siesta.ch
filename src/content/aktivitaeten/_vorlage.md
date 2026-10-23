@@ -19,7 +19,10 @@ kinderwagen: false
 hund: true
 geheimtipp: false
 website: https://example.ch     # optional
-# bild: ../../assets/aktivitaeten/datei.jpg   # optional
+# Bilder liegen im selben Ordner wie diese Datei:
+# bild: ./titel.jpg
+# galerie:
+#   - { bild: ./galerie-1.jpg, alt: Beschreibung }
 # bild_alt: Beschreibung des Bildes
 geprueft: false                 # erst auf true, wenn Fakten (Preise, Zeiten) von Hand geprüft sind
 ---

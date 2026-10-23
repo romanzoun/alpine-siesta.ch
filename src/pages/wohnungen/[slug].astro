@@ -3,8 +3,11 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Fakten from '../../components/Fakten.astro';
 import Galerie from '../../components/Galerie.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { site } from '../../config';
 import { alleWohnungen, wohnungUrl, type Wohnung } from '../../lib/wohnungen';
+
+const anzahl = (await alleWohnungen()).length;
 
 export async function getStaticPaths() {
   return (await alleWohnungen()).map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag } }));
@@ -40,6 +43,7 @@ const schema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <section class="section container">
+    <Breadcrumbs pfad={[...(anzahl > 1 ? [{ name: 'Wohnungen', href: '/wohnungen/' }] : []), { name: w.name, href: wohnungUrl(eintrag.id) }]} />
     <h1>{w.name}</h1>
     <p class="lead">{w.claim}</p>
     <Fakten fakten={w.fakten} hoehe={w.lage.hoehe_m} />

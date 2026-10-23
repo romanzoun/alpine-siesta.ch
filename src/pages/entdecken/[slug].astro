@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { saisonsVon, themenUrl, themenH1 } from '../../lib/entdecken';
 import * as L from '../../lib/labels';
 import { site } from '../../config';
 
@@ -18,6 +20,14 @@ interface Props {
 const { eintrag, alle } = Astro.props;
 const a = eintrag.data;
 const { Content } = await render(eintrag);
+
+// Brotkrumen über das erste Thema, Schlagworte verlinken auf Themenseiten
+const hauptThema = a.kategorien[0];
+const schlagworte = [
+  ...saisonsVon(eintrag).map((w) => ({ href: themenUrl('saison', w), label: L.saisons[w] })),
+  ...a.zielgruppen.map((w) => ({ href: themenUrl('fuer', w), label: L.zielgruppen[w] })),
+  ...a.kategorien.map((w) => ({ href: themenUrl('thema', w), label: L.kategorien[w] })),
+];
 
 const aehnlich = alle
   .filter((x) => x.id !== eintrag.id)
@@ -46,7 +56,8 @@ const schema = {
   description: a.description,
   url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
   isAccessibleForFree: a.preis === 'gratis',
-  address: { '@type': 'PostalAddress', addressLocality: 'Leukerbad', addressCountry: 'CH' },
+  address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' },
+  ...(a.bild && { image: new URL(a.bild.src, Astro.site).href }),
   ...(a.website && { sameAs: a.website }),
 };
 ---
@@ -55,18 +66,30 @@ const schema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <article class="section container">
-    <nav class="pfad muted" aria-label="Brotkrumen"><a href="/entdecken/">Entdecken</a> / {L.pillars[a.pillar]}</nav>
+    <Breadcrumbs pfad={[
+      { name: 'Entdecken', href: '/entdecken/' },
+      { name: themenH1('thema', hauptThema), href: themenUrl('thema', hauptThema) },
+      { name: a.title, href: `/entdecken/${eintrag.id}/` },
+    ]} />
     <h1 style={`view-transition-name: titel-${eintrag.id}`}>{a.title}</h1>
     <p class="lead">{a.kurz}</p>
     {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
 
     <div class="zweispaltig">
-      <div class="prose"><Content /></div>
+      <div class="prose">
+        <Content />
+        {a.galerie.length > 0 && (
+          <ul class="galerie">
+            {a.galerie.map((g) => <li><Image src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" /></li>)}
+          </ul>
+        )}
+      </div>
       <aside class="fakten">
         <dl>
           {fakten.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
         </dl>
         {a.website && <p><a href={a.website} rel="noopener">Offizielle Website</a></p>}
+        <ul class="schlagworte">{schlagworte.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul>
         <a class="btn" href={site.buchungUrl}>Unterkunft anfragen</a>
       </aside>
     </div>
@@ -81,7 +104,11 @@ const schema = {
 </Base>
 
 <style>
-  .pfad { margin-bottom: 1rem; }
+  .schlagworte { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .9rem; }
+  .schlagworte a { display: inline-block; padding: .25rem .65rem; border-radius: var(--radius); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--text); text-decoration: none; }
+  .schlagworte a:hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+  .galerie { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .5rem; grid-template-columns: repeat(2, 1fr); }
+  .galerie img { border-radius: var(--radius); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
   .fakten { border-top: 2px solid var(--text); padding-top: 1rem; }
   .karten { display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
   .titelbild { border-radius: var(--radius); margin-block: 1.5rem; width: 100%; }

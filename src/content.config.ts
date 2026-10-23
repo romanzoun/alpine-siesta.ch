@@ -57,7 +57,7 @@ const seiten = defineCollection({
 });
 
 const aktivitaeten = defineCollection({
-  loader: glob({ pattern: '[^_]*.md', base: './src/content/aktivitaeten' }),
+  loader: glob({ pattern: '[^_]*/index.md', base: './src/content/aktivitaeten', generateId: ({ entry }) => entry.split('/')[0] }),
   schema: ({ image }) =>
     z.object({
       title: z.string().max(70),
@@ -77,10 +77,23 @@ const aktivitaeten = defineCollection({
       hund: z.boolean(),
       geheimtipp: z.boolean().default(false),
       website: z.url().optional(),
+      ort: z.string().default('Leukerbad'),
       bild: image().optional(),
       bild_alt: z.string().optional(),
+      galerie: z.array(z.object({ bild: image(), alt: z.string() })).default([]),
       geprueft: z.boolean().default(false),
-    }),
+    }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt: jedes Bild braucht einen Alternativtext', path: ['bild_alt'] }),
 });
 
-export const collections = { wohnungen, seiten, aktivitaeten };
+// Optionaler eigener Text für Themenseiten, Dateiname = <dimension>-<wert>.md (z. B. saison-winter.md)
+const themenseiten = defineCollection({
+  loader: glob({ pattern: '[^_]*.md', base: './src/content/themenseiten' }),
+  schema: z.object({
+    title: z.string().max(70).optional(),
+    description: z.string().min(70).max(160).optional(),
+    h1: z.string().optional(),
+    intro: z.string(),
+  }),
+});
+
+export const collections = { wohnungen, seiten, aktivitaeten, themenseiten };

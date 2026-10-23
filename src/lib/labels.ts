@@ -36,4 +36,22 @@ export const dauer = { kurz: 'Bis 2 Stunden', halbtag: 'Halber Tag', ganztag: 'G
 export const anstrengung = { leicht: 'Leicht', mittel: 'Mittel', anspruchsvoll: 'Anspruchsvoll' } as const;
 export const preis = { gratis: 'Gratis', $: 'Günstig', $$: 'Mittel', $$$: 'Teuer' } as const;
 
+// Saisons werden aus den Monaten abgeleitet (für Themenseiten wie /entdecken/saison/winter/).
+export const saisons = { winter: 'Winter', fruehling: 'Frühling', sommer: 'Sommer', herbst: 'Herbst' } as const;
+export const saisonMonate: Record<keyof typeof saisons, number[]> = {
+  winter: [12, 1, 2, 3],
+  fruehling: [4, 5],
+  sommer: [6, 7, 8],
+  herbst: [9, 10, 11],
+};
+
+// Zusatzfilter (alle gewählten müssen zutreffen)
+export const extras = {
+  kinderwagen: 'Mit Kinderwagen',
+  hund: 'Mit Hund',
+  gratis: 'Gratis',
+  regen: 'Auch bei Regen',
+  geheimtipp: 'Geheimtipp',
+} as const;
+
 export const keys = <T extends Record<string, string>>(o: T) => Object.keys(o) as [keyof T & string, ...(keyof T & string)[]];

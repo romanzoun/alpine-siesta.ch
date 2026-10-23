@@ -4,7 +4,9 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 
 ## Neue Aktivität anlegen
 
-1. `src/content/aktivitaeten/_vorlage.md` kopieren nach `src/content/aktivitaeten/<slug>.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet.md`). Der Dateiname wird zur URL `/entdecken/<slug>/`.
+Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-import/` verarbeitet – Eingang in `inbox/aktivitaeten/`.
+
+1. `src/content/aktivitaeten/_vorlage.md` kopieren nach `src/content/aktivitaeten/<slug>/index.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet/index.md`), Bilder in denselben Ordner. Der Ordnername wird zur URL `/entdecken/<slug>/`.
 2. Für alle Labels **nur Werte aus `src/lib/labels.ts`** verwenden. Keine neuen Werte erfinden. Wenn ein Wert fehlt, im Text darauf hinweisen statt ihn einzutragen.
 3. `geprueft: false` setzen. Fakten, die sich ändern können (Preise, Öffnungszeiten, Fahrpläne), im Text mit `[PRÜFEN]` markieren statt Zahlen zu raten.
 4. Text: Deutsch mit Schweizer Rechtschreibung (ss statt ß), du-Form, persönlich aus Gastgeber-Sicht. Abschnitte wie in der Vorlage.
