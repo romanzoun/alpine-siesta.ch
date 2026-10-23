@@ -6,9 +6,11 @@ import Hero from '../components/Hero.astro';
 import Fakten from '../components/Fakten.astro';
 import Faq from '../components/Faq.astro';
 import { site } from '../config';
+import { alleWohnungen, wohnungUrl } from '../lib/wohnungen';
 
 const seite = (await getEntry('seiten', 'startseite'))!.data;
-const wohnung = (await getEntry('wohnung', 'alpine-siesta'))!.data;
+const wohnungen = await alleWohnungen();
+const wohnung = wohnungen[0].data;
 const hero = seite.hero!;
 
 const faqSchema = {
@@ -27,9 +29,11 @@ const faqSchema = {
 
   <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={site.buchungUrl} ctaLabel="Verfügbarkeit anfragen" />
 
-  <section class="container fakten-zeile">
-    <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} />
-  </section>
+  {wohnungen.length === 1 && (
+    <section class="container fakten-zeile">
+      <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} />
+    </section>
+  )}
 
   <section class="section container zweispaltig">
     <h2>Warum Leukerbad</h2>
@@ -44,18 +48,20 @@ const faqSchema = {
   </section>
 
   <section class="section container">
-    <div class="wohnung">
-      <ul class="mosaik">
-        {wohnung.galerie.slice(0, 3).map((b, i) => (
-          <li><Image src={b.bild} alt={b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
-        ))}
-      </ul>
-      <div>
-        <h2>Die Wohnung</h2>
-        <p class="lead">{wohnung.claim}</p>
-        <a class="btn btn--ghost" href="/wohnung/">Wohnung ansehen</a>
+    {wohnungen.map(({ id, data: w }) => (
+      <div class="wohnung">
+        <ul class="mosaik">
+          {w.galerie.slice(0, 3).map((b, i) => (
+            <li><Image src={b.bild} alt={b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
+          ))}
+        </ul>
+        <div>
+          <h2>{wohnungen.length === 1 ? 'Die Wohnung' : w.name}</h2>
+          <p class="lead">{w.claim}</p>
+          <a class="btn btn--ghost" href={wohnungUrl(id)}>{wohnungen.length === 1 ? 'Wohnung ansehen' : `${w.name} ansehen`}</a>
+        </div>
       </div>
-    </div>
+    ))}
   </section>
 
   <section class="section band">
@@ -99,6 +105,7 @@ const faqSchema = {
   }
   .zweispaltig .liste { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
   .wohnung { display: grid; gap: 2rem 3rem; align-items: end; }
+  .wohnung + .wohnung { margin-top: clamp(3rem, 7vw, 5rem); }
   @media (min-width: 60rem) { .wohnung { grid-template-columns: 3fr 2fr; } }
   .mosaik { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: .5rem; aspect-ratio: 16 / 10; }
   .mosaik li:first-child { grid-row: span 2; }

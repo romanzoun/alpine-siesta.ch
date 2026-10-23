@@ -3,11 +3,15 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import * as L from './lib/labels';
 
-const wohnung = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/wohnung' }),
+const wohnungen = defineCollection({
+  loader: glob({ pattern: '[^_]*.md', base: './src/content/wohnungen' }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
+      // Sortierung auf Startseite und Übersicht (kleinste zuerst)
+      reihenfolge: z.number().int().default(0),
+      // IDs aus Beds24 → Properties. Kein Geheimnis, darum hier statt in .env.
+      beds24: z.object({ propertyId: z.number().int(), roomId: z.number().int() }).optional(),
       claim: z.string(),
       beschreibung: z.string(),
       fakten: z.object({
@@ -79,4 +83,4 @@ const aktivitaeten = defineCollection({
     }),
 });
 
-export const collections = { wohnung, seiten, aktivitaeten };
+export const collections = { wohnungen, seiten, aktivitaeten };

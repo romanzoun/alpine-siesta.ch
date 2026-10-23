@@ -1,11 +1,16 @@
 ---
-import { getEntry, render } from 'astro:content';
-import Base from '../layouts/Base.astro';
-import Fakten from '../components/Fakten.astro';
-import Galerie from '../components/Galerie.astro';
-import { site } from '../config';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Fakten from '../../components/Fakten.astro';
+import Galerie from '../../components/Galerie.astro';
+import { site } from '../../config';
+import { alleWohnungen, wohnungUrl, type Wohnung } from '../../lib/wohnungen';
 
-const eintrag = (await getEntry('wohnung', 'alpine-siesta'))!;
+export async function getStaticPaths() {
+  return (await alleWohnungen()).map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag } }));
+}
+
+const { eintrag } = Astro.props as { eintrag: Wohnung };
 const w = eintrag.data;
 const { Content } = await render(eintrag);
 
@@ -14,7 +19,7 @@ const schema = {
   '@type': 'VacationRental',
   name: w.name,
   description: w.beschreibung,
-  url: new URL('/wohnung/', Astro.site).href,
+  url: new URL(wohnungUrl(eintrag.id), Astro.site).href,
   address: { '@type': 'PostalAddress', addressLocality: 'Leukerbad', addressRegion: 'VS', addressCountry: 'CH' },
   containsPlace: {
     '@type': 'Accommodation',

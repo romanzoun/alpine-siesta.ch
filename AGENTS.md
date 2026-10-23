@@ -10,6 +10,13 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 4. Text: Deutsch mit Schweizer Rechtschreibung (ss statt ß), du-Form, persönlich aus Gastgeber-Sicht. Abschnitte wie in der Vorlage.
 5. `npm run build` ausführen – muss ohne Fehler durchlaufen.
 
+## Neue Wohnung anlegen
+
+1. `src/content/wohnungen/alpine-siesta.md` kopieren nach `src/content/wohnungen/<slug>.md`. URL wird `/wohnungen/<slug>/`.
+2. Bilder in einen eigenen Ordner `src/assets/<slug>/` legen und in `galerie` eintragen.
+3. `reihenfolge` setzen und unter `beds24` die `propertyId` und `roomId` aus Beds24 eintragen. Der Beds24-Token in `.env` gilt für alle Wohnungen.
+4. Startseite, Navigation («Wohnung» → «Wohnungen») und Übersicht `/wohnungen/` passen sich automatisch an.
+
 ## Labels richtig wählen
 
 - `monate`: nur Monate, in denen die Aktivität tatsächlich möglich ist (Bergbahnen haben Revisionspausen, Skigebiete eine Saison).

@@ -4,6 +4,10 @@
 # Bilder: in src/assets/wohnung/ ablegen und hier eintragen.
 # ─────────────────────────────────────────────────────────────
 name: Alpine Siesta
+reihenfolge: 1
+# beds24:              # [TODO] eintragen, sobald Beds24 angebunden wird
+#   propertyId: 123456
+#   roomId: 654321
 claim: Deine Ferienwohnung in Leukerbad – Thermalwasser, Gemmiwand, Siesta.
 beschreibung: "[TODO] Ein Satz, der die Wohnung beschreibt (wird als Meta-Description verwendet, max. 155 Zeichen)."
 

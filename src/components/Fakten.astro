@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  fakten: CollectionEntry<'wohnung'>['data']['fakten'];
+  fakten: CollectionEntry<'wohnungen'>['data']['fakten'];
   hoehe?: number;
 }
 const { fakten, hoehe } = Astro.props;
