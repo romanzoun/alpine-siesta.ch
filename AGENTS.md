@@ -4,6 +4,8 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 
 **Alles Website-spezifische liegt in `site/`** (Einstellungen in `site/site.config.ts`, Inhalte, Bilder, `public/`). Übersicht: `site/README.md`. Der Code in `src/` muss für jede Website funktionieren: keine Namen, Orte oder Texte von Alpine Siesta in `src/` fest einbauen, sondern aus `site` lesen. Offene Punkte: `npm run checkliste`.
 
+Vision der Gesamtplattform (Agentur, Trizoun Travel, Kunden-Websites) und getroffene Entscheide: Skill `produkt-kompass` – vor grösseren neuen Features damit prüfen. Massgebliche Fassung im Repo `trizoun-travel`, hier eine Kopie.
+
 ## Neue Aktivität anlegen
 
 Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-import/` verarbeitet – Eingang in `inbox/aktivitaeten/`.
