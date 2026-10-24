@@ -6,3 +6,4 @@ dist/
 .dev.vars
 inbox/*
 !inbox/README.md
+merch/export/
