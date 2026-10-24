@@ -182,6 +182,8 @@ Motive über alle Produkte: **Alpine Siesta** (Logo/Claim «Siesta auf 1411 m»)
 
 **Gemischte Bestellungen:** Der Stripe-Webhook trennt den Warenkorb: POD-Artikel → Gelato-API, Lagerartikel → Bestell-Mail mit Packliste an dich. Bei Bestellungen nur mit Lagerartikeln reduzierte Versandkosten (Brief statt Paket).
 
+> **Entscheid (Oktober 2026):** Der Shop liefert zum Start **nur in die Schweiz und nach Liechtenstein**. Verkäufer ist Alpine Siesta, Zahlung über Stripe (Karte, TWINT), Merch über Trizoun Travel (Gelato, Produktion in der Schweiz) plus Kleinlager. EU/Welt ist eine spätere Stufe; die Optionen unten bleiben als Referenz. Details: Konzept von Trizoun Travel (`docs/KONZEPT.md`, «Entscheid Start»).
+
 ### Anbieter & Routing CH / EU
 
 Ziel: Schweizer Bestellungen in der Schweiz produzieren, EU-Bestellungen in der EU – keine Zollgebühren und kurze Lieferzeiten.
