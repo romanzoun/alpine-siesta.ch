@@ -22,6 +22,7 @@ const { slug, maxGaeste } = Astro.props;
       data-key={trizoun.key}
       data-waehrung={site.waehrung}
       data-anfrage={site.anfrageUrl}
+      data-einwilligung={site.erinnerungEinwilligung}
     >
       <div class="kopf">
         <button type="button" class="nav" data-zurueck aria-label="Vorheriger Monat">‹</button>
@@ -63,7 +64,8 @@ const { slug, maxGaeste } = Astro.props;
   const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-buchung]')) {
-    const { slug, api, key, waehrung, anfrage } = root.dataset as Record<string, string>;
+    const { slug, api, key, waehrung, anfrage, einwilligung } = root.dataset as Record<string, string>;
+    let gemerkteEmail = '';
     const client = createTrizoun({ key, baseUrl: api });
     const kalender = root.querySelector<HTMLElement>('[data-kalender]')!;
     const titel = root.querySelector<HTMLElement>('[data-monatstitel]')!;
@@ -180,10 +182,34 @@ const { slug, maxGaeste } = Astro.props;
           p.textContent = new Intl.NumberFormat('de-CH', { style: 'currency', currency: angebot.waehrung ?? waehrung }).format(angebot.preis);
           ergebnis.append(p);
         }
+        // Optional: E-Mail für eine einmalige Erinnerung (nur mit Häkchen)
+        const merken = document.createElement('div');
+        merken.className = 'merken';
+        merken.innerHTML = `
+          <label class="feld"><span>E-Mail <span class="muted">(optional)</span></span><input type="email" autocomplete="email" data-email></label>
+          <label class="haken"><input type="checkbox" data-zustimmung><span></span></label>`;
+        merken.querySelector('.haken span')!.textContent = einwilligung;
+        const emailFeld = merken.querySelector<HTMLInputElement>('[data-email]')!;
+        const zustimmung = merken.querySelector<HTMLInputElement>('[data-zustimmung]')!;
+        emailFeld.value = gemerkteEmail;
+        emailFeld.addEventListener('input', () => (gemerkteEmail = emailFeld.value));
+        ergebnis.append(merken);
+
         const link = document.createElement('a');
         link.className = 'btn';
         link.href = url;
         link.textContent = 'Jetzt buchen';
+        link.addEventListener('click', async (ev) => {
+          const email = emailFeld.value.trim();
+          if (!email || !zustimmung.checked || !emailFeld.checkValidity()) return;
+          ev.preventDefault();
+          // Anfrage senden, aber die Weiterleitung höchstens 1.5 s aufhalten
+          await Promise.race([
+            client.anfrageSenden(slug, { email, ...a, sprache: document.documentElement.lang.slice(0, 2) || 'de', einwilligungText: einwilligung }).catch(() => {}),
+            new Promise((r) => setTimeout(r, 1500)),
+          ]);
+          location.href = url;
+        });
         const hinweis = document.createElement('p');
         hinweis.className = 'muted klein';
         hinweis.textContent = 'Du wirst zur sicheren Buchungsseite weitergeleitet.';
@@ -250,4 +276,10 @@ const { slug, maxGaeste } = Astro.props;
   .ergebnis :global(p) { margin: 0 0 .75rem; }
   .ergebnis :global(.preis) { font-stretch: 62%; font-weight: 800; font-size: 2.4rem; line-height: 1; }
   .ergebnis :global(.klein) { font-size: .85rem; margin-top: .6rem; }
+  .ergebnis :global(.merken) { display: grid; gap: .6rem; margin: .25rem 0 1rem; }
+  .ergebnis :global(.feld) { display: grid; gap: .25rem; font-size: .95rem; }
+  .ergebnis :global(.feld input) { font: inherit; padding: .55rem .7rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: var(--bg); color: var(--text); }
+  .ergebnis :global(.feld input:focus) { outline: none; border-color: var(--accent); }
+  .ergebnis :global(.haken) { display: flex; gap: .55rem; align-items: flex-start; font-size: .85rem; color: var(--muted); line-height: 1.4; }
+  .ergebnis :global(.haken input) { margin-top: .15rem; accent-color: var(--accent); }
 </style>

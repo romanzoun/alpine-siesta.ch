@@ -15,6 +15,8 @@ export const site = {
   // Rückfallebene, falls die Online-Buchung (Trizoun Travel) nicht erreichbar oder nicht eingerichtet ist.
   anfrageUrl: 'mailto:hallo@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
   waehrung: 'CHF',
+  // Wortlaut der Einwilligung im Buchungs-Widget (wird mit der Anfrage gespeichert)
+  erinnerungEinwilligung: 'Schickt mir dieses Angebot einmalig per E-Mail, falls ich nicht buche. Abmeldung jederzeit möglich.',
 
   // SEO-Bereich: URL-Anfang der Pillar Pages (/leukerbad/thermen/…)
   seoPfad: 'leukerbad',
