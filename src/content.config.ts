@@ -109,8 +109,10 @@ const pillars = defineCollection({
       description: z.string().min(70).max(160),
       h1: z.string(),
       lead: z.string(),
+      aktualisiert: z.coerce.date().optional(),
       bild: image().optional(),
       bild_alt: z.string().optional(),
+      faq: z.array(z.object({ frage: z.string(), antwort: z.string() })).default([]),
       entwurf: z.boolean().default(true),
     }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt', path: ['bild_alt'] }),
 });
