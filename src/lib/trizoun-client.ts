@@ -23,7 +23,10 @@ export function createTrizoun({ key, baseUrl }: { key: string; baseUrl: string }
   return {
     verfuegbarkeit: (slug: string, von: string, bis: string) => get<Tag[]>(`${s(slug)}/availability`, { von, bis }),
     angebot: (slug: string, a: { anreise: string; abreise: string; erwachsene: number }) => get<Angebot>(`${s(slug)}/offer`, a),
-    anfrageSenden: async (slug: string, a: { email: string; anreise: string; abreise: string; erwachsene: number; sprache: string; einwilligungText: string }) => {
+    anfrageSenden: async (
+      slug: string,
+      a: { email: string; anreise: string; abreise: string; erwachsene: number; sprache: string; einwilligungText: string; einwilligungUmfang: string },
+    ) => {
       const res = await fetch(`${baseUrl}/v1/public${s(slug)}/anfragen`, {
         method: 'POST',
         headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },

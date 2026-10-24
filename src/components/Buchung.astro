@@ -23,6 +23,7 @@ const { slug, maxGaeste } = Astro.props;
       data-waehrung={site.waehrung}
       data-anfrage={site.anfrageUrl}
       data-einwilligung={site.erinnerungEinwilligung}
+      data-umfang={site.einwilligungUmfang}
     >
       <div class="kopf">
         <button type="button" class="nav" data-zurueck aria-label="Vorheriger Monat">‹</button>
@@ -64,7 +65,7 @@ const { slug, maxGaeste } = Astro.props;
   const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-buchung]')) {
-    const { slug, api, key, waehrung, anfrage, einwilligung } = root.dataset as Record<string, string>;
+    const { slug, api, key, waehrung, anfrage, einwilligung, umfang } = root.dataset as Record<string, string>;
     let gemerkteEmail = '';
     const client = createTrizoun({ key, baseUrl: api });
     const kalender = root.querySelector<HTMLElement>('[data-kalender]')!;
@@ -205,7 +206,7 @@ const { slug, maxGaeste } = Astro.props;
           ev.preventDefault();
           // Anfrage senden, aber die Weiterleitung höchstens 1.5 s aufhalten
           await Promise.race([
-            client.anfrageSenden(slug, { email, ...a, sprache: document.documentElement.lang.slice(0, 2) || 'de', einwilligungText: einwilligung }).catch(() => {}),
+            client.anfrageSenden(slug, { email, ...a, sprache: document.documentElement.lang.slice(0, 2) || 'de', einwilligungText: einwilligung, einwilligungUmfang: umfang }).catch(() => {}),
             new Promise((r) => setTimeout(r, 1500)),
           ]);
           location.href = url;
