@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Fakten from '../../components/Fakten.astro';
 import Galerie from '../../components/Galerie.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Buchung from '../../components/Buchung.astro';
 import { site } from '../../config';
 import { alleWohnungen, wohnungUrl, type Wohnung } from '../../lib/wohnungen';
 
@@ -57,10 +58,8 @@ const schema = {
     <div class="prose">
       <Content />
     </div>
-    <aside class="buchen band">
-      <h3>Verfügbarkeit prüfen</h3>
-      <p class="muted">Direkt bei uns buchen – zum besten Preis.</p>
-      <a class="btn" href={site.buchungUrl}>Jetzt anfragen</a>
+    <aside class="buchen">
+      <Buchung slug={w.trizounSlug ?? eintrag.id} maxGaeste={w.fakten.personen} />
     </aside>
   </section>
 
@@ -102,11 +101,9 @@ const schema = {
 <style>
   .zweispaltig { display: grid; gap: 2rem; }
   @media (min-width: 60rem) {
-    .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; }
+    .zweispaltig { grid-template-columns: 1fr 22rem; align-items: start; }
     .buchen { position: sticky; top: 6rem; }
   }
-  .buchen { padding: 1.75rem; border-radius: var(--radius); }
-  .buchen p { margin-top: 0; }
   .liste ul { list-style: none; padding: 0; margin: 0; }
   .liste li { padding-block: .2rem; }
   .distanzen { list-style: none; padding: 0; display: grid; gap: .5rem; max-width: 30rem; }

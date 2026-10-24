@@ -14,8 +14,8 @@ const wohnungen = defineCollection({
       name: z.string(),
       // Sortierung auf Startseite und Übersicht (kleinste zuerst)
       reihenfolge: z.number().int().default(0),
-      // IDs aus Beds24 → Properties. Kein Geheimnis, darum hier statt in .env.
-      beds24: z.object({ propertyId: z.number().int(), roomId: z.number().int() }).optional(),
+      // Kurzname der Wohnung in Trizoun Travel (dort ist sie mit Beds24 verknüpft). Standard: Ordnername.
+      trizounSlug: z.string().optional(),
       claim: z.string(),
       beschreibung: z.string(),
       fakten: z.object({

@@ -74,6 +74,8 @@ for (const s of ['impressum', 'datenschutz', 'agb']) {
   punkt(ok, `${s}.md ausgefüllt`);
 }
 punkt(!config.includes('[TODO]'), 'site.config.ts ohne [TODO] (z. B. E-Mail)');
-punkt(!config.includes("buchungUrl: 'mailto:"), 'Buchung über Beds24 statt Mail-Anfrage');
+const envDatei = existsSync('.env') ? readFileSync('.env', 'utf8') : '';
+const envWert = (k) => process.env[k] || envDatei.match(new RegExp(`^${k}=(.+)$`, 'm'))?.[1]?.trim();
+punkt(Boolean(envWert('PUBLIC_TRIZOUN_API_URL') && envWert('PUBLIC_TRIZOUN_KEY')), 'Online-Buchung: PUBLIC_TRIZOUN_API_URL und PUBLIC_TRIZOUN_KEY gesetzt (sonst Mail-Anfrage)');
 
 console.log(`# Checkliste ${SITE}/\n` + zeilen.join('\n'));

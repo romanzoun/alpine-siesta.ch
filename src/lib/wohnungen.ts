@@ -16,3 +16,9 @@ export async function wohnungenNav() {
     ? { href: wohnungUrl(alle[0].id), label: 'Wohnung' }
     : { href: '/wohnungen/', label: 'Wohnungen' };
 }
+
+// Ziel aller «Buchen»-Knöpfe: das Buchungs-Widget auf der Wohnungsseite bzw. die Übersicht.
+export async function buchungsZiel() {
+  const alle = await alleWohnungen();
+  return alle.length === 1 ? `${wohnungUrl(alle[0].id)}#buchen` : '/wohnungen/';
+}

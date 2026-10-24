@@ -6,9 +6,9 @@
 # ─────────────────────────────────────────────────────────────
 name: Alpine Siesta
 reihenfolge: 1
-# beds24:              # [TODO] eintragen, sobald Beds24 angebunden wird
-#   propertyId: 123456
-#   roomId: 654321
+# Online-Buchung: Die Wohnung ist in Trizoun Travel mit Beds24 verknüpft.
+# Kurzname dort = Ordnername (alpine-siesta). Nur bei Abweichung setzen:
+# trizounSlug: anderer-name
 claim: Deine Ferienwohnung in Leukerbad – Thermalwasser, Gemmiwand, Siesta.
 beschreibung: "[TODO] Ein Satz, der die Wohnung beschreibt (wird als Meta-Description verwendet, max. 155 Zeichen)."
 

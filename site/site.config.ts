@@ -12,8 +12,9 @@ export const site = {
   ort: 'Leukerbad',
   region: 'Wallis',
   email: 'hallo@alpine-siesta.ch', // [TODO] echte Adresse
-  // Bis die Beds24-Anbindung steht, führt «Anfragen» zu einer Mail-Anfrage.
-  buchungUrl: 'mailto:hallo@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
+  // Rückfallebene, falls die Online-Buchung (Trizoun Travel) nicht erreichbar oder nicht eingerichtet ist.
+  anfrageUrl: 'mailto:hallo@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
+  waehrung: 'CHF',
 
   // SEO-Bereich: URL-Anfang der Pillar Pages (/leukerbad/thermen/…)
   seoPfad: 'leukerbad',

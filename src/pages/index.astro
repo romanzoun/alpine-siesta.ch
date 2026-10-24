@@ -6,12 +6,13 @@ import Hero from '../components/Hero.astro';
 import Fakten from '../components/Fakten.astro';
 import Faq from '../components/Faq.astro';
 import { site } from '../config';
-import { alleWohnungen, wohnungUrl } from '../lib/wohnungen';
+import { alleWohnungen, buchungsZiel, wohnungUrl } from '../lib/wohnungen';
 
 const seite = (await getEntry('seiten', 'startseite'))!.data;
 const wohnungen = await alleWohnungen();
 const wohnung = wohnungen[0].data;
 const hero = seite.hero!;
+const buchenZiel = await buchungsZiel();
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -27,7 +28,7 @@ const faqSchema = {
 <Base title={seite.title} description={seite.description}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={site.buchungUrl} ctaLabel="Verfügbarkeit anfragen" />
+  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={buchenZiel} ctaLabel="Verfügbarkeit & Preise" />
 
   {wohnungen.length === 1 && (
     <section class="container fakten-zeile">
@@ -71,7 +72,7 @@ const faqSchema = {
         <ul class="vorteile">
           {seite.vorteile.map((v) => <li>{v}</li>)}
         </ul>
-        <a class="btn" href={site.buchungUrl}>Verfügbarkeit anfragen</a>
+        <a class="btn" href={buchenZiel}>Verfügbarkeit &amp; Preise</a>
       </div>
     </div>
   </section>

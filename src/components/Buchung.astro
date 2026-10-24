@@ -1,0 +1,253 @@
+---
+// Buchungs-Widget: Kalender mit freien Tagen, Preis für den gewählten Zeitraum, Weiter zur Buchung (Beds24).
+// Ohne Trizoun-Konfiguration oder bei Fehlern: Mail-Anfrage.
+import { site } from '../config';
+import { trizoun, trizounAktiv } from '../lib/trizoun';
+
+interface Props {
+  slug: string;
+  maxGaeste: number;
+}
+const { slug, maxGaeste } = Astro.props;
+---
+
+<section class="buchung" id="buchen" aria-labelledby="buchung-titel">
+  <h2 id="buchung-titel" class="titel">Verfügbarkeit &amp; Preis</h2>
+
+  {trizounAktiv ? (
+    <div
+      data-buchung
+      data-slug={slug}
+      data-api={trizoun.apiUrl}
+      data-key={trizoun.key}
+      data-waehrung={site.waehrung}
+      data-anfrage={site.anfrageUrl}
+    >
+      <div class="kopf">
+        <button type="button" class="nav" data-zurueck aria-label="Vorheriger Monat">‹</button>
+        <p class="monat" data-monatstitel aria-live="polite"></p>
+        <button type="button" class="nav" data-vor aria-label="Nächster Monat">›</button>
+      </div>
+      <div class="kalender" data-kalender role="grid" aria-label="Kalender: freie Tage wählen"></div>
+      <p class="legende muted"><span class="punkt frei"></span> frei <span class="punkt belegt"></span> belegt</p>
+
+      <label class="gaeste">
+        Gäste
+        <select data-gaeste>
+          {Array.from({ length: maxGaeste }, (_, i) => <option value={i + 1} selected={i + 1 === Math.min(2, maxGaeste)}>{i + 1}</option>)}
+        </select>
+      </label>
+
+      <div class="ergebnis" data-ergebnis aria-live="polite">
+        <p class="muted">Wähle Anreise und Abreise im Kalender.</p>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <p class="muted">Direkt bei uns buchen – zum besten Preis.</p>
+      <a class="btn" href={site.anfrageUrl}>Verfügbarkeit anfragen</a>
+    </div>
+  )}
+</section>
+
+<script>
+  import { createTrizoun, type Tag } from '../lib/trizoun-client';
+
+  const ISO = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const plusTage = (iso: string, n: number) => {
+    const d = new Date(`${iso}T12:00:00`);
+    d.setDate(d.getDate() + n);
+    return ISO(d);
+  };
+  const naechte = (a: string, b: string) => Math.round((Date.parse(b) - Date.parse(a)) / 86_400_000);
+  const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-buchung]')) {
+    const { slug, api, key, waehrung, anfrage } = root.dataset as Record<string, string>;
+    const client = createTrizoun({ key, baseUrl: api });
+    const kalender = root.querySelector<HTMLElement>('[data-kalender]')!;
+    const titel = root.querySelector<HTMLElement>('[data-monatstitel]')!;
+    const ergebnis = root.querySelector<HTMLElement>('[data-ergebnis]')!;
+    const gaeste = root.querySelector<HTMLSelectElement>('[data-gaeste]')!;
+    const heute = ISO(new Date());
+
+    let monat = new Date();
+    monat.setDate(1);
+    const frei = new Map<string, boolean>();
+    const geladen = new Set<string>();
+    let anreise: string | null = null;
+    let abreise: string | null = null;
+    let anfrageNr = 0;
+
+    const fehler = (text: string) => {
+      ergebnis.innerHTML = '';
+      const p = document.createElement('p');
+      p.textContent = text;
+      const a = document.createElement('a');
+      a.className = 'btn btn--ghost';
+      a.href = anfrage;
+      a.textContent = 'Per Mail anfragen';
+      ergebnis.append(p, a);
+    };
+
+    async function laden(m: Date) {
+      const key = `${m.getFullYear()}-${m.getMonth()}`;
+      if (geladen.has(key)) return;
+      const von = ISO(m);
+      const ende = new Date(m.getFullYear(), m.getMonth() + 1, 0);
+      const tage: Tag[] = await client.verfuegbarkeit(slug, von, ISO(ende));
+      for (const t of tage) frei.set(t.datum, t.frei);
+      geladen.add(key);
+    }
+
+    // Eine Nacht ist buchbar, wenn der Tag frei ist. Abreisetag selbst darf belegt sein.
+    const zeitraumFrei = (a: string, b: string) => {
+      for (let d = a; d < b; d = plusTage(d, 1)) if (frei.get(d) !== true) return false;
+      return true;
+    };
+    const alsAbreise = (iso: string) => Boolean(anreise && !abreise && iso > anreise && zeitraumFrei(anreise, iso));
+
+    function zeichnen() {
+      titel.textContent = `${MONATE[monat.getMonth()]} ${monat.getFullYear()}`;
+      kalender.innerHTML = '';
+      for (const w of ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']) {
+        const k = document.createElement('span');
+        k.className = 'wt';
+        k.textContent = w;
+        kalender.append(k);
+      }
+      const erster = new Date(monat);
+      const versatz = (erster.getDay() + 6) % 7;
+      for (let i = 0; i < versatz; i++) kalender.append(document.createElement('span'));
+      const tageImMonat = new Date(monat.getFullYear(), monat.getMonth() + 1, 0).getDate();
+      for (let t = 1; t <= tageImMonat; t++) {
+        const iso = ISO(new Date(monat.getFullYear(), monat.getMonth(), t));
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = String(t);
+        b.dataset.datum = iso;
+        const istFrei = frei.get(iso) === true;
+        // Wählbar: freier Tag (als Anreise) oder gültige Abreise zur gewählten Anreise
+        b.disabled = iso < heute || (!istFrei && !alsAbreise(iso));
+        b.classList.toggle('abreise-moeglich', alsAbreise(iso));
+        b.classList.toggle('belegt', !istFrei && iso >= heute);
+        b.classList.toggle('gewaehlt', iso === anreise || iso === abreise);
+        b.classList.toggle('dazwischen', Boolean(anreise && abreise && iso > anreise && iso < abreise));
+        b.setAttribute('aria-pressed', String(iso === anreise || iso === abreise));
+        b.setAttribute('aria-label', `${t}. ${MONATE[monat.getMonth()]}${istFrei ? '' : ', belegt'}`);
+        kalender.append(b);
+      }
+    }
+
+    async function monatZeigen() {
+      kalender.setAttribute('aria-busy', 'true');
+      try {
+        // Folgemonat mitladen, damit Aufenthalte über das Monatsende funktionieren
+        await Promise.all([laden(monat), laden(new Date(monat.getFullYear(), monat.getMonth() + 1, 1))]);
+        zeichnen();
+      } catch (e) {
+        fehler(`Die Verfügbarkeit konnte nicht geladen werden (${(e as Error).message}).`);
+      } finally {
+        kalender.removeAttribute('aria-busy');
+      }
+    }
+
+    async function angebotZeigen() {
+      if (!anreise || !abreise) return;
+      const nr = ++anfrageNr;
+      ergebnis.innerHTML = '<p class="muted">Preis wird berechnet …</p>';
+      const a = { anreise, abreise, erwachsene: Number(gaeste.value) };
+      try {
+        const [angebot, url] = await Promise.all([client.angebot(slug, a), client.buchungsLink(slug, { ...a, sprache: document.documentElement.lang.slice(0, 2) || 'de' })]);
+        if (nr !== anfrageNr) return;
+        const n = naechte(anreise, abreise);
+        const fmt = new Intl.DateTimeFormat('de-CH', { day: 'numeric', month: 'long' });
+        const zeitraum = `${fmt.format(new Date(`${anreise}T12:00`))} bis ${fmt.format(new Date(`${abreise}T12:00`))}, ${n} ${n === 1 ? 'Nacht' : 'Nächte'}`;
+        ergebnis.innerHTML = '';
+        const z = document.createElement('p');
+        z.className = 'zeitraum';
+        z.textContent = zeitraum;
+        ergebnis.append(z);
+        if (!angebot.verfuegbar) {
+          const p = document.createElement('p');
+          p.textContent = 'Für diesen Zeitraum ist leider nichts frei.';
+          ergebnis.append(p);
+          return;
+        }
+        if (angebot.preis != null) {
+          const p = document.createElement('p');
+          p.className = 'preis';
+          p.textContent = new Intl.NumberFormat('de-CH', { style: 'currency', currency: angebot.waehrung ?? waehrung }).format(angebot.preis);
+          ergebnis.append(p);
+        }
+        const link = document.createElement('a');
+        link.className = 'btn';
+        link.href = url;
+        link.textContent = 'Jetzt buchen';
+        const hinweis = document.createElement('p');
+        hinweis.className = 'muted klein';
+        hinweis.textContent = 'Du wirst zur sicheren Buchungsseite weitergeleitet.';
+        ergebnis.append(link, hinweis);
+      } catch (e) {
+        if (nr === anfrageNr) fehler(`Der Preis konnte nicht berechnet werden (${(e as Error).message}).`);
+      }
+    }
+
+    kalender.addEventListener('click', (ev) => {
+      const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('button[data-datum]');
+      if (!b || b.disabled) return;
+      const d = b.dataset.datum!;
+      if (alsAbreise(d)) {
+        abreise = d;
+        void angebotZeigen();
+      } else {
+        // Neue Anreise (auch wenn zwischen alter Anreise und diesem Tag belegte Nächte liegen)
+        anreise = d;
+        abreise = null;
+        ergebnis.innerHTML = '<p class="muted">Jetzt die Abreise wählen.</p>';
+      }
+      zeichnen();
+    });
+    gaeste.addEventListener('change', () => void angebotZeigen());
+    root.querySelector('[data-zurueck]')!.addEventListener('click', () => {
+      const jetzt = new Date();
+      if (monat.getFullYear() === jetzt.getFullYear() && monat.getMonth() === jetzt.getMonth()) return;
+      monat = new Date(monat.getFullYear(), monat.getMonth() - 1, 1);
+      void monatZeigen();
+    });
+    root.querySelector('[data-vor]')!.addEventListener('click', () => {
+      monat = new Date(monat.getFullYear(), monat.getMonth() + 1, 1);
+      void monatZeigen();
+    });
+    void monatZeigen();
+  }
+</script>
+
+<style>
+  .buchung { padding: 1.5rem; border-radius: var(--radius); border-top: 2px solid var(--text); background: var(--surface); scroll-margin-top: 6rem; }
+  .titel { font-size: 1.9rem; margin-bottom: 1rem; }
+  .kopf { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+  .monat { margin: 0; font-stretch: 62%; font-weight: 800; font-size: 1.35rem; }
+  .nav { font: inherit; font-size: 1.4rem; line-height: 1; width: 2.25rem; height: 2.25rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: none; color: var(--text); cursor: pointer; }
+  .nav:hover { border-color: var(--text); }
+  .kalender { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .kalender[aria-busy='true'] { opacity: .5; }
+  .kalender :global(.wt) { font-size: .75rem; color: var(--muted); text-align: center; padding-bottom: .25rem; }
+  .kalender :global(button) { font: inherit; font-size: .9rem; aspect-ratio: 1; border: 0; border-radius: 4px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--text); cursor: pointer; transition: background-color .15s; }
+  .kalender :global(button:hover:not(:disabled)) { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+  .kalender :global(button:disabled) { background: none; color: var(--muted); cursor: default; opacity: .5; }
+  .kalender :global(button.belegt) { text-decoration: line-through; }
+  .kalender :global(button.dazwischen) { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+  .kalender :global(button.abreise-moeglich) { box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .kalender :global(button.gewaehlt) { background: var(--accent); color: var(--accent-contrast); opacity: 1; }
+  .legende { display: flex; align-items: center; gap: .4rem; font-size: .85rem; margin: .5rem 0 1rem; }
+  .punkt { width: .8rem; height: .8rem; border-radius: 3px; display: inline-block; }
+  .punkt.frei { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+  .punkt.belegt { border: 1px solid var(--rule); margin-left: .6rem; }
+  .gaeste { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; border-block: 1px solid var(--rule); }
+  .gaeste select { font: inherit; padding: .35rem .6rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: var(--bg); color: var(--text); }
+  .ergebnis { padding-top: 1rem; }
+  .ergebnis :global(p) { margin: 0 0 .75rem; }
+  .ergebnis :global(.preis) { font-stretch: 62%; font-weight: 800; font-size: 2.4rem; line-height: 1; }
+  .ergebnis :global(.klein) { font-size: .85rem; margin-top: .6rem; }
+</style>

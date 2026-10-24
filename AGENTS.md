@@ -18,7 +18,7 @@ Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-im
 
 1. Ordner `site/wohnungen/alpine-siesta/` kopieren nach `site/wohnungen/<slug>/`. URL wird `/wohnungen/<slug>/`.
 2. Bilder im selben Ordner ersetzen bzw. ergänzen und in `galerie` eintragen.
-3. `reihenfolge` setzen und unter `beds24` die `propertyId` und `roomId` aus Beds24 eintragen. Der Beds24-Token in `.env` gilt für alle Wohnungen.
+3. `reihenfolge` setzen. Online-Buchung: In Trizoun Travel eine Wohnung mit gleichem Kurznamen (= Ordnername) anlegen und mit Beds24 verknüpfen; abweichender Name → `trizounSlug`. Die Website braucht nur `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` (siehe `.env.example`).
 4. Startseite, Navigation («Wohnung» → «Wohnungen») und Übersicht `/wohnungen/` passen sich automatisch an.
 
 ## Pillar Pages

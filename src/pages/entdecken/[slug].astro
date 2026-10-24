@@ -7,6 +7,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { saisonsVon, themenUrl, themenH1 } from '../../lib/entdecken';
 import * as L from '../../lib/labels';
 import { site } from '../../config';
+import { buchungsZiel } from '../../lib/wohnungen';
 
 export async function getStaticPaths() {
   const alle = await getCollection('aktivitaeten');
@@ -20,6 +21,7 @@ interface Props {
 const { eintrag, alle } = Astro.props;
 const a = eintrag.data;
 const { Content } = await render(eintrag);
+const buchenZiel = await buchungsZiel();
 
 // Brotkrumen über das erste Thema, Schlagworte verlinken auf Themenseiten
 const hauptThema = a.kategorien[0];
@@ -90,7 +92,7 @@ const schema = {
         </dl>
         {a.website && <p><a href={a.website} rel="noopener">Offizielle Website</a></p>}
         <ul class="schlagworte">{schlagworte.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul>
-        <a class="btn" href={site.buchungUrl}>Unterkunft anfragen</a>
+        <a class="btn" href={buchenZiel}>Unterkunft buchen</a>
       </aside>
     </div>
   </article>
