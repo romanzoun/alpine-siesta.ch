@@ -21,7 +21,7 @@ const eigen = await getEntry('themenseiten', `${dimensionen[d].pfad}-${wert}`);
 const { Content } = eigen ? await render(eigen) : { Content: null };
 
 const h1 = eigen?.data.h1 ?? themenH1(d, wert);
-const title = eigen?.data.title ?? `${h1}: ${treffer.length} Tipps vom Gastgeber | ${site.name}`;
+const title = eigen?.data.title ?? `${h1}: ${treffer.length} ${treffer.length === 1 ? 'Tipp' : 'Tipps'} | ${site.name}`;
 const description =
   eigen?.data.description ??
   `${h1}: ${treffer.slice(0, 3).map((a) => a.data.title.split(' – ')[0]).join(', ')} und mehr. Ausgewählt von deinen Gastgebern in ${site.ort}.`.replace(/^(.{0,157})\s.*$/s, '$1 …');

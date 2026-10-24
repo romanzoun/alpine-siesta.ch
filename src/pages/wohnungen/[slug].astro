@@ -40,7 +40,7 @@ const schema = {
 };
 ---
 
-<Base title={`Die Wohnung – ${w.name} in ${site.ort}`} description={w.beschreibung}>
+<Base title={`Die Wohnung – ${w.name} in ${site.ort}`} description={w.beschreibung} bild={w.galerie[0]?.bild}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <section class="section container">

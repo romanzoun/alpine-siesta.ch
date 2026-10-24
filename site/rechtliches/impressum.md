@@ -1,6 +1,6 @@
 ---
 title: Impressum
-description: Impressum von Alpine Siesta, Ferienwohnung in Leukerbad.
+description: Impressum von Alpine Siesta, Ferienwohnung in Leukerbad im Wallis – verantwortlich für Inhalt und Buchungen.
 reihenfolge: 1
 ---
 

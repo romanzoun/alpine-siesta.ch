@@ -14,6 +14,22 @@ const wohnung = wohnungen[0].data;
 const hero = seite.hero!;
 const buchenZiel = await buchungsZiel();
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': `${site.domain}/#website`, url: site.domain, name: site.name, inLanguage: site.sprache, publisher: { '@id': `${site.domain}/#anbieter` } },
+    {
+      '@type': 'Organization',
+      '@id': `${site.domain}/#anbieter`,
+      name: site.name,
+      url: site.domain,
+      email: site.email,
+      logo: new URL('/favicon.svg', site.domain).href,
+      address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
+    },
+  ],
+};
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -25,8 +41,9 @@ const faqSchema = {
 };
 ---
 
-<Base title={seite.title} description={seite.description}>
+<Base title={seite.title} description={seite.description} bild={hero.bild}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
   <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={buchenZiel} ctaLabel="Verfügbarkeit & Preise" />
 

@@ -29,7 +29,7 @@ const schema = {
 };
 ---
 
-<Base title={p.data.title} description={p.data.description}>
+<Base title={p.data.title} description={p.data.description} bild={p.data.bild} typ="article" noindex={p.data.entwurf}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
   <article class="section container">
     <Breadcrumbs pfad={[{ name: site.ort, href: hubUrl() }, { name: site.pillars[p.id as keyof typeof site.pillars], href: pillarUrl(p.id) }]} />

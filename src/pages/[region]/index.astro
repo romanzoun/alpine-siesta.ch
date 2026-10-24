@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 const pillars = await Promise.all((await allePillars()).map(async (p) => ({ p, artikel: await artikelVon(p.id) })));
 ---
 
-<Base title={`${site.ort} Reiseführer: Tipps von deinen Gastgebern | ${site.name}`} description={`Alles für deine Ferien in ${site.ort}: ${Object.values(site.pillars).join(', ')} – persönlich zusammengestellt von deinen Gastgebern.`.slice(0, 160)}>
+<Base title={`${site.ort} Reiseführer deiner Gastgeber | ${site.name}`} description={`Alles für deine Ferien in ${site.ort}: ${Object.values(site.pillars).join(', ')} – persönlich zusammengestellt von deinen Gastgebern.`.slice(0, 160)}>
   <section class="section container">
     <Breadcrumbs pfad={[{ name: site.ort, href: hubUrl() }]} />
     <h1>{site.ort} entdecken</h1>

@@ -64,7 +64,7 @@ const schema = {
 };
 ---
 
-<Base title={`${a.title} | ${site.name} ${site.ort}`} description={a.description}>
+<Base title={`${a.title} | ${site.name}`} description={a.description} bild={a.bild}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <article class="section container">

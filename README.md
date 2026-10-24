@@ -21,4 +21,5 @@ Das Buchungs-Widget (`src/components/Buchung.astro`, auf jeder Wohnungsseite unt
 ```sh
 npm run checkliste        # was fehlt noch? (Platzhalter, [TODO], Pillar Pages, Rechtliches …)
 npm run build:entwuerfe   # Build inklusive Entwürfe zur Kontrolle
+npm run seo-check         # nach dem Build: Titel, Descriptions, H1, Alt-Texte, tote Links, JSON-LD
 ```

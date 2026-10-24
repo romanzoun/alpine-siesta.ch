@@ -51,7 +51,7 @@ const schema = [
 ];
 ---
 
-<Base title={a.data.title} description={a.data.description}>
+<Base title={a.data.title} description={a.data.description} bild={a.data.bild} typ="article" noindex={a.data.entwurf}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
   <article class="section container">
     <Breadcrumbs pfad={[

@@ -12,7 +12,6 @@ site/
 ├── startseite.md             Hero-Text, «Warum …», Vorteile, Bewertungen, FAQ
 ├── bilder/
 │   ├── hero.jpg              Hero-Foto Startseite (optional, sonst Illustration)
-│   └── og.jpg                Vorschaubild für Social Media (geplant)
 ├── wohnungen/
 │   └── alpine-siesta/        eine Wohnung = ein Ordner → /wohnungen/alpine-siesta/
 │       ├── index.md          Fakten, Ausstattung, Lage, Hausregeln, Beds24-IDs, Text
@@ -34,7 +33,7 @@ site/
 │       └── titel.jpg
 ├── themenseiten/             optionale Texte für /entdecken/saison/winter/ usw. (saison-winter.md)
 ├── rechtliches/              impressum.md, datenschutz.md, agb.md → /impressum/ usw.
-└── public/                   favicon.svg, robots.txt – wird 1:1 ausgeliefert
+└── public/                   favicon.svg, robots.txt, og.jpg (Vorschaubild Social Media, 1200 × 630) – wird 1:1 ausgeliefert
 ```
 
 ## Bilder

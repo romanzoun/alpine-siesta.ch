@@ -9,7 +9,8 @@
     "check": "astro check",
     "checkliste": "node scripts/checkliste.mjs",
     "build:entwuerfe": "PUBLIC_ENTWUERFE=true astro build",
-    "merch:export": "node merch/export.mjs"
+    "merch:export": "node merch/export.mjs",
+    "seo-check": "node scripts/seo-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
