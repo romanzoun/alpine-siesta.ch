@@ -54,6 +54,7 @@ Alpine Siesta (Leukerbad) ist **Kunde Nr. 1 und Testfeld**: Was dort funktionier
 | 2026-10 | **Buchung Stufe 1**: Kalender + Preis auf der Website, Abschluss auf der Beds24-Buchungsseite | Schnell live; eigener Checkout später |
 | 2026-10 | **Conversion-Kampagnen** nur mit Einwilligung, max. 4 Mails, über den Mailserver des Vermieters | Recht (UWG), Absender-Reputation beim Vermieter |
 | 2026-10 | **Merch als eigene Marke** pro Wohnung/Ort (Alpine Siesta × Leukerbad), Motive mit Platzhaltern für weitere Kunden | Zusatzumsatz und Markenbildung |
+| 2026-10 | **Gäste-Portal & Gameroom** (nach Livegang): Schnitzeljagd/Hausbuch und Regionen-Quiz pro Wohnung, **server-basierter Gameroom** – mehrere Geräte treten per QR-Code bei, spielen gemeinsam oder gegeneinander, TV als gemeinsamer Bildschirm. **Keine** generischen Arcade-Spiele | Gäste vor Ort für die nächste Direktbuchung gewinnen (Rückkehrer-Code), Hausbuch spart Rückfragen; Server nötig für Multiplayer und faire Antwortprüfung; Inhalte bleiben Dateien in `site/` |
 
 ## 4. Prüfliste für eine Idee
 

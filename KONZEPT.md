@@ -281,6 +281,7 @@ Reihenfolge festgelegt: zuerst alles auf Dateibasis, Integrationen danach.
 | **4 – Beds24** | Verfügbarkeit + Preise live, Weiterleitung zur Beds24-Buchung; ersetzt die Mail-Anfrage hinter «Jetzt buchen» | ⏳ |
 | **5 – Shop** | POD (Gelato) + Kleinlager, Stripe Checkout, Webhooks | ⏳ |
 | **6 – Ausbau** | Integrierter Checkout (Beds24 Stufe 2), EN/FR, Events, Gäste-Gutscheine | ⏳ |
+| **7 – Gäste-Portal & Gameroom** (nach Livegang) | QR-Code in der Wohnung → Gameroom (Trizoun Travel): mehrere Geräte spielen gemeinsam oder gegeneinander – Schnitzeljagd als Hausbuch, Regionen-Quiz aus den Aktivitäten, TV als gemeinsamer Bildschirm; Rückkehrer-Code für die nächste Direktbuchung. Spielinhalte als Dateien in `site/`. Details: Konzept Trizoun Travel, M6 | ⏳ |
 
 ## 12. Offene Fragen
 
