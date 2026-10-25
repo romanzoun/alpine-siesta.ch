@@ -2,8 +2,6 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import * as L from './lib/labels';
-import { aktivitaetenLoader } from './lib/entdecken-loader';
-import { site } from '../site/site.config';
 
 // Alle Inhalte liegen in site/ (pro Website verschieden), siehe site/README.md.
 // Ordner/index.md → ID ist der Ordnerpfad ohne «/index.md»
@@ -63,8 +61,7 @@ const seiten = defineCollection({
 });
 
 const aktivitaeten = defineCollection({
-  // Aus Trizoun Travel (regionaler Katalog) oder lokal aus site/aktivitaeten/ – siehe lib/entdecken-loader.ts
-  loader: aktivitaetenLoader({ base: './site/aktivitaeten', generateId: ordnerId }),
+  loader: glob({ pattern: '[^_]*/index.md', base: './site/aktivitaeten', generateId: ordnerId }),
   schema: ({ image }) =>
     z.object({
       title: z.string().max(70),
@@ -84,11 +81,10 @@ const aktivitaeten = defineCollection({
       hund: z.boolean(),
       geheimtipp: z.boolean().default(false),
       website: z.url().optional(),
-      ort: z.string().default(site.ort),
-      // Lokal: Bilddatei im Ordner; aus Trizoun Travel: URL (wird beim Build heruntergeladen und optimiert)
-      bild: z.union([image(), z.url()]).optional(),
+      ort: z.string().default('Leukerbad'),
+      bild: image().optional(),
       bild_alt: z.string().optional(),
-      galerie: z.array(z.object({ bild: z.union([image(), z.url()]), alt: z.string() })).default([]),
+      galerie: z.array(z.object({ bild: image(), alt: z.string() })).default([]),
       geprueft: z.boolean().default(false),
     }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt: jedes Bild braucht einen Alternativtext', path: ['bild_alt'] }),
 });

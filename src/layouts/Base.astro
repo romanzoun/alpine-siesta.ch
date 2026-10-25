@@ -11,14 +11,14 @@ interface Props {
   title: string;
   description: string;
   // Vorschaubild für Social Media; ohne Angabe /og.jpg aus site/public/
-  bild?: ImageMetadata | string;
+  bild?: ImageMetadata;
   typ?: 'website' | 'article';
   // Entwürfe nie indexieren (falls sie versehentlich mitgebaut werden)
   noindex?: boolean;
 }
 const { title, description, bild, typ = 'website', noindex = false } = Astro.props;
 const ogBild = bild
-  ? new URL((await getImage({ src: bild, width: 1200, height: 630, fit: 'cover', format: 'jpeg', ...(typeof bild === 'string' ? { inferSize: true } : {}) })).src, Astro.site).href
+  ? new URL((await getImage({ src: bild, width: 1200, height: 630, fit: 'cover', format: 'jpeg' })).src, Astro.site).href
   : new URL('/og.jpg', Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
