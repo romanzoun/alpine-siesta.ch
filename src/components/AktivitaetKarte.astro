@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import Bild from './Bild.astro';
 import type { CollectionEntry } from 'astro:content';
 import * as L from '../lib/labels';
 
@@ -12,7 +12,7 @@ const { id, data: a } = Astro.props.aktivitaet;
 <article class="karte">
   <div class="bild" style={`view-transition-name: bild-${id}`}>
     {a.bild ? (
-      <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 100vw" />
+      <Bild src={a.bild} alt={a.bild_alt ?? ''} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 100vw" />
     ) : (
       <span class="ohne-bild" data-pillar={a.pillar}>{L.pillars[a.pillar]}</span>
     )}

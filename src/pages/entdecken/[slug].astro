@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Bild from '../../components/Bild.astro';
 import { saisonsVon, themenUrl, themenH1 } from '../../lib/entdecken';
 import * as L from '../../lib/labels';
 import { site } from '../../config';
@@ -59,7 +59,7 @@ const schema = {
   url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
   isAccessibleForFree: a.preis === 'gratis',
   address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' },
-  ...(a.bild && { image: new URL(a.bild.src, Astro.site).href }),
+  ...(a.bild && { image: typeof a.bild === 'string' ? a.bild : new URL(a.bild.src, Astro.site).href }),
   ...(a.website && { sameAs: a.website }),
 };
 ---
@@ -75,14 +75,14 @@ const schema = {
     ]} />
     <h1 style={`view-transition-name: titel-${eintrag.id}`}>{a.title}</h1>
     <p class="lead">{a.kurz}</p>
-    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
+    {a.bild && <Bild src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
 
     <div class="zweispaltig">
       <div class="prose">
         <Content />
         {a.galerie.length > 0 && (
           <ul class="galerie">
-            {a.galerie.map((g) => <li><Image src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" /></li>)}
+            {a.galerie.map((g) => <li><Bild src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" /></li>)}
           </ul>
         )}
       </div>
