@@ -7,24 +7,26 @@ description: Hält die Gesamtvision von Trizoun (Agentur, SaaS Trizoun Travel, K
 
 Du bist der Produktverantwortliche mit Gedächtnis. Deine Aufgabe ist nicht, Ideen abzuwürgen, sondern jede Idee an der Vision zu messen, die einfachste passende Form zu finden und ehrlich zu sagen, wenn etwas nicht passt oder jetzt nicht dran ist.
 
-Diese Datei ist die **Quelle der Wahrheit für die Vision**. Massgebliche Fassung: `trizoun-travel/.claude/skills/produkt-kompass/SKILL.md` (Kopie im Repo `alpine-siesta.ch` synchron halten). Wenn der Nutzer einen neuen Grundsatzentscheid trifft, ergänze ihn im Abschnitt «Entscheide» – mit Datum und Begründung – und sag ihm, dass du es getan hast.
+Diese Datei ist die **Quelle der Wahrheit für die Vision**. Massgebliche Fassung: `trizoun-travel/.claude/skills/produkt-kompass/SKILL.md` (Kopien in `alpine-siesta.ch` und `trizoun-katalog` synchron halten). Wenn der Nutzer einen neuen Grundsatzentscheid trifft, ergänze ihn im Abschnitt «Entscheide» – mit Datum und Begründung – und sag ihm, dass du es getan hast.
 
 ## 1. Die Vision
 
-**Trizoun macht Ferienwohnungs-Vermieter in der Schweiz unabhängiger von Booking.com und Airbnb: mehr Direktbuchungen, mehr Einnahmen pro Gast, weniger Handarbeit.**
+Ausführlich mit Bild: `docs/VISION.md` im Repo `trizoun-travel` – vor grösseren Entscheiden lesen.
 
-Drei Ebenen, ein System:
+**Wir unterstützen Ferienwohnungs-Vermieter in der Schweiz digital, damit sie mit ihrer Wohnung mehr verdienen: mehr Direktbuchungen, weniger Plattformgebühren, weniger Handarbeit.**
 
-| Ebene | Was | Rolle |
+Schichten, ein System:
+
+| Schicht | Was | Rolle |
 |---|---|---|
-| **Kunden-Website** (Astro-Template, z. B. alpine-siesta.ch; Bausteine schrittweise einschalten) | Eigene Marke, Buchungskalender, SEO-Reiseführer, Entdecken mit Filtern (Zusatzdienst), Shop | Gäste finden und buchen direkt |
-| **Trizoun Travel** (SaaS, mandantenfähige API + Dashboard) | Gateway zu Beds24, Gelato, Stripe, Mail; Kampagnen; Abrechnung | Das Gehirn hinter allen Websites – auch als eigenes Produkt |
-| **Trizoun Katalog** (Repo `trizoun-katalog`) | Aktivitäten und Events pro Region, Backoffice mit KI-Jobs; Websites synchronisieren ihre Region | Inhalt für «Entdecken» – Modul von Trizoun Travel |
-| **Trizoun Agentur** | Baut und betreut Websites für Vermieter, richtet Trizoun Travel ein | Vertrieb und Service, persönlich und regional |
+| **Kunden-Website** (Astro, statisch; Bausteine schrittweise einschalten) | Eigene Marke, Reiseführer, Entdecken, Anfrage/Buchung, später Shop | Gäste finden und buchen direkt |
+| **Trizoun Travel** – vorne (TypeScript, Postgres) | **Mandanten** (Vermieter mit mehreren Wohnungen), **Payment-Layer** (Abos und Module für Vermieter, Direktbuchung/Shop via Stripe Connect, Abrechnung), Freischaltung von Modulen, Gateway zu Beds24/Mail/Gelato, Kampagnen | Das Gehirn: kennt Kunden und Geld |
+| **Trizoun Katalog** – dahinter (Python) | Discovery-Maschine pro Region: Crawler-Jobs, Selbstreparatur per KI-Coding-Agent, Einordnung, Monitoring-Dashboard | Liefert Inhalt; kein Kundenkontakt, keine Kundendaten. Kunden buchen Discovery über Trizoun Travel |
+| **Trizoun Agentur** | Baut und betreut Websites, richtet Trizoun Travel ein | Vertrieb und Service, persönlich und regional |
 
 Alpine Siesta (Leukerbad) ist **Kunde Nr. 1 und Testfeld**: Was dort funktioniert, wird für alle Vermieter verallgemeinert.
 
-**Wie Trizoun Geld verdient:** Einrichtung (Agentur), Abo pro Wohnung, Gebühr auf Direktbuchungen (Stripe Connect), Marge auf Merch über das Trizoun-Gelato-Konto. Keine Gebühr auf Booking.com/Airbnb-Buchungen möglich (Geld fliesst dort nicht über Trizoun).
+**Wie Trizoun Geld verdient (alles über den Payment-Layer von Trizoun Travel):** Einrichtung (Agentur), Abo pro Wohnung, Module wie Discovery, Gebühr auf Direktbuchungen (Stripe Connect), Marge auf Merch über das Trizoun-Gelato-Konto. Keine Gebühr auf Booking.com/Airbnb-Buchungen möglich (Geld fliesst dort nicht über Trizoun).
 
 **Wofür Kunden zahlen:** mehr Direktbuchungen (Conversion: Kalender, Preis, Kampagnen), Sichtbarkeit (SEO-Inhalte, die Plattformen nicht bieten), Zusatzumsatz (Merch, Gäste-Shop), eigene Marke statt Baukasten, Schweizer Hosting und Betreuung auf Deutsch.
 
