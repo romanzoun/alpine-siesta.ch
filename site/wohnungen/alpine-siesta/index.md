@@ -9,6 +9,10 @@ reihenfolge: 1
 # Online-Buchung: Die Wohnung ist in Trizoun Travel mit Beds24 verknüpft.
 # Kurzname dort = Ordnername (alpine-siesta). Nur bei Abweichung setzen:
 # trizounSlug: anderer-name
+# Inserate auf Buchungsplattformen – erscheinen als Knöpfe beim Buchungsbereich.
+plattformen:
+  booking: https://www.booking.com/hotel/ch/TODO.html   # [TODO] echter Link
+  airbnb: https://www.airbnb.ch/rooms/TODO              # [TODO] echter Link
 claim: Deine Ferienwohnung in Leukerbad – Thermalwasser, Gemmiwand, Siesta.
 beschreibung: "[TODO] Ein Satz, der die Wohnung beschreibt (wird als Meta-Description verwendet, max. 155 Zeichen)."
 

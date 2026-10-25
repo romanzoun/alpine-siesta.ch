@@ -1,0 +1,96 @@
+---
+// Kontakt-/Buchungsanfrage per E-Mail. Sendet an /kontakt.php (wird beim Build aus src/server/kontakt.php erzeugt).
+// Ohne JavaScript: normales Formular mit Weiterleitung auf /kontakt/danke/.
+import { site } from '../config';
+import { alleWohnungen } from '../lib/wohnungen';
+
+interface Props {
+  // vorgewählte Wohnung (Ordnername); ohne Angabe Auswahl bei mehreren Wohnungen
+  wohnung?: string;
+  // mit Anreise/Abreise/Gäste (Buchungsanfrage) oder nur Nachricht
+  daten?: boolean;
+  maxGaeste?: number;
+}
+const { wohnung, daten = true, maxGaeste = 8 } = Astro.props;
+const wohnungen = (await alleWohnungen()).map((w) => ({ id: w.id, name: w.data.name }));
+const heute = new Date().toISOString().slice(0, 10);
+---
+
+<form class="anfrage" method="post" action="/kontakt.php" data-anfrage>
+  {wohnung || wohnungen.length === 1 ? (
+    <input type="hidden" name="wohnung" value={wohnung ?? wohnungen[0]?.id} />
+  ) : (
+    <label class="feld">
+      Wohnung
+      <select name="wohnung">
+        <option value="">Noch offen</option>
+        {wohnungen.map((w) => <option value={w.id}>{w.name}</option>)}
+      </select>
+    </label>
+  )}
+  {daten && (
+    <div class="reihe">
+      <label class="feld">Anreise<input type="date" name="anreise" min={heute} /></label>
+      <label class="feld">Abreise<input type="date" name="abreise" min={heute} /></label>
+      <label class="feld">Gäste
+        <select name="gaeste">
+          {Array.from({ length: maxGaeste }, (_, i) => <option value={i + 1} selected={i + 1 === Math.min(2, maxGaeste)}>{i + 1}</option>)}
+        </select>
+      </label>
+    </div>
+  )}
+  <label class="feld">Name<input name="name" required maxlength="100" autocomplete="name" /></label>
+  <label class="feld">E-Mail<input type="email" name="email" required maxlength="200" autocomplete="email" /></label>
+  <label class="feld">Nachricht<textarea name="nachricht" rows="4" maxlength="5000" required></textarea></label>
+  <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
+  <label class="falle" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+  <input type="hidden" name="t" value="" />
+  <p class="hinweis">Wir verwenden deine Angaben nur, um deine Anfrage zu beantworten. <a href="/datenschutz/">Datenschutz</a></p>
+  <button class="btn" type="submit">Anfrage senden</button>
+  <p class="status" data-status role="status" aria-live="polite"></p>
+</form>
+
+<script define:vars={{ email: site.email }}>
+  document.querySelectorAll('[data-anfrage]').forEach((form) => {
+    form.querySelector('[name="t"]').value = String(Math.floor(Date.now() / 1000));
+    const status = form.querySelector('[data-status]');
+    const anreise = form.querySelector('[name="anreise"]');
+    const abreise = form.querySelector('[name="abreise"]');
+    anreise?.addEventListener('change', () => { if (abreise) abreise.min = anreise.value; });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const knopf = form.querySelector('button[type="submit"]');
+      knopf.disabled = true;
+      status.textContent = 'Wird gesendet …';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || !json.ok) throw new Error(json.meldung || `Fehler ${res.status}`);
+        form.reset();
+        status.textContent = 'Danke! Deine Anfrage ist bei uns angekommen – wir melden uns so bald wie möglich.';
+      } catch (err) {
+        status.innerHTML = '';
+        status.append(`Das hat nicht geklappt (${err.message}). Schreib uns direkt: `);
+        const a = document.createElement('a');
+        a.href = `mailto:${email}`;
+        a.textContent = email;
+        status.append(a);
+      } finally {
+        knopf.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .anfrage { display: grid; gap: .75rem; }
+  .reihe { display: grid; grid-template-columns: 1fr 1fr 5rem; gap: .6rem; }
+  @media (max-width: 30rem) { .reihe { grid-template-columns: 1fr 1fr; } }
+  .feld { display: grid; gap: .25rem; font-size: .95rem; }
+  .feld :is(input, select, textarea) { font: inherit; padding: .55rem .7rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: var(--bg); color: var(--text); min-width: 0; }
+  .feld :is(input, select, textarea):focus { outline: none; border-color: var(--accent); }
+  .falle { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .hinweis { font-size: .85rem; color: var(--muted); margin: 0; }
+  .status { margin: 0; min-height: 1.5em; }
+  .btn { justify-self: start; }
+</style>

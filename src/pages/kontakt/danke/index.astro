@@ -1,0 +1,15 @@
+---
+// Ziel des Formulars ohne JavaScript (Weiterleitung aus kontakt.php)
+import Base from '../../../layouts/Base.astro';
+import { site } from '../../../config';
+import { buchungsZiel } from '../../../lib/wohnungen';
+const ziel = await buchungsZiel();
+---
+
+<Base title={`Danke – ${site.name}`} description="Danke für deine Anfrage – sie ist bei uns angekommen. Wir melden uns so bald wie möglich persönlich bei dir." noindex>
+  <section class="section container">
+    <h1>Danke!</h1>
+    <p class="lead">Deine Anfrage ist bei uns angekommen. Wir melden uns so bald wie möglich.</p>
+    <a class="btn" href={ziel.replace('#buchen', '')}>Zurück zur Wohnung</a>
+  </section>
+</Base>

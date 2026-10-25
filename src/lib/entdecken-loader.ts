@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import type { Loader } from 'astro/loaders';
 import { parse } from 'yaml';
 import { z } from 'astro/zod';
+import { site } from '../../site/site.config';
 
 // Aktivitäten für «Entdecken» aus zwei Quellen:
 //   site/katalog/aktivitaeten/  – zentraler Katalog der Region (per Sync gespiegelt, nie von Hand ändern)
@@ -40,6 +41,11 @@ export function entdeckenLoader(): Loader {
   return {
     name: 'entdecken',
     async load({ store, parseData, renderMarkdown, generateDigest, logger, watcher }) {
+      if (!site.module.entdecken) {
+        store.clear();
+        logger.info('Entdecken ist ausgeschaltet (site.module.entdecken) – keine Aktivitäten');
+        return;
+      }
       const anpassung = existsSync(ANPASSUNGEN) ? anpassungSchema.safeParse(parse(readFileSync(ANPASSUNGEN, 'utf8')) ?? {}) : anpassungSchema.safeParse({});
       if (!anpassung.success) throw new Error(`${ANPASSUNGEN}: ${anpassung.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}`);
       const { ausblenden, anpassungen } = anpassung.data;

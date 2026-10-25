@@ -59,7 +59,7 @@ const schema = {
       <Content />
     </div>
     <aside class="buchen">
-      <Buchung slug={w.trizounSlug ?? eintrag.id} maxGaeste={w.fakten.personen} />
+      <Buchung slug={w.trizounSlug ?? eintrag.id} wohnung={eintrag.id} maxGaeste={w.fakten.personen} plattformen={w.plattformen} />
     </aside>
   </section>
 

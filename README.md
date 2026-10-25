@@ -14,7 +14,22 @@ npm run build    # statische Seite in dist/
 
 Alle Inhalte und Einstellungen dieser Website liegen in **`site/`** – siehe [site/README.md](site/README.md) für die Übersicht, welches Bild und welcher Text wohin gehört. Der Code in `src/` ist für alle Websites gleich.
 
+## Phasen
+
+Die Website wächst in Stufen; was aktiv ist, steht in `site/site.config.ts`:
+
+1. **Jetzt:** Wohnung, Reiseführer (Pillar Pages), Kontaktformular (`kontakt.php`, braucht Hosting mit PHP, z. B. Infomaniak), Links zu Booking.com/Airbnb pro Wohnung (`plattformen` in `site/wohnungen/<slug>/index.md`).
+2. **Entdecken:** `module.entdecken: true` und Katalog-Sync (siehe unten).
+3. **Online-Buchung:** Trizoun Travel mit Beds24 (`.env`), Kalender ersetzt das Anfrageformular; Plattform-Links bleiben als «Auch buchbar auf».
+4. **Shop.**
+
+## Kontaktformular
+
+Beim Build entsteht `dist/kontakt.php` aus `src/server/kontakt.php` mit Empfänger und Absender aus `site.kontakt` – die Empfängeradresse steht nie im Formular. Schutz: Spam-Falle, Mindestzeit, 5 Anfragen pro Stunde und IP. Der Absender muss eine Adresse der eigenen Domain sein, damit die Mail nicht im Spam landet. `npm run dev` hat kein PHP – Formular nach dem Deploy testen.
+
 ## Entdecken (Aktivitäten)
+
+Ausgeschaltet, solange `module.entdecken: false` (keine Seiten, kein Menüpunkt, Sync macht nichts).
 
 Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) kommen aus dem Git-Repo **`trizoun-katalog`** und werden statisch gerendert – mit Filter, Themenseiten und Detailseite pro Eintrag.
 

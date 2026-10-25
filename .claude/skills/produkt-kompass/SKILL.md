@@ -17,8 +17,9 @@ Drei Ebenen, ein System:
 
 | Ebene | Was | Rolle |
 |---|---|---|
-| **Kunden-Website** (Astro-Template, z. B. alpine-siesta.ch) | Eigene Marke, Buchungskalender, SEO-Reiseführer, Entdecken mit Filtern (Zusatzdienst), Shop | Gäste finden und buchen direkt |
+| **Kunden-Website** (Astro-Template, z. B. alpine-siesta.ch; Bausteine schrittweise einschalten) | Eigene Marke, Buchungskalender, SEO-Reiseführer, Entdecken mit Filtern (Zusatzdienst), Shop | Gäste finden und buchen direkt |
 | **Trizoun Travel** (SaaS, mandantenfähige API + Dashboard) | Gateway zu Beds24, Gelato, Stripe, Mail; Kampagnen; Abrechnung | Das Gehirn hinter allen Websites – auch als eigenes Produkt |
+| **Trizoun Katalog** (Repo `trizoun-katalog`) | Aktivitäten und Events pro Region, Backoffice mit KI-Jobs; Websites synchronisieren ihre Region | Inhalt für «Entdecken» – Modul von Trizoun Travel |
 | **Trizoun Agentur** | Baut und betreut Websites für Vermieter, richtet Trizoun Travel ein | Vertrieb und Service, persönlich und regional |
 
 Alpine Siesta (Leukerbad) ist **Kunde Nr. 1 und Testfeld**: Was dort funktioniert, wird für alle Vermieter verallgemeinert.
@@ -44,7 +45,8 @@ Alpine Siesta (Leukerbad) ist **Kunde Nr. 1 und Testfeld**: Was dort funktionier
 |---|---|---|
 | 2026-10 | **Beds24 ist der Channel-Manager.** Booking.com/Airbnb nur über Beds24, keine eigenen OTA-Schnittstellen | Direkte OTA-APIs nur für zertifizierte Partner; Beds24 löst Kalender-Sync |
 | 2026-10 | **Inhalte als Dateien** (Markdown + Bilder pro Ordner, strenge Schemas), KI-Skills statt CMS | Schnell, versioniert, von KI zuverlässig befüllbar, kein Server |
-| 2026-10 | **Discovery ist ein Zusatzdienst** (Pillar Pages gehören zum Agentur-Grundangebot). Zentrale KI-Jobs im Repo `trizoun-katalog` sammeln und klassifizieren Aktivitäten **und Events** pro Region (Ski, Wanderwege, Konzerte …), jeder Eintrag mit **Quelle**, eigene Texte, Änderungen nur per Pull Request mit Kontrolle. Jede Website rendert sie statisch mit Detailseite pro Eintrag (schema.org Event) | Einmal sammeln, viele Websites; frische Events bringen SEO-Seiten und Gründe zu buchen; Quelle und Review schützen vor falschen Angaben und Urheberrechtsproblemen |
+| 2026-10 | **Livegang in Phasen:** 1) Wohnungs-Website mit Pillar Pages, Kontaktformular (PHP beim Hoster, kein Backend) und Links zu Booking.com/Airbnb · 2) Discovery · 3) Online-Buchung über Beds24 + Trizoun Travel · 4) Shop. Bausteine pro Website in `site.config.ts` (`module`) ein-/ausschaltbar | Schnell online mit echtem Nutzen (SEO, Anfragen); jedes Backend erst, wenn die Stufe davor läuft |
+| 2026-10 | **Discovery ist ein Zusatzdienst** – verkauft als Modul von Trizoun Travel, technisch aber eigenes Repo mit Git-Sync, nicht über die API (Pillar Pages gehören zum Agentur-Grundangebot). Zentrale KI-Jobs im Repo `trizoun-katalog` sammeln und klassifizieren Aktivitäten **und Events** pro Region (Ski, Wanderwege, Konzerte …), jeder Eintrag mit **Quelle**, eigene Texte, Änderungen nur per Pull Request mit Kontrolle. Jede Website rendert sie statisch mit Detailseite pro Eintrag (schema.org Event) | Einmal sammeln, viele Websites; frische Events bringen SEO-Seiten und Gründe zu buchen; Quelle und Review schützen vor falschen Angaben und Urheberrechtsproblemen |
 | 2026-10 | **Entdecken: regionaler Katalog als Git-Repo** (`trizoun-katalog`, Ordner pro Region). Jede Website synchronisiert ihre Region per geplantem Job (nächtlich/wöchentlich) in `site/katalog/` – mit Build, SEO-Check und Pull Request. Eigene Anpassungen (ausblenden, Tipp, Anreise) in `site/entdecken.yaml`, eigene Aktivitäten in `site/aktivitaeten/`. Kein Katalog in der API | Bleibt beim Grundsatz «Inhalte als Dateien»: versioniert, prüfbar, statisch; einmal pflegen, alle Websites der Region profitieren |
 | 2026-10 | **Gelato/Merch-Shop nach hinten.** Zuerst SEO und Entdecken, Buchung und Kampagnen | Gelato-Anbindung aufwendig; SEO und Entdecken bringen zuerst Direktbuchungen |
 | 2026-10 | **Kundeninhalte in `site/`**, Code in `src/` generisch | Neue Website = neuer `site/`-Ordner |

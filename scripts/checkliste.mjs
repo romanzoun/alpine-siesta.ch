@@ -55,16 +55,20 @@ for (const key of pillarKeys) {
   punkt(hauptFertig && fertig.length >= 5, `${key}: Pillar ${hauptFertig ? 'live' : 'Entwurf'}, Unterseiten ${fertig.length}/${artikel.length} live`);
 }
 
-// Aktivitäten
-abschnitt('Aktivitäten (Ziel: 30–40)');
-const akt = md.filter((p) => p.startsWith(join(SITE, 'aktivitaeten')) || p.startsWith(join(SITE, 'katalog')));
-punkt(akt.length >= 30, `${akt.length} Aktivitäten und Events (Katalog + eigene)`);
-const ungeprueft = akt.filter((p) => wert(readFileSync(p, 'utf8'), 'geprueft') !== 'true');
-punkt(ungeprueft.length === 0, `Fakten geprüft (${ungeprueft.length} mit geprueft: false)`);
-const pruefen = akt.reduce((s, p) => s + zaehle(readFileSync(p, 'utf8'), /\[PRÜFEN\]/g), 0);
-punkt(pruefen === 0, `[PRÜFEN]-Stellen erledigt (${pruefen} offen)`);
-const ohneBild = akt.filter((p) => !wert(readFileSync(p, 'utf8'), 'bild'));
-punkt(ohneBild.length === 0, `Alle mit Titelbild (${ohneBild.length} ohne)`);
+// Aktivitäten (nur wenn «Entdecken» eingeschaltet ist)
+if (/entdecken:\s*true/.test(config)) {
+  // Aktivitäten
+  abschnitt('Aktivitäten (Ziel: 30–40)');
+  const akt = md.filter((p) => p.startsWith(join(SITE, 'aktivitaeten')) || p.startsWith(join(SITE, 'katalog')));
+  punkt(akt.length >= 30, `${akt.length} Aktivitäten und Events (Katalog + eigene)`);
+  const ungeprueft = akt.filter((p) => wert(readFileSync(p, 'utf8'), 'geprueft') !== 'true');
+  punkt(ungeprueft.length === 0, `Fakten geprüft (${ungeprueft.length} mit geprueft: false)`);
+  const pruefen = akt.reduce((s, p) => s + zaehle(readFileSync(p, 'utf8'), /\[PRÜFEN\]/g), 0);
+  punkt(pruefen === 0, `[PRÜFEN]-Stellen erledigt (${pruefen} offen)`);
+  const ohneBild = akt.filter((p) => !wert(readFileSync(p, 'utf8'), 'bild'));
+  punkt(ohneBild.length === 0, `Alle mit Titelbild (${ohneBild.length} ohne)`);
+
+}
 
 // Rechtliches & Einstellungen
 abschnitt('Rechtliches & Einstellungen');
@@ -76,6 +80,8 @@ for (const s of ['impressum', 'datenschutz', 'agb']) {
 punkt(!config.includes('[TODO]'), 'site.config.ts ohne [TODO] (z. B. E-Mail)');
 const envDatei = existsSync('.env') ? readFileSync('.env', 'utf8') : '';
 const envWert = (k) => process.env[k] || envDatei.match(new RegExp(`^${k}=(.+)$`, 'm'))?.[1]?.trim();
-punkt(Boolean(envWert('PUBLIC_TRIZOUN_API_URL') && envWert('PUBLIC_TRIZOUN_KEY')), 'Online-Buchung: PUBLIC_TRIZOUN_API_URL und PUBLIC_TRIZOUN_KEY gesetzt (sonst Mail-Anfrage)');
+const wohnungsDateien = md.filter((p) => p.startsWith(join(SITE, 'wohnungen')));
+punkt(wohnungsDateien.every((p) => /plattformen:\s*\n(\s+(booking|airbnb):\s*https?:\/\/\S+\s*\n?)+/.test(readFileSync(p, 'utf8')) && !/rooms\/TODO|\/TODO\.html/.test(readFileSync(p, 'utf8'))), 'Links zu Booking.com/Airbnb pro Wohnung eingetragen (plattformen)');
+punkt(Boolean(envWert('PUBLIC_TRIZOUN_API_URL') && envWert('PUBLIC_TRIZOUN_KEY')), 'Online-Buchung (später): PUBLIC_TRIZOUN_API_URL und PUBLIC_TRIZOUN_KEY gesetzt – bis dahin Anfrageformular');
 
 console.log(`# Checkliste ${SITE}/\n` + zeilen.join('\n'));

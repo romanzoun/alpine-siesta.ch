@@ -7,6 +7,11 @@ import ThemenLinks from '../../components/ThemenLinks.astro';
 import { sortiert } from '../../lib/entdecken';
 import { site } from '../../config';
 
+// Nur erzeugen, wenn «Entdecken» eingeschaltet ist (site.module.entdecken)
+export function getStaticPaths() {
+  return site.module.entdecken ? [{ params: { index: undefined } }] : [];
+}
+
 const aktivitaeten = sortiert(await getCollection('aktivitaeten'));
 ---
 

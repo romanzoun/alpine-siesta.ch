@@ -1,18 +1,27 @@
 ---
 // Buchungs-Widget: Kalender mit freien Tagen, Preis für den gewählten Zeitraum, Weiter zur Buchung (Beds24).
-// Ohne Trizoun-Konfiguration oder bei Fehlern: Mail-Anfrage.
+// Ohne Trizoun-Konfiguration (Phase 1): Anfrageformular per E-Mail und Links zu Booking.com/Airbnb.
 import { site } from '../config';
 import { trizoun, trizounAktiv } from '../lib/trizoun';
+import Anfrage from './Anfrage.astro';
 
 interface Props {
+  // Kurzname in Trizoun Travel
   slug: string;
+  // Ordnername der Wohnung (für das Anfrageformular)
+  wohnung: string;
   maxGaeste: number;
+  plattformen?: { booking?: string; airbnb?: string };
 }
-const { slug, maxGaeste } = Astro.props;
+const { slug, wohnung, maxGaeste, plattformen = {} } = Astro.props;
+const links = [
+  plattformen.booking && { href: plattformen.booking, label: 'Booking.com' },
+  plattformen.airbnb && { href: plattformen.airbnb, label: 'Airbnb' },
+].filter(Boolean) as { href: string; label: string }[];
 ---
 
 <section class="buchung" id="buchen" aria-labelledby="buchung-titel">
-  <h2 id="buchung-titel" class="titel">Verfügbarkeit &amp; Preis</h2>
+  <h2 id="buchung-titel" class="titel">{trizounAktiv ? 'Verfügbarkeit & Preis' : 'Anfragen & buchen'}</h2>
 
   {trizounAktiv ? (
     <div
@@ -46,8 +55,16 @@ const { slug, maxGaeste } = Astro.props;
     </div>
   ) : (
     <div>
-      <p class="muted">Direkt bei uns buchen – zum besten Preis.</p>
-      <a class="btn" href={site.anfrageUrl}>Verfügbarkeit anfragen</a>
+      <p class="muted">Schreib uns deine Wunschdaten – wir antworten persönlich mit Preis und Verfügbarkeit. Direkt bei uns zahlst du keine Plattformgebühren.</p>
+      <Anfrage wohnung={wohnung} maxGaeste={maxGaeste} />
+    </div>
+  )}
+  {links.length > 0 && (
+    <div class="plattformen">
+      <p class="muted">{trizounAktiv ? 'Auch buchbar auf' : 'Lieber über eine Plattform buchen?'}</p>
+      <div class="knoepfe">
+        {links.map((l) => <a class="btn btn--ghost" href={l.href} rel="nofollow noopener">{l.label}</a>)}
+      </div>
     </div>
   )}
 </section>
@@ -274,6 +291,9 @@ const { slug, maxGaeste } = Astro.props;
   .gaeste { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; border-block: 1px solid var(--rule); }
   .gaeste select { font: inherit; padding: .35rem .6rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: var(--bg); color: var(--text); }
   .ergebnis { padding-top: 1rem; }
+  .plattformen { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+  .plattformen p { margin: 0 0 .6rem; }
+  .knoepfe { display: flex; flex-wrap: wrap; gap: .6rem; }
   .ergebnis :global(p) { margin: 0 0 .75rem; }
   .ergebnis :global(.preis) { font-stretch: 62%; font-weight: 800; font-size: 2.4rem; line-height: 1; }
   .ergebnis :global(.klein) { font-size: .85rem; margin-top: .6rem; }

@@ -33,6 +33,19 @@ export const site = {
     reisetipps: 'Anreise & Wallis-Ausflüge',
   },
 
+  // Bausteine, die schrittweise dazukommen. Phase 1: Wohnung, Reiseführer, Kontaktformular,
+  // Links zu Booking.com/Airbnb (pro Wohnung in site/wohnungen/<slug>/index.md unter «plattformen»).
+  module: {
+    // «Entdecken» (Aktivitäten + Events aus dem Katalog, Zusatzdienst von Trizoun Travel)
+    entdecken: false,
+  },
+  // Kontaktformular: wird beim Build als PHP-Skript erzeugt (Hosting mit PHP, z. B. Infomaniak).
+  // Absender muss eine Adresse der eigenen Domain sein (SPF), Antworten gehen an die Adresse des Gastes.
+  kontakt: {
+    empfaenger: 'hallo@alpine-siesta.ch', // [TODO] echte Adresse
+    absender: 'website@alpine-siesta.ch',
+  },
+
   // Zentraler Aktivitäten-Katalog (Git-Repo). Der Sync spiegelt die Region nach site/katalog/.
   katalog: {
     repo: 'https://github.com/romanzoun/trizoun-katalog.git',
@@ -40,6 +53,6 @@ export const site = {
     ref: 'main',
   },
 
-  // Weitere Menüpunkte. «Wohnung(en)» und «Leukerbad» werden automatisch ergänzt.
-  nav: [{ href: '/entdecken/', label: 'Entdecken' }],
+  // Weitere Menüpunkte. «Wohnung(en)», «Leukerbad», «Entdecken» (wenn aktiv) und «Kontakt» kommen automatisch.
+  nav: [] as { href: string; label: string }[],
 } as const;

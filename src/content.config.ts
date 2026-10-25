@@ -44,6 +44,8 @@ const wohnungen = defineCollection({
         weitere: z.array(z.string()).default([]),
       }),
       galerie: z.array(z.object({ bild: image(), alt: z.string(), raum: z.string().optional() })).min(1),
+      // Inserate auf Buchungsplattformen (solange es keine Online-Buchung gibt bzw. zusätzlich)
+      plattformen: z.object({ booking: z.url().optional(), airbnb: z.url().optional() }).default({}),
     }),
 });
 

@@ -41,8 +41,6 @@ Unser Rat: Mit Kindern oder für einen langen Badetag in die Leukerbad Therme, f
 
 Die Leukerbad Therme ist das grösste Bad im Dorf und der Klassiker für jeden Aufenthalt. Am schönsten sind die Aussenbecken: Du liegst im warmen Wasser und schaust direkt an die senkrechte Felswand der Gemmi. Neben den Erlebnisbecken gibt es Bereiche zum Schwimmen und für Kinder [PRÜFEN].
 
-Mehr zur Therme, mit Anreise ab der Wohnung: [Leukerbad Therme – baden im Thermalwasser](/entdecken/leukerbad-therme/).
-
 ## Walliser Alpentherme & Spa: Ruhe und Saunawelt
 
 Wer es ruhiger mag, ist in der Walliser Alpentherme richtig. Neben dem Thermalbad gibt es eine grosse Saunalandschaft und das Römisch-irische Bad, ein Rundgang durch Bäder und Wärmeräume in festgelegter Reihenfolge [PRÜFEN]. Für Massagen und Behandlungen lohnt es sich, vorher zu reservieren.
@@ -71,5 +69,3 @@ Leukerbad ist ein guter Ort für Familien, die gern baden. In der Leukerbad Ther
 ## Von der Wohnung zur Therme
 
 Von Alpine Siesta bist du in wenigen Minuten zu Fuss in der Leukerbad Therme [PRÜFEN: Gehzeit aus der Wohnungsseite]. Du brauchst weder Auto noch Parkplatz und bist nach dem Baden schnell zurück auf dem Sofa.
-
-Weitere Ideen für Wellness und Erholung findest du unter [Wellness in Leukerbad](/entdecken/thema/wellness/).

@@ -8,6 +8,10 @@ import { join } from 'node:path';
 import { site } from '../site/site.config.ts';
 
 const ZIEL = 'site/katalog';
+if (!site.module?.entdecken) {
+  console.log('Entdecken ist ausgeschaltet (site.module.entdecken) – kein Sync.');
+  process.exit(0);
+}
 const { region, ref } = site.katalog;
 const repo = process.env.KATALOG_REPO ?? site.katalog.repo;
 let quelle = process.env.KATALOG_DIR;

@@ -25,7 +25,9 @@ const path = Astro.url.pathname;
 const nav = [
   await wohnungenNav(),
   ...((await allePillars()).length ? [{ href: hubUrl(), label: site.ort }] : []),
+  ...(site.module.entdecken ? [{ href: '/entdecken/', label: 'Entdecken' }] : []),
   ...site.nav,
+  { href: '/kontakt/', label: 'Kontakt' },
 ];
 const buchenZiel = await buchungsZiel();
 const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
