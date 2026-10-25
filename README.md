@@ -14,6 +14,10 @@ npm run build    # statische Seite in dist/
 
 Alle Inhalte und Einstellungen dieser Website liegen in **`site/`** – siehe [site/README.md](site/README.md) für die Übersicht, welches Bild und welcher Text wohin gehört. Der Code in `src/` ist für alle Websites gleich.
 
+## Entdecken (Aktivitäten)
+
+Die Aktivitäten kommen beim Build aus dem **regionalen Katalog von Trizoun Travel** (gleiche `.env`-Werte wie die Buchung). Ohne API-Zugang nimmt der Build die Ordner in `site/aktivitaeten/`. Ist die API gesetzt, aber nicht erreichbar, bricht der Build ab, damit keine leere Entdecken-Seite online geht.
+
 ## Online-Buchung
 
 Das Buchungs-Widget (`src/components/Buchung.astro`, auf jeder Wohnungsseite unter `#buchen`) zeigt freie Tage, berechnet den Preis und leitet zur Beds24-Buchungsseite weiter. Die Daten kommen von **Trizoun Travel** (Repo `trizoun-travel`), wo Beds24 verbunden ist. Konfiguration in `.env`: `PUBLIC_TRIZOUN_API_URL`, `PUBLIC_TRIZOUN_KEY`. Ohne diese Werte zeigt das Widget die Mail-Anfrage.

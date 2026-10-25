@@ -74,7 +74,15 @@ Fehlt ein passender Label-Wert, **nicht** `labels.ts` ändern, sondern den näch
 2. In der Build-Ausgabe kontrollieren, dass `/entdecken/<slug>/` und die erwarteten Themenseiten entstehen.
 3. Wenn möglich `npx astro preview` starten und Detailseite plus `/entdecken/?…` mit passenden Filtern als Screenshot ansehen (Desktop und 390 px).
 
-## 7. Aufräumen und berichten
+## 7. In den Katalog übernehmen
+
+Aktivitäten werden zentral im regionalen Katalog von Trizoun Travel gepflegt (gilt für alle Websites der Region). Nach erfolgreichem Build:
+
+1. Im Repo `trizoun-travel`: `npm run import:aktivitaeten -w @trizoun/api -- --region <region> --dir <pfad>/site/aktivitaeten` (läuft auf dem Server mit Zugriff auf die Datenbank; Region muss existieren).
+2. Persönliches («Unser Tipp» eines bestimmten Gastgebers, Anreise ab seiner Wohnung) gehört nicht in den Katalogtext, sondern als Anpassung der Organisation in Trizoun Travel.
+3. Hat der Nutzer keinen Zugriff auf den Server: Ordner committen und ihm den Import-Befehl nennen.
+
+## 8. Aufräumen und berichten
 
 - Verarbeitete Eingänge nach `inbox/_erledigt/<JJJJ-MM-TT>/` verschieben (nicht löschen).
 - Bericht an den Nutzer, eine Zeile pro Element: Slug/URL, gewählte Labels, unsichere Felder, Anzahl `[PRÜFEN]`, Bildhinweise, neue Themenseiten.

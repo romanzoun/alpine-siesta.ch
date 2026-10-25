@@ -8,7 +8,9 @@ Vision der Gesamtplattform (Agentur, Trizoun Travel, Kunden-Websites) und getrof
 
 ## Neue Aktivität anlegen
 
-Rohinhalte (Texte + Bilder) werden mit dem Skill `.claude/skills/aktivitaeten-import/` verarbeitet – Eingang in `inbox/aktivitaeten/`.
+**Aktivitäten leben im regionalen Katalog von Trizoun Travel** und werden beim Build geladen (`src/lib/entdecken-loader.ts`), sobald `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` gesetzt sind. `site/aktivitaeten/` dient als Eingangs- und Austauschformat und als Rückfallebene ohne API (lokale Entwicklung).
+
+Ablauf: Rohinhalte (Texte + Bilder) in `inbox/aktivitaeten/` → Skill `.claude/skills/aktivitaeten-import/` erzeugt Ordner in `site/aktivitaeten/` → Import in den Katalog (`npm run import:aktivitaeten -w @trizoun/api -- --region <region> --dir …/site/aktivitaeten` im Repo `trizoun-travel`). Änderungen im Katalog lösen den Deploy-Hook der Website aus. Persönliche Tipps, Ausblenden und Anreisezeit pro Website sind Anpassungen in Trizoun Travel, nicht im Katalogtext.
 
 1. `site/aktivitaeten/_vorlage.md` kopieren nach `site/aktivitaeten/<slug>/index.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet/index.md`), Bilder in denselben Ordner. Der Ordnername wird zur URL `/entdecken/<slug>/`.
 2. Für alle Labels **nur Werte aus `src/lib/labels.ts`** verwenden. Keine neuen Werte erfinden. Wenn ein Wert fehlt, im Text darauf hinweisen statt ihn einzutragen.

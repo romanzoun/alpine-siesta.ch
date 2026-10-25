@@ -44,6 +44,8 @@ Alpine Siesta (Leukerbad) ist **Kunde Nr. 1 und Testfeld**: Was dort funktionier
 |---|---|---|
 | 2026-10 | **Beds24 ist der Channel-Manager.** Booking.com/Airbnb nur über Beds24, keine eigenen OTA-Schnittstellen | Direkte OTA-APIs nur für zertifizierte Partner; Beds24 löst Kalender-Sync |
 | 2026-10 | **Inhalte als Dateien** (Markdown + Bilder pro Ordner, strenge Schemas), KI-Skills statt CMS | Schnell, versioniert, von KI zuverlässig befüllbar, kein Server |
+| 2026-10 | **Ausnahme Entdecken: regionaler Aktivitäten-Katalog in Trizoun Travel.** Aktivitäten pro Region zentral gepflegt, Websites laden sie beim Build (statisch für SEO); Anpassungen pro Vermieter (ausblenden, eigener Tipp, Anreise). Ordnerformat bleibt Eingangsformat (Import) und Rückfallebene | Aktivitäten sind regional, nicht pro Wohnung: einmal pflegen, alle Kunden der Region profitieren; neuer Kunde startet mit fertigem Katalog |
+| 2026-10 | **Gelato/Merch-Shop nach hinten.** Zuerst SEO und Entdecken, Buchung und Kampagnen | Gelato-Anbindung aufwendig; SEO und Entdecken bringen zuerst Direktbuchungen |
 | 2026-10 | **Kundeninhalte in `site/`**, Code in `src/` generisch | Neue Website = neuer `site/`-Ordner |
 | 2026-10 | **Eigenes, mandantenfähiges Backend** (Trizoun Travel) statt Logik in jeder Website | Agentur + SaaS teilen sich eine Plattform |
 | 2026-10 | **Gateway-Modell**: Kunden nutzen Trizoun-Schlüssel; Anbieter mit eigenem Konto oder über Trizoun-Hauptkonto (Freigaben pro Organisation) | Mengenvorteile, Gebühren, einheitliche API |
