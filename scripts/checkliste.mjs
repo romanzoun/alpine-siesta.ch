@@ -57,8 +57,8 @@ for (const key of pillarKeys) {
 
 // Aktivitäten
 abschnitt('Aktivitäten (Ziel: 30–40)');
-const akt = md.filter((p) => p.startsWith(join(SITE, 'aktivitaeten')));
-punkt(akt.length >= 30, `${akt.length} Aktivitäten`);
+const akt = md.filter((p) => p.startsWith(join(SITE, 'aktivitaeten')) || p.startsWith(join(SITE, 'katalog')));
+punkt(akt.length >= 30, `${akt.length} Aktivitäten und Events (Katalog + eigene)`);
 const ungeprueft = akt.filter((p) => wert(readFileSync(p, 'utf8'), 'geprueft') !== 'true');
 punkt(ungeprueft.length === 0, `Fakten geprüft (${ungeprueft.length} mit geprueft: false)`);
 const pruefen = akt.reduce((s, p) => s + zaehle(readFileSync(p, 'utf8'), /\[PRÜFEN\]/g), 0);

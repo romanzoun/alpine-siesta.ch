@@ -33,6 +33,13 @@ export const site = {
     reisetipps: 'Anreise & Wallis-Ausflüge',
   },
 
+  // Zentraler Aktivitäten-Katalog (Git-Repo). Der Sync spiegelt die Region nach site/katalog/.
+  katalog: {
+    repo: 'https://github.com/romanzoun/trizoun-katalog.git',
+    region: 'leukerbad',
+    ref: 'main',
+  },
+
   // Weitere Menüpunkte. «Wohnung(en)» und «Leukerbad» werden automatisch ergänzt.
   nav: [{ href: '/entdecken/', label: 'Entdecken' }],
 } as const;

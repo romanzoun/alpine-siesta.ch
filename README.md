@@ -16,7 +16,14 @@ Alle Inhalte und Einstellungen dieser Website liegen in **`site/`** – siehe [s
 
 ## Entdecken (Aktivitäten)
 
-Die Aktivitäten kommen beim Build aus dem **regionalen Katalog von Trizoun Travel** (gleiche `.env`-Werte wie die Buchung). Ohne API-Zugang nimmt der Build die Ordner in `site/aktivitaeten/`. Ist die API gesetzt, aber nicht erreichbar, bricht der Build ab, damit keine leere Entdecken-Seite online geht.
+Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) kommen aus dem Git-Repo **`trizoun-katalog`** und werden statisch gerendert – mit Filter, Themenseiten und Detailseite pro Eintrag.
+
+```sh
+npm run katalog:sync                          # Region aus site.config.ts (katalog) nach site/katalog/ spiegeln
+KATALOG_DIR=../trizoun-katalog npm run katalog:sync   # aus lokalem Checkout
+```
+
+Täglich läuft `.github/workflows/katalog-sync.yml`: Sync, Build und SEO-Check, dann ein PR mit den Änderungen. Für ein privates Katalog-Repo braucht das Repo das Secret `KATALOG_TOKEN` (Fine-grained Token, nur Lesezugriff auf `trizoun-katalog`). Anpassungen pro Website: `site/entdecken.yaml`; eigene Aktivitäten: `site/aktivitaeten/`.
 
 ## Online-Buchung
 

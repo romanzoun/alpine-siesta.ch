@@ -2,6 +2,9 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import * as L from './lib/labels';
+import { entdeckenLoader } from './lib/entdecken-loader';
+import { ortszeit, teile } from './lib/zeit';
+import { site } from '../site/site.config';
 
 // Alle Inhalte liegen in site/ (pro Website verschieden), siehe site/README.md.
 // Ordner/index.md → ID ist der Ordnerpfad ohne «/index.md»
@@ -61,13 +64,21 @@ const seiten = defineCollection({
 });
 
 const aktivitaeten = defineCollection({
-  loader: glob({ pattern: '[^_]*/index.md', base: './site/aktivitaeten', generateId: ordnerId }),
+  // Zentraler Katalog (site/katalog/) + eigene Aktivitäten + Anpassungen (site/entdecken.yaml), siehe lib/entdecken-loader.ts
+  loader: entdeckenLoader(),
   schema: ({ image }) =>
     z.object({
+      typ: z.enum(L.keys(L.typen)).default('aktivitaet'),
       title: z.string().max(70),
       description: z.string().min(70).max(160),
       kurz: z.string().max(120),
-      monate: z.array(z.number().int().min(1).max(12)).min(1),
+      // Bei Events aus den Terminen abgeleitet, wenn nicht angegeben
+      monate: z.array(z.number().int().min(1).max(12)).min(1).optional(),
+      // Events: ein oder mehrere Termine (Datum oder Datum mit Uhrzeit, Ortszeit)
+      termine: z.array(z.object({ beginn: z.union([z.string(), z.date()]).transform(ortszeit), ende: z.union([z.string(), z.date()]).transform(ortszeit).optional() })).default([]),
+      veranstaltungsort: z.string().optional(),
+      // Woher die Information stammt (Pflicht bei Events und bei KI-gesammelten Einträgen)
+      quelle: z.object({ name: z.string(), url: z.url(), abgerufen: z.coerce.date() }).optional(),
       zielgruppen: z.array(z.enum(L.keys(L.zielgruppen))).min(1),
       kategorien: z.array(z.enum(L.keys(L.kategorien))).min(1),
       pillar: z.enum(L.keys(L.pillars)),
@@ -81,12 +92,17 @@ const aktivitaeten = defineCollection({
       hund: z.boolean(),
       geheimtipp: z.boolean().default(false),
       website: z.url().optional(),
-      ort: z.string().default('Leukerbad'),
+      ort: z.string().default(site.ort),
       bild: image().optional(),
       bild_alt: z.string().optional(),
       galerie: z.array(z.object({ bild: image(), alt: z.string() })).default([]),
       geprueft: z.boolean().default(false),
-    }).refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt: jedes Bild braucht einen Alternativtext', path: ['bild_alt'] }),
+    })
+      .refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt: jedes Bild braucht einen Alternativtext', path: ['bild_alt'] })
+      .refine((a) => a.typ !== 'event' || a.termine.length > 0, { message: 'Events brauchen mindestens einen Termin', path: ['termine'] })
+      .refine((a) => a.typ !== 'event' || a.quelle, { message: 'Events brauchen eine Quelle (name, url, abgerufen)', path: ['quelle'] })
+      .refine((a) => a.typ === 'event' || a.monate, { message: 'Aktivitäten brauchen «monate»', path: ['monate'] })
+      .transform((a) => ({ ...a, monate: a.monate ?? [...new Set(a.termine.map((t) => teile(t.beginn).month))].sort((x, y) => x - y) })),
 });
 
 // Optionaler eigener Text für Themenseiten, Dateiname = <dimension>-<wert>.md (z. B. saison-winter.md)

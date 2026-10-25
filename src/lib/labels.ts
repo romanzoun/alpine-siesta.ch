@@ -23,7 +23,12 @@ export const kategorien = {
   kultur: 'Kultur',
   kulinarik: 'Kulinarik',
   aussicht: 'Aussicht',
+  musik: 'Musik & Konzerte',
+  feste: 'Feste & Märkte',
 } as const;
+
+// Art des Eintrags: Aktivität (ganzjährig/saisonal) oder Event (mit Terminen)
+export const typen = { aktivitaet: 'Aktivität', event: 'Event' } as const;
 
 // Pillar-Themen sind pro Website verschieden und stehen in site/site.config.ts
 export const pillars = site.pillars;

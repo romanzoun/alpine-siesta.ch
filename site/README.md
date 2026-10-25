@@ -27,10 +27,9 @@ site/
 │       └── therme-guide/
 │           ├── index.md      Unterseite /leukerbad/thermen/therme-guide/
 │           └── titel.jpg     Bilder der Unterseite
-├── aktivitaeten/             «Entdecken» → /entdecken/<ordner>/  (Import: inbox/ + Skill)
-│   └── gemmipass-daubensee/
-│       ├── index.md
-│       └── titel.jpg
+├── katalog/                  Aktivitäten + Events der Region aus trizoun-katalog (npm run katalog:sync – nicht von Hand ändern)
+├── entdecken.yaml            Anpassungen am Katalog: ausblenden, eigener Tipp, Anreise ab Wohnung, Geheimtipp
+├── aktivitaeten/             eigene Aktivitäten nur dieser Website → /entdecken/<ordner>/  (Vorlage: _vorlage.md)
 ├── themenseiten/             optionale Texte für /entdecken/saison/winter/ usw. (saison-winter.md)
 ├── rechtliches/              impressum.md, datenschutz.md, agb.md → /impressum/ usw.
 └── public/                   favicon.svg, robots.txt, og.jpg (Vorschaubild Social Media, 1200 × 630) – wird 1:1 ausgeliefert

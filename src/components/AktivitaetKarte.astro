@@ -2,11 +2,13 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import * as L from '../lib/labels';
+import { naechsterTermin, terminText } from '../lib/entdecken';
 
 interface Props {
   aktivitaet: CollectionEntry<'aktivitaeten'>;
 }
 const { id, data: a } = Astro.props.aktivitaet;
+const termin = a.typ === 'event' ? naechsterTermin(Astro.props.aktivitaet) : undefined;
 ---
 
 <article class="karte">
@@ -19,7 +21,11 @@ const { id, data: a } = Astro.props.aktivitaet;
   </div>
   <h3 style={`view-transition-name: titel-${id}`}><a href={`/entdecken/${id}/`}>{a.title}</a></h3>
   <p class="muted">{a.kurz}</p>
-  <p class="meta">{L.dauer[a.dauer]}, {a.anreise_min} min {a.anreise_wie}</p>
+  {termin ? (
+    <p class="meta"><strong class="termin">{terminText(termin)}</strong>{a.veranstaltungsort && `, ${a.veranstaltungsort}`}</p>
+  ) : (
+    <p class="meta">{L.dauer[a.dauer]}, {a.anreise_min} min {a.anreise_wie}</p>
+  )}
 </article>
 
 <style>
@@ -39,4 +45,5 @@ const { id, data: a } = Astro.props.aktivitaet;
   .karte:hover h3 a { text-decoration: underline; text-decoration-thickness: 2px; }
   p { margin: 0; }
   .meta { font-size: .9rem; color: var(--muted); }
+  .termin { color: var(--accent); font-weight: 650; }
 </style>

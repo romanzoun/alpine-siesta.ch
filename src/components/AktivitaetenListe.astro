@@ -38,6 +38,12 @@ const schema = {
   {filter && (
     <form class="filter" data-filter>
       <fieldset>
+        <legend>Was suchst du?</legend>
+        <div class="chips">
+          {Object.entries(L.typen).map(([k, v]) => <label><input type="checkbox" name="typ" value={k} /><span>{k === 'event' ? 'Events' : 'Aktivitäten'}</span></label>)}
+        </div>
+      </fieldset>
+      <fieldset>
         <legend>Wann kommst du?</legend>
         <div class="chips">
           <label><input type="radio" name="monat" value="" checked /><span>Egal</span></label>
@@ -62,13 +68,14 @@ const schema = {
           {Object.entries(L.extras).map(([k, v]) => <label><input type="checkbox" name="extra" value={k} /><span>{v}</span></label>)}
         </div>
       </fieldset>
-      <p class="stand"><span aria-live="polite"><strong data-anzahl>{aktivitaeten.length}</strong> Aktivitäten</span> <button type="reset" class="zuruecksetzen">Filter zurücksetzen</button></p>
+      <p class="stand"><span aria-live="polite"><strong data-anzahl>{aktivitaeten.length}</strong> Treffer</span> <button type="reset" class="zuruecksetzen">Filter zurücksetzen</button></p>
     </form>
   )}
 
   <ul class="karten">
     {aktivitaeten.map((a) => (
       <li
+        data-typ={a.data.typ}
         data-monate={a.data.monate.join(' ')}
         data-fuer={a.data.zielgruppen.join(' ')}
         data-thema={a.data.kategorien.join(' ')}
@@ -102,6 +109,7 @@ const schema = {
       const fd = new FormData(form);
       return {
         monat: String(fd.get('monat') ?? ''),
+        typ: fd.getAll('typ').map(String),
         fuer: fd.getAll('fuer').map(String),
         thema: fd.getAll('thema').map(String),
         extra: fd.getAll('extra').map(String),
@@ -114,6 +122,7 @@ const schema = {
         !werte.length || werte.some((w) => el.dataset[key]!.split(' ').includes(w));
       const sichtbar = (el: HTMLElement) =>
         (!a.monat || el.dataset.monate!.split(' ').includes(a.monat)) &&
+        hat(el, 'typ', a.typ) &&
         hat(el, 'fuer', a.fuer) &&
         hat(el, 'thema', a.thema) &&
         a.extra.every((x) => el.dataset.extra!.split(' ').includes(x));
@@ -134,7 +143,7 @@ const schema = {
 
       const params = new URLSearchParams();
       if (a.monat) params.set('monat', a.monat);
-      for (const k of ['fuer', 'thema', 'extra'] as const) if (a[k].length) params.set(k, a[k].join(','));
+      for (const k of ['typ', 'fuer', 'thema', 'extra'] as const) if (a[k].length) params.set(k, a[k].join(','));
       const qs = params.toString();
       history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
     };
@@ -143,7 +152,7 @@ const schema = {
     const url = new URLSearchParams(location.search);
     const monat = url.get('monat');
     if (monat) form.querySelector<HTMLInputElement>(`input[name="monat"][value="${CSS.escape(monat)}"]`)?.click();
-    for (const k of ['fuer', 'thema', 'extra']) {
+    for (const k of ['typ', 'fuer', 'thema', 'extra']) {
       for (const w of (url.get(k) ?? '').split(',').filter(Boolean)) {
         const input = form.querySelector<HTMLInputElement>(`input[name="${k}"][value="${CSS.escape(w)}"]`);
         if (input) input.checked = true;

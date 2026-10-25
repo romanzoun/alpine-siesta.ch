@@ -5,7 +5,7 @@ description: Macht aus rohen Inhalten (Markdown-Notizen, Texte, Bilder) fertige 
 
 # Aktivitäten importieren
 
-Ziel: Jedes gelieferte Element wird zu einem Ordner `site/aktivitaeten/<slug>/` mit `index.md` (strenges Frontmatter) und Bildern daneben. Daraus erzeugt Astro automatisch die Detailseite, die Karte in der Filterliste, die Themenseiten (`/entdecken/saison|fuer|thema/<wert>/`), Brotkrumen und strukturierte Daten. **Du schreibst keine Astro-Komponenten** – nur Inhalte. Die Komponenten sind fertig:
+Ziel: Jedes gelieferte Element wird zu einem Ordner `site/aktivitaeten/<slug>/` (zum Prüfen; regionale Einträge wandern danach in den Katalog, siehe Schritt 7) mit `index.md` (strenges Frontmatter) und Bildern daneben. Daraus erzeugt Astro automatisch die Detailseite, die Karte in der Filterliste, die Themenseiten (`/entdecken/saison|fuer|thema/<wert>/`), Brotkrumen und strukturierte Daten. **Du schreibst keine Astro-Komponenten** – nur Inhalte. Die Komponenten sind fertig:
 
 | Datei | Zweck |
 |---|---|
@@ -74,13 +74,11 @@ Fehlt ein passender Label-Wert, **nicht** `labels.ts` ändern, sondern den näch
 2. In der Build-Ausgabe kontrollieren, dass `/entdecken/<slug>/` und die erwarteten Themenseiten entstehen.
 3. Wenn möglich `npx astro preview` starten und Detailseite plus `/entdecken/?…` mit passenden Filtern als Screenshot ansehen (Desktop und 390 px).
 
-## 7. In den Katalog übernehmen
+## 7. Regional oder eigen?
 
-Aktivitäten werden zentral im regionalen Katalog von Trizoun Travel gepflegt (gilt für alle Websites der Region). Nach erfolgreichem Build:
-
-1. Im Repo `trizoun-travel`: `npm run import:aktivitaeten -w @trizoun/api -- --region <region> --dir <pfad>/site/aktivitaeten` (läuft auf dem Server mit Zugriff auf die Datenbank; Region muss existieren).
-2. Persönliches («Unser Tipp» eines bestimmten Gastgebers, Anreise ab seiner Wohnung) gehört nicht in den Katalogtext, sondern als Anpassung der Organisation in Trizoun Travel.
-3. Hat der Nutzer keinen Zugriff auf den Server: Ordner committen und ihm den Import-Befehl nennen.
+- **Regional** (Bergbahn, Wanderweg, Therme, Konzert – gilt für alle Websites der Region): Ordner nach dem Build ins Repo `trizoun-katalog` unter `regionen/<region>/aktivitaeten/<slug>/` verschieben, dort per PR committen und hier `npm run katalog:sync` ausführen. Events nach `regionen/_vorlage-event.md` mit `termine` und `quelle`; Texte in eigenen Worten, Bilder nur mit Nutzungsrecht.
+- **Persönliches** («Unser Tipp», Anreise ab der Wohnung, ausblenden) nicht in den Katalogtext, sondern in `site/entdecken.yaml`.
+- **Nur für diese Website** (z. B. Angebot des Gastgebers): bleibt in `site/aktivitaeten/`.
 
 ## 8. Aufräumen und berichten
 

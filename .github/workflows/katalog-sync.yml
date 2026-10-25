@@ -1,0 +1,45 @@
+# Discovery: spiegelt die Region aus dem zentralen Katalog (trizoun-katalog) nach site/katalog/,
+# baut und prüft die Website und schlägt die Änderungen als Pull Request vor.
+name: Katalog-Sync
+
+on:
+  schedule:
+    - cron: '17 3 * * *' # täglich 03:17 UTC (Events ändern sich laufend)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: katalog-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Katalog spiegeln
+        run: npm run katalog:sync
+        env:
+          # Fine-grained Token mit Leserecht auf das Katalog-Repo
+          KATALOG_TOKEN: ${{ secrets.KATALOG_TOKEN }}
+      - name: Bauen und prüfen
+        run: npm run build && npm run seo-check
+      - name: Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: katalog-sync
+          delete-branch: true
+          commit-message: 'Discovery: Katalog synchronisiert'
+          title: 'Discovery: Katalog synchronisiert'
+          body: |
+            Automatischer Abgleich mit dem zentralen Katalog (siehe `site/katalog/STAND.md`).
+            Build und SEO-Check sind erfolgreich durchgelaufen.
+          add-paths: site/katalog

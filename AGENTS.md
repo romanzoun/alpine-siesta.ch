@@ -8,9 +8,13 @@ Vision der Gesamtplattform (Agentur, Trizoun Travel, Kunden-Websites) und getrof
 
 ## Neue Aktivität anlegen
 
-**Aktivitäten leben im regionalen Katalog von Trizoun Travel** und werden beim Build geladen (`src/lib/entdecken-loader.ts`), sobald `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` gesetzt sind. `site/aktivitaeten/` dient als Eingangs- und Austauschformat und als Rückfallebene ohne API (lokale Entwicklung).
+**«Entdecken» ist ein Zusatzdienst**: Aktivitäten und Events der Region kommen aus dem zentralen Git-Repo `trizoun-katalog` (`regionen/<region>/`), das zentrale KI-Jobs pflegen. `npm run katalog:sync` spiegelt die Region nach `site/katalog/` (nie von Hand ändern); der Workflow `.github/workflows/katalog-sync.yml` macht das täglich und öffnet einen PR. Gebaut wird alles statisch (`src/lib/entdecken-loader.ts`).
 
-Ablauf: Rohinhalte (Texte + Bilder) in `inbox/aktivitaeten/` → Skill `.claude/skills/aktivitaeten-import/` erzeugt Ordner in `site/aktivitaeten/` → Import in den Katalog (`npm run import:aktivitaeten -w @trizoun/api -- --region <region> --dir …/site/aktivitaeten` im Repo `trizoun-travel`). Änderungen im Katalog lösen den Deploy-Hook der Website aus. Persönliche Tipps, Ausblenden und Anreisezeit pro Website sind Anpassungen in Trizoun Travel, nicht im Katalogtext.
+- **Regionale Inhalte** (für alle Websites der Region) gehören ins Katalog-Repo, nicht hierher. Events (`typ: event`) brauchen `termine` und `quelle`; vergangene Events fallen beim Build automatisch weg.
+- **Pro Website**: `site/entdecken.yaml` – Katalogeinträge ausblenden, eigenen Tipp anhängen, Anreise ab der Wohnung, Geheimtipp.
+- **Eigene Aktivitäten** (nur für diese Website) in `site/aktivitaeten/<slug>/`; gleicher Slug wie im Katalog ersetzt den Katalogeintrag.
+
+Rohinhalte (Texte + Bilder) in `inbox/aktivitaeten/` verarbeitet der Skill `.claude/skills/aktivitaeten-import/`.
 
 1. `site/aktivitaeten/_vorlage.md` kopieren nach `site/aktivitaeten/<slug>/index.md` (kebab-case, ohne Umlaute, z. B. `torrent-skigebiet/index.md`), Bilder in denselben Ordner. Der Ordnername wird zur URL `/entdecken/<slug>/`.
 2. Für alle Labels **nur Werte aus `src/lib/labels.ts`** verwenden. Keine neuen Werte erfinden. Wenn ein Wert fehlt, im Text darauf hinweisen statt ihn einzutragen.
