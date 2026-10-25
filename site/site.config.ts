@@ -39,11 +39,10 @@ export const site = {
     // «Entdecken» (Aktivitäten + Events aus dem Katalog, Zusatzdienst von Trizoun Travel)
     entdecken: false,
   },
-  // Kontaktformular: wird beim Build als PHP-Skript erzeugt (Hosting mit PHP, z. B. Infomaniak).
-  // Absender muss eine Adresse der eigenen Domain sein (SPF), Antworten gehen an die Adresse des Gastes.
+  // Kontaktformular: Ohne Endpunkt öffnet «Anfrage senden» eine vorausgefüllte E-Mail an «email».
+  // Sobald das Backend läuft: URL eintragen (POST JSON → { ok: true }).
   kontakt: {
-    empfaenger: 'hallo@alpine-siesta.ch', // [TODO] echte Adresse
-    absender: 'website@alpine-siesta.ch',
+    endpunkt: '' as string,
   },
 
   // Zentraler Aktivitäten-Katalog (Git-Repo). Der Sync spiegelt die Region nach site/katalog/.

@@ -4,7 +4,7 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 
 **Alles Website-spezifische liegt in `site/`** (Einstellungen in `site/site.config.ts`, Inhalte, Bilder, `public/`). Übersicht: `site/README.md`. Der Code in `src/` muss für jede Website funktionieren: keine Namen, Orte oder Texte von Alpine Siesta in `src/` fest einbauen, sondern aus `site` lesen. Offene Punkte: `npm run checkliste`.
 
-**Phase 1 (aktuell):** Wohnung, Pillar Pages, Kontaktformular (`src/server/kontakt.php` → `dist/kontakt.php`) und Links zu Booking.com/Airbnb (`plattformen` pro Wohnung). «Entdecken» ist mit `module.entdecken` in `site/site.config.ts` ausgeschaltet; Online-Buchung kommt erst mit Trizoun Travel (`.env`). Neue Bausteine immer abschaltbar bauen.
+**Phase 1 (aktuell):** Wohnung, Pillar Pages, Kontaktformular (`src/components/Anfrage.astro`, ohne Backend als vorausgefüllte E-Mail) und Links zu Booking.com/Airbnb (`plattformen` pro Wohnung). «Entdecken» ist mit `module.entdecken` in `site/site.config.ts` ausgeschaltet; Online-Buchung kommt erst mit Trizoun Travel (`.env`). Neue Bausteine immer abschaltbar bauen.
 
 Vision der Gesamtplattform (Agentur, Trizoun Travel, Kunden-Websites) und getroffene Entscheide: Skill `produkt-kompass` – vor grösseren neuen Features damit prüfen. Massgebliche Fassung im Repo `trizoun-travel`, hier eine Kopie.
 

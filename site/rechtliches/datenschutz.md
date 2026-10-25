@@ -8,7 +8,7 @@ reihenfolge: 2
 
 ## Kontaktformular
 
-[TODO] Text prüfen lassen. Vorschlag: Wenn du uns über das Kontaktformular schreibst, erhalten wir Name, E-Mail-Adresse, Nachricht und – falls angegeben – Reisedaten und Anzahl Gäste per E-Mail. Wir verwenden diese Angaben nur, um deine Anfrage zu beantworten. Das Formular wird bei unserem Hoster Infomaniak (Schweiz) verarbeitet; zum Schutz vor Missbrauch wird deine IP-Adresse höchstens eine Stunde gespeichert.
+[TODO] Text prüfen lassen. Vorschlag: Wenn du uns über das Kontaktformular schreibst, erhalten wir Name, E-Mail-Adresse, Nachricht und – falls angegeben – Reisedaten und Anzahl Gäste per E-Mail. Wir verwenden diese Angaben nur, um deine Anfrage zu beantworten.
 
 ## Angebote per E-Mail (Buchungskalender)
 

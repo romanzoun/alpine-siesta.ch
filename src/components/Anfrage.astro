@@ -1,6 +1,6 @@
 ---
-// Kontakt-/Buchungsanfrage per E-Mail. Sendet an /kontakt.php (wird beim Build aus src/server/kontakt.php erzeugt).
-// Ohne JavaScript: normales Formular mit Weiterleitung auf /kontakt/danke/.
+// Kontakt-/Buchungsanfrage. Mit site.kontakt.endpunkt: POST als JSON an das Backend.
+// Ohne Endpunkt (Phase 1): öffnet eine vorausgefüllte E-Mail an site.email – kein Server nötig.
 import { site } from '../config';
 import { alleWohnungen } from '../lib/wohnungen';
 
@@ -16,7 +16,7 @@ const wohnungen = (await alleWohnungen()).map((w) => ({ id: w.id, name: w.data.n
 const heute = new Date().toISOString().slice(0, 10);
 ---
 
-<form class="anfrage" method="post" action="/kontakt.php" data-anfrage>
+<form class="anfrage" method="post" action={site.kontakt.endpunkt || `mailto:${site.email}`} enctype={site.kontakt.endpunkt ? undefined : 'text/plain'} data-anfrage>
   {wohnung || wohnungen.length === 1 ? (
     <input type="hidden" name="wohnung" value={wohnung ?? wohnungen[0]?.id} />
   ) : (
@@ -46,11 +46,11 @@ const heute = new Date().toISOString().slice(0, 10);
   <label class="falle" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
   <input type="hidden" name="t" value="" />
   <p class="hinweis">Wir verwenden deine Angaben nur, um deine Anfrage zu beantworten. <a href="/datenschutz/">Datenschutz</a></p>
-  <button class="btn" type="submit">Anfrage senden</button>
+  <button class="btn" type="submit">{site.kontakt.endpunkt ? 'Anfrage senden' : 'E-Mail vorbereiten'}</button>
   <p class="status" data-status role="status" aria-live="polite"></p>
 </form>
 
-<script define:vars={{ email: site.email }}>
+<script define:vars={{ email: site.email, endpunkt: site.kontakt.endpunkt, name: site.name }}>
   document.querySelectorAll('[data-anfrage]').forEach((form) => {
     form.querySelector('[name="t"]').value = String(Math.floor(Date.now() / 1000));
     const status = form.querySelector('[data-status]');
@@ -59,11 +59,28 @@ const heute = new Date().toISOString().slice(0, 10);
     anreise?.addEventListener('change', () => { if (abreise) abreise.min = anreise.value; });
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const f = Object.fromEntries(new FormData(form));
+      if (f.website) return; // Spam-Falle
+      if (!endpunkt) {
+        const zeilen = [
+          ...(f.anreise ? [`Anreise: ${f.anreise}`] : []),
+          ...(f.abreise ? [`Abreise: ${f.abreise}`] : []),
+          ...(f.gaeste && f.anreise ? [`Gäste: ${f.gaeste}`] : []),
+          '',
+          f.nachricht,
+          '',
+          f.name,
+        ];
+        const betreff = `Anfrage ${name}${f.anreise ? ` für ${f.anreise}` : ''}`;
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(zeilen.join('\n'))}`;
+        status.textContent = 'Dein E-Mail-Programm öffnet sich mit der fertigen Anfrage – bitte dort noch absenden.';
+        return;
+      }
       const knopf = form.querySelector('button[type="submit"]');
       knopf.disabled = true;
       status.textContent = 'Wird gesendet …';
       try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const res = await fetch(endpunkt, { method: 'POST', body: JSON.stringify(f), headers: { 'Content-Type': 'application/json', Accept: 'application/json' } });
         const json = await res.json().catch(() => ({}));
         if (!res.ok || !json.ok) throw new Error(json.meldung || `Fehler ${res.status}`);
         form.reset();
