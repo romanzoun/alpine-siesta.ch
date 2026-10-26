@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <!-- T-Shirt Front oder Rücken: rundes Abzeichen -->
+  <style>
+    @font-face { font-family: "Archivo"; src: url("../fonts/archivo-wdth.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    svg { --ink: #f5f8f7; --akzent: #f0b38c; --zweit: #5cc8c2; }
+    svg.dunkel { --ink: #16233a; --akzent: #d9825a; --zweit: #0f7470; }
+    .t { font-family: "Archivo"; font-stretch: 62%; font-weight: 800; fill: var(--ink); }
+    .k { font-family: "Archivo"; font-stretch: 100%; font-weight: 500; fill: var(--ink); }
+  </style>
+  <defs>
+    <path id="ring" d="M600 800 m-400 0 a400 400 0 1 1 800 0 a400 400 0 1 1 -800 0" />
+  </defs>
+  <circle cx="600" cy="800" r="490" fill="none" style="stroke: var(--ink)" stroke-width="12" />
+  <circle cx="600" cy="800" r="330" fill="none" style="stroke: var(--ink)" stroke-width="6" />
+  <text class="t" font-size="92" letter-spacing="10"><textPath href="#ring" startOffset="0">ALPINE SIESTA ✶ LEUKERBAD ✶ THERMALWASSER ✶</textPath></text>
+  <!-- Berg und Wasser im Inneren -->
+  <clipPath id="innen"><circle cx="600" cy="800" r="322" /></clipPath>
+  <g clip-path="url(#innen)">
+    <path d="M250 860 L380 760 L430 640 L520 620 L640 640 L760 610 L830 650 L900 780 L990 860 Z" style="fill: var(--ink)" />
+    <path d="M430 640 L520 620 L640 640 L760 610 L830 650" fill="none" style="stroke: var(--akzent)" stroke-width="12" stroke-linejoin="round" transform="translate(0,-14)" />
+    <g fill="none" style="stroke: var(--zweit)" stroke-width="12" stroke-linecap="round">
+      <path d="M270 930 q55 -30 110 0 t110 0 t110 0 t110 0 t110 0 t110 0 t110 0" />
+      <path d="M270 1000 q55 -30 110 0 t110 0 t110 0 t110 0 t110 0 t110 0 t110 0" />
+    </g>
+  </g>
+  <text class="t" x="600" y="1110" text-anchor="middle" font-size="96">1411</text>
+</svg>

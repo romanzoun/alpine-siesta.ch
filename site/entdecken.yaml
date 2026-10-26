@@ -1,0 +1,18 @@
+# ─────────────────────────────────────────────────────────────
+# Anpassungen am Aktivitäten-Katalog – gilt nur für diese Website.
+# Der Katalog selbst (site/katalog/) wird automatisch gespiegelt und
+# nie von Hand geändert. Eigene Aktivitäten: site/aktivitaeten/.
+# ─────────────────────────────────────────────────────────────
+
+# Aktivitäten, die auf dieser Website nicht erscheinen sollen (Ordnername)
+ausblenden: []
+
+# Pro Aktivität (Ordnername): eigener Tipp, Anreise ab der Wohnung, Geheimtipp
+anpassungen:
+  leukerbad-therme:
+    anreise_min: 5        # [TODO] Gehzeit ab Alpine Siesta
+    anreise_wie: zu Fuss
+    # tipp: |
+    #   Am Abend ist es ruhiger – und das Licht auf der Gemmiwand wunderschön.
+  # gemmipass-daubensee:
+  #   geheimtipp: true

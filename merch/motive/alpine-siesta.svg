@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <!-- T-Shirt Front: Wortmarke mit aufsteigendem Thermaldampf -->
+  <style>
+    @font-face { font-family: "Archivo"; src: url("../fonts/archivo-wdth.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    svg { --ink: #f5f8f7; --akzent: #f0b38c; --zweit: #5cc8c2; }
+    svg.dunkel { --ink: #16233a; --akzent: #d9825a; --zweit: #0f7470; }
+    .t { font-family: "Archivo"; font-stretch: 62%; font-weight: 800; fill: var(--ink); }
+    .k { font-family: "Archivo"; font-stretch: 100%; font-weight: 500; fill: var(--ink); }
+  </style>
+  <g fill="none" style="stroke: var(--zweit)" stroke-width="12" stroke-linecap="round">
+    <path d="M480 560 q-34 -55 0 -110 q34 -55 0 -110" />
+    <path d="M600 590 q-34 -55 0 -110 q34 -55 0 -110 q34 -55 0 -110" />
+    <path d="M720 560 q-34 -55 0 -110 q34 -55 0 -110" />
+  </g>
+  <text class="t" x="600" y="930" text-anchor="middle" font-size="400" letter-spacing="-6">Alpine</text>
+  <text class="t" x="600" y="1270" text-anchor="middle" font-size="400" letter-spacing="-6" style="fill: var(--akzent)">Siesta</text>
+  <text class="k" x="600" y="1390" text-anchor="middle" font-size="60" letter-spacing="8">Leukerbad, Wallis</text>
+</svg>

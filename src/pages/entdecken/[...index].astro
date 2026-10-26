@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AktivitaetenListe from '../../components/AktivitaetenListe.astro';
+import ThemenLinks from '../../components/ThemenLinks.astro';
+import { sortiert } from '../../lib/entdecken';
+import { site } from '../../config';
+
+// Nur erzeugen, wenn «Entdecken» eingeschaltet ist (site.module.entdecken)
+export function getStaticPaths() {
+  return site.module.entdecken ? [{ params: { index: undefined } }] : [];
+}
+
+const aktivitaeten = sortiert(await getCollection('aktivitaeten'));
+---
+
+<Base title={`Was tun in ${site.ort}? Aktivitäten für jeden Monat | ${site.name}`} description={`Aktivitäten in ${site.ort} nach Monat, Reisegruppe und Thema filtern: Thermen, Wandern, Skifahren, Ausflüge und Geheimtipps vom Gastgeber.`}>
+  <section class="section container">
+    <Breadcrumbs pfad={[{ name: 'Entdecken', href: '/entdecken/' }]} />
+    <h1>Was tun in {site.ort}?</h1>
+    <p class="lead">Sag uns, wann du kommst und mit wem – wir zeigen dir, was sich lohnt.</p>
+    <AktivitaetenListe aktivitaeten={aktivitaeten} filter />
+  </section>
+  <section class="section container">
+    <h2>Nach Thema stöbern</h2>
+    <ThemenLinks />
+  </section>
+</Base>

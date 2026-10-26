@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { naechsterTermin, saisonsVon, terminText, themenUrl, themenH1 } from '../../lib/entdecken';
+import * as L from '../../lib/labels';
+import { site } from '../../config';
+import { buchungsZiel } from '../../lib/wohnungen';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('aktivitaeten');
+  return alle.map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag, alle } }));
+}
+
+interface Props {
+  eintrag: CollectionEntry<'aktivitaeten'>;
+  alle: CollectionEntry<'aktivitaeten'>[];
+}
+const { eintrag, alle } = Astro.props;
+const a = eintrag.data;
+const { Content } = await render(eintrag);
+const buchenZiel = await buchungsZiel();
+
+// Brotkrumen über das erste Thema, Schlagworte verlinken auf Themenseiten
+const hauptThema = a.kategorien[0];
+const schlagworte = [
+  ...saisonsVon(eintrag).map((w) => ({ href: themenUrl('saison', w), label: L.saisons[w] })),
+  ...a.zielgruppen.map((w) => ({ href: themenUrl('fuer', w), label: L.zielgruppen[w] })),
+  ...a.kategorien.map((w) => ({ href: themenUrl('thema', w), label: L.kategorien[w] })),
+];
+
+const aehnlich = alle
+  .filter((x) => x.id !== eintrag.id)
+  .map((x) => ({ x, score: x.data.kategorien.filter((k) => a.kategorien.includes(k)).length + (x.data.pillar === a.pillar ? 1 : 0) }))
+  .filter((s) => s.score > 0)
+  .sort((p, q) => q.score - p.score)
+  .slice(0, 3)
+  .map((s) => s.x);
+
+const istEvent = a.typ === 'event';
+const kommende = istEvent ? a.termine.filter((t) => (t.ende ?? t.beginn) >= new Date(Date.now() - 86_400_000)).sort((x, y) => x.beginn.getTime() - y.beginn.getTime()) : [];
+const fakten = [
+  ...(istEvent
+    ? [['Wann', kommende.map(terminText).join(' · ')], ...(a.veranstaltungsort ? [['Wo', a.veranstaltungsort]] : [])]
+    : [['Saison', a.monate.length === 12 ? 'Ganzjährig' : a.monate.map((m) => L.monatsnamen[m - 1]).join(', ')]]),
+  ['Für', a.zielgruppen.map((z) => L.zielgruppen[z]).join(', ')],
+  ['Dauer', L.dauer[a.dauer]],
+  ['Anstrengung', L.anstrengung[a.anstrengung]],
+  ['Preis', L.preis[a.preis]],
+  ['Wetter', L.wetter[a.wetter]],
+  ['Ab der Wohnung', `${a.anreise_min} min ${a.anreise_wie}`],
+  ['Kinderwagen', a.kinderwagen ? 'Ja' : 'Nein'],
+  ['Hunde', a.hund ? 'Erlaubt' : 'Nicht erlaubt'],
+];
+
+const ort = { '@type': 'Place', name: a.veranstaltungsort ?? a.ort, address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' } };
+const bildUrl = a.bild ? new URL(a.bild.src, Astro.site).href : undefined;
+const schema = istEvent
+  ? kommende.map((t) => ({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: a.title,
+      description: a.description,
+      url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
+      startDate: t.beginn.toISOString(),
+      ...(t.ende && { endDate: t.ende.toISOString() }),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: ort,
+      ...(bildUrl && { image: bildUrl }),
+      isAccessibleForFree: a.preis === 'gratis',
+    }))
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'TouristAttraction',
+      name: a.title,
+      description: a.description,
+      url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
+      isAccessibleForFree: a.preis === 'gratis',
+      address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' },
+      ...(bildUrl && { image: bildUrl }),
+      ...(a.website && { sameAs: a.website }),
+    };
+---
+
+<Base title={`${a.title} | ${site.name}`} description={a.description} bild={a.bild}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <article class="section container">
+    <Breadcrumbs pfad={[
+      { name: 'Entdecken', href: '/entdecken/' },
+      { name: themenH1('thema', hauptThema), href: themenUrl('thema', hauptThema) },
+      { name: a.title, href: `/entdecken/${eintrag.id}/` },
+    ]} />
+    <h1 style={`view-transition-name: titel-${eintrag.id}`}>{a.title}</h1>
+    <p class="lead">{a.kurz}</p>
+    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
+
+    <div class="zweispaltig">
+      <div class="prose">
+        <Content />
+        {a.quelle && (
+          <p class="quelle">
+            Quelle: <a href={a.quelle.url} rel="nofollow noopener" target="_blank">{a.quelle.name}</a>, Stand {a.quelle.abgerufen.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}.
+            {istEvent && ' Angaben ohne Gewähr – Details und Änderungen beim Veranstalter.'}
+          </p>
+        )}
+        {a.galerie.length > 0 && (
+          <ul class="galerie">
+            {a.galerie.map((g) => <li><Image src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" /></li>)}
+          </ul>
+        )}
+      </div>
+      <aside class="fakten">
+        <dl>
+          {fakten.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+        </dl>
+        {a.website && <p><a href={a.website} rel="noopener">Offizielle Website</a></p>}
+        <ul class="schlagworte">{schlagworte.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul>
+        <a class="btn" href={buchenZiel}>Unterkunft buchen</a>
+      </aside>
+    </div>
+  </article>
+
+  {aehnlich.length > 0 && (
+    <section class="section container">
+      <h2>Das könnte dir auch gefallen</h2>
+      <div class="karten">{aehnlich.map((x) => <AktivitaetKarte aktivitaet={x} />)}</div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .schlagworte { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .9rem; }
+  .schlagworte a { display: inline-block; padding: .25rem .65rem; border-radius: var(--radius); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--text); text-decoration: none; }
+  .schlagworte a:hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+  .galerie { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .5rem; grid-template-columns: repeat(2, 1fr); }
+  .galerie img { border-radius: var(--radius); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+  .fakten { border-top: 2px solid var(--text); padding-top: 1rem; }
+  .quelle { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .9rem; color: var(--muted); }
+  .karten { display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .titelbild { border-radius: var(--radius); margin-block: 1.5rem; width: 100%; }
+  .zweispaltig { display: grid; gap: 2rem; margin-top: 1.5rem; }
+  @media (min-width: 60rem) { .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; } }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0 0 1rem; font-size: .95rem; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+</style>

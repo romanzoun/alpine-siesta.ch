@@ -1,0 +1,27 @@
+{
+  "name": "alpine-siesta",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "checkliste": "node scripts/checkliste.mjs",
+    "build:entwuerfe": "PUBLIC_ENTWUERFE=true astro build",
+    "merch:export": "node merch/export.mjs",
+    "seo-check": "node scripts/seo-check.mjs",
+    "katalog:sync": "node scripts/katalog-sync.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/archivo": "^5.3.0",
+    "astro": "^7.4.1",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "playwright-core": "1.56",
+    "typescript": "^6.0.3"
+  }
+}

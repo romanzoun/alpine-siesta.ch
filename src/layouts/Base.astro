@@ -1,0 +1,115 @@
+---
+import '../styles/global.css';
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { site } from '../config';
+import { getCollection } from 'astro:content';
+import { buchungsZiel, wohnungenNav } from '../lib/wohnungen';
+import { allePillars, hubUrl } from '../lib/pillars';
+
+interface Props {
+  title: string;
+  description: string;
+  // Vorschaubild für Social Media; ohne Angabe /og.jpg aus site/public/
+  bild?: ImageMetadata;
+  typ?: 'website' | 'article';
+  // Entwürfe nie indexieren (falls sie versehentlich mitgebaut werden)
+  noindex?: boolean;
+}
+const { title, description, bild, typ = 'website', noindex = false } = Astro.props;
+const ogBild = bild
+  ? new URL((await getImage({ src: bild, width: 1200, height: 630, fit: 'cover', format: 'jpeg' })).src, Astro.site).href
+  : new URL('/og.jpg', Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const nav = [
+  await wohnungenNav(),
+  ...((await allePillars()).length ? [{ href: hubUrl(), label: site.ort }] : []),
+  ...(site.module.entdecken ? [{ href: '/entdecken/', label: 'Entdecken' }] : []),
+  ...site.nav,
+  { href: '/kontakt/', label: 'Kontakt' },
+];
+const buchenZiel = await buchungsZiel();
+const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
+---
+
+<!doctype html>
+<html lang={site.sprache}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content={typ} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.sprache.replace('-', '_')} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogBild} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container bar">
+        <a href="/" class="logo">{site.name}</a>
+        <nav aria-label="Hauptnavigation">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
+          ))}
+        </nav>
+        <a class="btn" href={buchenZiel}>Buchen</a>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p class="footer-name">{site.name}</p>
+        <p>Ferienwohnung in {site.ort}, {site.region}<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <ul class="footer-links">{rechtliches.map((r) => <li><a href={`/${r.id}/`}>{r.data.title}</a></li>)}</ul>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'logo nav btn';
+    align-items: center;
+    gap: .5rem 1.5rem;
+    padding-block: .75rem;
+  }
+  .logo { grid-area: logo; white-space: nowrap; font-stretch: 62%; font-size: 1.7rem; font-weight: 800; color: var(--text); text-decoration: none; }
+  nav { grid-area: nav; display: flex; justify-content: flex-end; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; }
+  nav a { color: var(--text); text-decoration: none; white-space: nowrap; }
+  nav a { padding-block: .25rem; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size .25s var(--ease-out); }
+  nav a:hover, nav a[aria-current='page'] { background-size: 100% 2px; }
+  .bar .btn { grid-area: btn; padding: .55rem 1.1rem; white-space: nowrap; }
+  @media (max-width: 40rem) {
+    .bar { grid-template-columns: 1fr auto; grid-template-areas: 'logo btn' 'nav nav'; }
+    nav { justify-content: flex-start; font-size: .95rem; }
+  }
+  .site-footer { background: var(--band); color: var(--band-text); padding-block: 3rem 4rem; font-size: .95rem; border-top: 1px solid rgb(245 248 247 / .12); }
+  .site-footer a { color: inherit; }
+  .footer-links { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+  .footer-name { font-stretch: 62%; font-weight: 800; font-size: clamp(3rem, 10vw, 6rem); line-height: .9; margin: 0 0 1rem; }
+</style>

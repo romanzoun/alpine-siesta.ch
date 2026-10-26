@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Fakten from '../../components/Fakten.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { alleWohnungen, wohnungUrl } from '../../lib/wohnungen';
+import { site } from '../../config';
+
+const wohnungen = await alleWohnungen();
+---
+
+<Base title={`Unsere Ferienwohnungen in ${site.ort} | ${site.name}`} description={`Alle Ferienwohnungen von ${site.name} in ${site.ort} im Überblick – direkt beim Gastgeber buchen.`}>
+  <section class="section container">
+    <Breadcrumbs pfad={[{ name: 'Wohnungen', href: '/wohnungen/' }]} />
+    <h1>Unsere Wohnungen</h1>
+    <div class="liste">
+      {wohnungen.map(({ id, data: w }) => (
+        <article>
+          <a href={wohnungUrl(id)}><Image src={w.galerie[0].bild} alt={w.galerie[0].alt} widths={[480, 900]} sizes="(min-width: 48rem) 50vw, 100vw" /></a>
+          <h2><a href={wohnungUrl(id)}>{w.name}</a></h2>
+          <p class="lead">{w.claim}</p>
+          <Fakten fakten={w.fakten} />
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .liste { grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+  img { border-radius: var(--radius); aspect-ratio: 3 / 2; object-fit: cover; width: 100%; margin-bottom: 1.25rem; }
+  h2 a { color: inherit; text-decoration: none; }
+</style>

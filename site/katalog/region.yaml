@@ -1,0 +1,10 @@
+# Region Leukerbad – gilt für alle Websites in dieser Region.
+name: Leukerbad
+# Pillar-Themen (Schlüssel = Wert «pillar» in den Aktivitäten).
+# Websites dieser Region verwenden dieselben Schlüssel in site/site.config.ts.
+pillars:
+  - { id: thermen, name: Thermen & Wellness }
+  - { id: familie, name: Familienferien }
+  - { id: sommer, name: Wandern & Sommer }
+  - { id: winter, name: Winter & Ski }
+  - { id: reisetipps, name: Anreise & Wallis-Ausflüge }

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="1000" height="1400">
+  <!-- Poster / Alu-Druck 50 × 70 cm: Gemmiwand im Abendlicht, Stil Schweizer Reiseplakat -->
+  <style>
+    @font-face { font-family: "Archivo"; src: url("../fonts/archivo-wdth.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    .t { font-family: "Archivo"; font-stretch: 62%; font-weight: 800; }
+    .k { font-family: "Archivo"; font-stretch: 100%; font-weight: 500; }
+  </style>
+  <defs>
+    <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16233a" /><stop offset=".55" stop-color="#4b5878" /><stop offset=".9" stop-color="#f0b38c" />
+    </linearGradient>
+    <linearGradient id="wand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9a98a" /><stop offset=".2" stop-color="#7d6f86" /><stop offset="1" stop-color="#2b3a56" />
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="1400" fill="url(#himmel)" />
+  <circle cx="760" cy="300" r="70" fill="#ffd9b8" opacity=".9" />
+  <path d="M0 640 L120 560 L210 600 L330 500 L420 560 L500 520 L560 580 L0 760Z M640 560 L760 470 L850 520 L1000 480 L1000 760 L640 760Z" fill="#5d6a8a" opacity=".75" />
+  <path d="M0 640 L60 630 L130 540 L160 470 L240 455 L340 470 L430 450 L530 462 L630 440 L730 456 L830 436 L890 460 L930 540 L1000 600 L1000 1400 L0 1400Z" fill="url(#wand)" />
+  <path d="M160 470 L240 455 L340 470 L430 450 L530 462 L630 440 L730 456 L830 436 L890 460" fill="none" stroke="#ffd2b4" stroke-width="4" />
+  <g stroke="#1f2d47" stroke-width="2.5" opacity=".35" fill="none"><path d="M170 540 Q500 520 925 535" /><path d="M140 610 Q520 590 960 605" /><path d="M110 680 Q540 660 990 675" /></g>
+  <path d="M0 860 Q260 800 520 850 Q760 895 1000 840 L1000 1400 L0 1400Z" fill="#16233a" />
+  <g fill="#ffd9a8"><circle cx="420" cy="868" r="4" /><circle cx="455" cy="878" r="3" /><circle cx="495" cy="866" r="4" /><circle cx="535" cy="882" r="3" /><circle cx="575" cy="872" r="4" /><circle cx="615" cy="886" r="3" /><circle cx="655" cy="876" r="4" /><circle cx="520" cy="900" r="3" /><circle cx="600" cy="906" r="3" /></g>
+  <g fill="none" stroke="#f5f8f7" stroke-width="6" stroke-linecap="round" opacity=".5">
+    <path d="M470 840 q-18 -28 0 -56 q18 -28 0 -56" /><path d="M520 830 q-18 -28 0 -56 q18 -28 0 -56 q18 -28 0 -56" /><path d="M570 840 q-18 -28 0 -56 q18 -28 0 -56" />
+  </g>
+  <text class="t" x="70" y="1170" font-size="250" fill="#f5f8f7" letter-spacing="-4">Leukerbad</text>
+  <text class="k" x="76" y="1250" font-size="40" fill="#f0b38c" letter-spacing="5">Thermalwasser, Gemmiwand, Siesta.</text>
+  <text class="k" x="76" y="1320" font-size="30" fill="#f5f8f7" opacity=".8" letter-spacing="4">Alpine Siesta, Wallis</text>
+</svg>

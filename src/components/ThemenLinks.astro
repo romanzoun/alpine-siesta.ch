@@ -1,0 +1,35 @@
+---
+// Interne Verlinkung auf alle Themenseiten, gruppiert nach Dimension.
+import { getCollection } from 'astro:content';
+import { dimensionen, themenseiten, themenUrl, themenH1, type DimensionKey } from '../lib/entdecken';
+
+interface Props {
+  aktuell?: string;
+}
+const { aktuell } = Astro.props;
+const seiten = themenseiten(await getCollection('aktivitaeten'));
+const gruppen = (Object.keys(dimensionen) as DimensionKey[])
+  .map((d) => ({ d, seiten: seiten.filter((s) => s.d === d) }))
+  .filter((g) => g.seiten.length);
+---
+
+{gruppen.length > 0 && (
+  <nav class="themen liste" aria-label="Themen">
+    {gruppen.map((g) => (
+      <div>
+        <h3>{dimensionen[g.d].name}</h3>
+        <ul>
+          {g.seiten.map((s) => {
+            const href = themenUrl(s.d, s.wert);
+            return <li><a href={href} aria-current={href === aktuell ? 'page' : undefined}>{themenH1(s.d, s.wert)}</a></li>;
+          })}
+        </ul>
+      </div>
+    ))}
+  </nav>
+)}
+
+<style>
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .35rem; }
+  a[aria-current] { color: var(--text); font-weight: 650; text-decoration: none; }
+</style>

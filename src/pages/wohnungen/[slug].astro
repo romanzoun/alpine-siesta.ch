@@ -1,0 +1,114 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Fakten from '../../components/Fakten.astro';
+import Galerie from '../../components/Galerie.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Buchung from '../../components/Buchung.astro';
+import { site } from '../../config';
+import { alleWohnungen, wohnungUrl, type Wohnung } from '../../lib/wohnungen';
+
+const anzahl = (await alleWohnungen()).length;
+
+export async function getStaticPaths() {
+  return (await alleWohnungen()).map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag } }));
+}
+
+const { eintrag } = Astro.props as { eintrag: Wohnung };
+const w = eintrag.data;
+const { Content } = await render(eintrag);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'VacationRental',
+  name: w.name,
+  description: w.beschreibung,
+  url: new URL(wohnungUrl(eintrag.id), Astro.site).href,
+  address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
+  containsPlace: {
+    '@type': 'Accommodation',
+    occupancy: { '@type': 'QuantitativeValue', value: w.fakten.personen },
+    numberOfBedrooms: w.fakten.schlafzimmer,
+    numberOfBathroomsTotal: w.fakten.badezimmer,
+    floorSize: { '@type': 'QuantitativeValue', value: w.fakten.flaeche_m2, unitCode: 'MTK' },
+    amenityFeature: w.ausstattung.flatMap((k) =>
+      k.items.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+    ),
+  },
+  checkinTime: w.hausregeln.checkin,
+  checkoutTime: w.hausregeln.checkout,
+};
+---
+
+<Base title={`Die Wohnung – ${w.name} in ${site.ort}`} description={w.beschreibung} bild={w.galerie[0]?.bild}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <section class="section container">
+    <Breadcrumbs pfad={[...(anzahl > 1 ? [{ name: 'Wohnungen', href: '/wohnungen/' }] : []), { name: w.name, href: wohnungUrl(eintrag.id) }]} />
+    <h1>{w.name}</h1>
+    <p class="lead">{w.claim}</p>
+    <Fakten fakten={w.fakten} hoehe={w.lage.hoehe_m} />
+  </section>
+
+  <section class="container">
+    <Galerie bilder={w.galerie} />
+  </section>
+
+  <section class="section container zweispaltig">
+    <div class="prose">
+      <Content />
+    </div>
+    <aside class="buchen">
+      <Buchung slug={w.trizounSlug ?? eintrag.id} wohnung={eintrag.id} maxGaeste={w.fakten.personen} plattformen={w.plattformen} />
+    </aside>
+  </section>
+
+  <section class="section container">
+    <h2>Ausstattung</h2>
+    <div class="liste">
+      {w.ausstattung.map((k) => (
+        <div>
+          <h3>{k.kategorie}</h3>
+          <ul>{k.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Lage</h2>
+    <p class="lead">{w.lage.ort}, {w.lage.hoehe_m} m ü. M.</p>
+    <ul class="distanzen">
+      {w.lage.distanzen.map((d) => (
+        <li><strong>{d.ziel}</strong> <span class="muted">{d.minuten} min {d.wie}</span></li>
+      ))}
+    </ul>
+    <p><strong>Parkplatz:</strong> {w.lage.parkplatz}</p>
+  </section>
+
+  <section class="section container">
+    <h2>Hausregeln</h2>
+    <dl class="regeln">
+      <dt>Check-in</dt><dd>{w.hausregeln.checkin}</dd>
+      <dt>Check-out</dt><dd>{w.hausregeln.checkout}</dd>
+      <dt>Haustiere</dt><dd>{w.hausregeln.haustiere}</dd>
+      <dt>Rauchen</dt><dd>{w.hausregeln.rauchen}</dd>
+    </dl>
+    {w.hausregeln.weitere.length > 0 && <ul>{w.hausregeln.weitere.map((r) => <li>{r}</li>)}</ul>}
+  </section>
+</Base>
+
+<style>
+  .zweispaltig { display: grid; gap: 2rem; }
+  @media (min-width: 60rem) {
+    .zweispaltig { grid-template-columns: 1fr 22rem; align-items: start; }
+    .buchen { position: sticky; top: 6rem; }
+  }
+  .liste ul { list-style: none; padding: 0; margin: 0; }
+  .liste li { padding-block: .2rem; }
+  .distanzen { list-style: none; padding: 0; display: grid; gap: .5rem; max-width: 30rem; }
+  .distanzen li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: .5rem; }
+  .regeln { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.5rem; }
+  .regeln dt { color: var(--muted); }
+  .regeln dd { margin: 0; }
+</style>

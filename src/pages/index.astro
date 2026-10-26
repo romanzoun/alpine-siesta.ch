@@ -1,0 +1,137 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Fakten from '../components/Fakten.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../config';
+import { alleWohnungen, buchungsZiel, wohnungUrl } from '../lib/wohnungen';
+
+const seite = (await getEntry('seiten', 'startseite'))!.data;
+const wohnungen = await alleWohnungen();
+const wohnung = wohnungen[0].data;
+const hero = seite.hero!;
+const buchenZiel = await buchungsZiel();
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': `${site.domain}/#website`, url: site.domain, name: site.name, inLanguage: site.sprache, publisher: { '@id': `${site.domain}/#anbieter` } },
+    {
+      '@type': 'Organization',
+      '@id': `${site.domain}/#anbieter`,
+      name: site.name,
+      url: site.domain,
+      email: site.email,
+      logo: new URL('/favicon.svg', site.domain).href,
+      address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
+    },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: seite.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.frage,
+    acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+  })),
+};
+---
+
+<Base title={seite.title} description={seite.description} bild={hero.bild}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={buchenZiel} ctaLabel="Verfügbarkeit & Preise" />
+
+  {wohnungen.length === 1 && (
+    <section class="container fakten-zeile">
+      <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} />
+    </section>
+  )}
+
+  <section class="section container zweispaltig">
+    <h2>Warum {site.ort}</h2>
+    <div class="liste">
+      {seite.highlights.map((h) => (
+        <article>
+          <h3>{h.titel}</h3>
+          <p class="muted">{h.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    {wohnungen.map(({ id, data: w }) => (
+      <div class="wohnung">
+        <ul class="mosaik">
+          {w.galerie.slice(0, 3).map((b, i) => (
+            <li><Image src={b.bild} alt={b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
+          ))}
+        </ul>
+        <div>
+          <h2>{wohnungen.length === 1 ? 'Die Wohnung' : w.name}</h2>
+          <p class="lead">{w.claim}</p>
+          <a class="btn btn--ghost" href={wohnungUrl(id)}>{wohnungen.length === 1 ? 'Wohnung ansehen' : `${w.name} ansehen`}</a>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="section band">
+    <div class="container zweispaltig">
+      <h2>Direkt buchen lohnt sich</h2>
+      <div>
+        <ul class="vorteile">
+          {seite.vorteile.map((v) => <li>{v}</li>)}
+        </ul>
+        <a class="btn" href={buchenZiel}>Verfügbarkeit &amp; Preise</a>
+      </div>
+    </div>
+  </section>
+
+  {seite.bewertungen.length > 0 && (
+    <section class="section container">
+      <h2>Das sagen unsere Gäste</h2>
+      <div class="liste">
+        {seite.bewertungen.map((b) => (
+          <figure>
+            <blockquote>«{b.text}»</blockquote>
+            <figcaption class="muted">{b.name}, {b.quelle}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section container zweispaltig">
+    <h2>Häufige Fragen</h2>
+    <Faq eintraege={seite.faq} />
+  </section>
+</Base>
+
+<style>
+  .fakten-zeile { padding-block: 2.5rem 0; }
+  .zweispaltig { display: grid; gap: 1.5rem 3rem; }
+  @media (min-width: 60rem) {
+    .zweispaltig { grid-template-columns: 22rem 1fr; align-items: start; }
+    .zweispaltig > h2 { position: sticky; top: 6rem; }
+  }
+  .zweispaltig .liste { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  .wohnung { display: grid; gap: 2rem 3rem; align-items: end; }
+  .wohnung + .wohnung { margin-top: clamp(3rem, 7vw, 5rem); }
+  @media (min-width: 60rem) { .wohnung { grid-template-columns: 3fr 2fr; } }
+  .mosaik { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: .5rem; aspect-ratio: 16 / 10; }
+  .mosaik li:first-child { grid-row: span 2; }
+  .mosaik li { overflow: hidden; border-radius: var(--radius); }
+  .mosaik img { width: 100%; height: 100%; object-fit: cover; }
+  .vorteile { list-style: none; padding: 0; margin: 0 0 2rem; font-size: 1.2rem; }
+  .vorteile li { padding-block: .8rem; border-bottom: 1px solid rgb(245 248 247 / .2); }
+  .vorteile li::before { content: '✓'; color: var(--glut); font-weight: 800; margin-right: .75rem; }
+  figure { margin: 0; }
+  blockquote { margin: 0 0 1rem; font-size: 1.35rem; line-height: 1.4; }
+</style>

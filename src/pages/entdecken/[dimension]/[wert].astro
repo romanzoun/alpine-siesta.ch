@@ -1,0 +1,46 @@
+---
+// Indexierbare Themenseiten, z. B. /entdecken/saison/winter/ oder /entdecken/fuer/paar/
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import AktivitaetenListe from '../../../components/AktivitaetenListe.astro';
+import ThemenLinks from '../../../components/ThemenLinks.astro';
+import { dimensionen, themenseiten, themenUrl, themenH1, sortiert, type DimensionKey } from '../../../lib/entdecken';
+import { site } from '../../../config';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('aktivitaeten');
+  return themenseiten(alle).map(({ d, wert, treffer }) => ({
+    params: { dimension: dimensionen[d].pfad, wert },
+    props: { d, wert, treffer: sortiert(treffer) },
+  }));
+}
+
+const { d, wert, treffer } = Astro.props as { d: DimensionKey; wert: string; treffer: Awaited<ReturnType<typeof getCollection<'aktivitaeten'>>> };
+const eigen = await getEntry('themenseiten', `${dimensionen[d].pfad}-${wert}`);
+const { Content } = eigen ? await render(eigen) : { Content: null };
+
+const h1 = eigen?.data.h1 ?? themenH1(d, wert);
+const title = eigen?.data.title ?? `${h1}: ${treffer.length} ${treffer.length === 1 ? 'Tipp' : 'Tipps'} | ${site.name}`;
+const description =
+  eigen?.data.description ??
+  `${h1}: ${treffer.slice(0, 3).map((a) => a.data.title.split(' – ')[0]).join(', ')} und mehr. Ausgewählt von deinen Gastgebern in ${site.ort}.`.replace(/^(.{0,157})\s.*$/s, '$1 …');
+const intro = eigen?.data.intro ?? `Unsere ${treffer.length === 1 ? 'Empfehlung' : `${treffer.length} Empfehlungen`} – ausgewählt von uns als Gastgeber.`;
+const href = themenUrl(d, wert);
+const filterLink = d === 'saison' ? '/entdecken/' : `/entdecken/?${d}=${wert}`;
+---
+
+<Base title={title} description={description}>
+  <section class="section container">
+    <Breadcrumbs pfad={[{ name: 'Entdecken', href: '/entdecken/' }, { name: h1, href }]} />
+    <h1>{h1}</h1>
+    <p class="lead">{intro}</p>
+    {Content && <div class="prose"><Content /></div>}
+    <p><a href={filterLink}>Alle Aktivitäten selbst filtern</a></p>
+    <AktivitaetenListe aktivitaeten={treffer} />
+  </section>
+  <section class="section container">
+    <h2>Weitere Themen</h2>
+    <ThemenLinks aktuell={href} />
+  </section>
+</Base>

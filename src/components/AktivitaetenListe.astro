@@ -1,0 +1,199 @@
+---
+// Liste aller Aktivitäten. Mit filter=true kommt die Filterleiste dazu (Monat, Für wen, Thema, Extras).
+// Alle Karten stehen im HTML (gut für Google); gefiltert wird im Browser, die Auswahl steht in der URL.
+import type { CollectionEntry } from 'astro:content';
+import AktivitaetKarte from './AktivitaetKarte.astro';
+import * as L from '../lib/labels';
+
+interface Props {
+  aktivitaeten: CollectionEntry<'aktivitaeten'>[];
+  filter?: boolean;
+}
+const { aktivitaeten, filter = false } = Astro.props;
+
+const extrasVon = ({ data: a }: CollectionEntry<'aktivitaeten'>) =>
+  [
+    a.kinderwagen && 'kinderwagen',
+    a.hund && 'hund',
+    a.preis === 'gratis' && 'gratis',
+    a.wetter !== 'outdoor' && 'regen',
+    a.geheimtipp && 'geheimtipp',
+  ].filter(Boolean).join(' ');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: aktivitaeten.map((a, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(`/entdecken/${a.id}/`, Astro.site).href,
+    name: a.data.title,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<div class="entdecken" data-entdecken>
+  {filter && (
+    <form class="filter" data-filter>
+      <fieldset>
+        <legend>Was suchst du?</legend>
+        <div class="chips">
+          {Object.entries(L.typen).map(([k, v]) => <label><input type="checkbox" name="typ" value={k} /><span>{k === 'event' ? 'Events' : 'Aktivitäten'}</span></label>)}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Wann kommst du?</legend>
+        <div class="chips">
+          <label><input type="radio" name="monat" value="" checked /><span>Egal</span></label>
+          {L.monatsnamen.map((m, i) => <label><input type="radio" name="monat" value={i + 1} /><span>{m}</span></label>)}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Wer bist du?</legend>
+        <div class="chips">
+          {Object.entries(L.zielgruppen).map(([k, v]) => <label><input type="checkbox" name="fuer" value={k} /><span>{v}</span></label>)}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Worauf hast du Lust?</legend>
+        <div class="chips">
+          {Object.entries(L.kategorien).map(([k, v]) => <label><input type="checkbox" name="thema" value={k} /><span>{v}</span></label>)}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Wichtig für dich</legend>
+        <div class="chips">
+          {Object.entries(L.extras).map(([k, v]) => <label><input type="checkbox" name="extra" value={k} /><span>{v}</span></label>)}
+        </div>
+      </fieldset>
+      <p class="stand"><span aria-live="polite"><strong data-anzahl>{aktivitaeten.length}</strong> Treffer</span> <button type="reset" class="zuruecksetzen">Filter zurücksetzen</button></p>
+    </form>
+  )}
+
+  <ul class="karten">
+    {aktivitaeten.map((a) => (
+      <li
+        data-typ={a.data.typ}
+        data-monate={a.data.monate.join(' ')}
+        data-fuer={a.data.zielgruppen.join(' ')}
+        data-thema={a.data.kategorien.join(' ')}
+        data-extra={extrasVon(a)}
+        style={`view-transition-name: karte-${a.id}`}
+      >
+        <AktivitaetKarte aktivitaet={a} />
+      </li>
+    ))}
+  </ul>
+
+  {filter && (
+    <div class="leer" data-leer hidden>
+      <h3>Dafür haben wir noch keinen Tipp</h3>
+      <p class="muted">Lass einen Filter weg oder schreib uns – wir helfen dir gern weiter.</p>
+      <button type="button" class="btn btn--ghost" data-zuruecksetzen>Filter zurücksetzen</button>
+    </div>
+  )}
+</div>
+
+<script>
+  // Filterlogik: innerhalb einer Gruppe ODER, zwischen Gruppen UND. Extras: alle gewählten müssen passen.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-entdecken]')) {
+    const form = root.querySelector<HTMLFormElement>('[data-filter]');
+    if (!form) continue;
+    const karten = [...root.querySelectorAll<HTMLElement>('.karten > li')];
+    const anzahl = root.querySelector('[data-anzahl]')!;
+    const leer = root.querySelector<HTMLElement>('[data-leer]')!;
+
+    const auswahl = () => {
+      const fd = new FormData(form);
+      return {
+        monat: String(fd.get('monat') ?? ''),
+        typ: fd.getAll('typ').map(String),
+        fuer: fd.getAll('fuer').map(String),
+        thema: fd.getAll('thema').map(String),
+        extra: fd.getAll('extra').map(String),
+      };
+    };
+
+    const anwenden = () => {
+      const a = auswahl();
+      const hat = (el: HTMLElement, key: string, werte: string[]) =>
+        !werte.length || werte.some((w) => el.dataset[key]!.split(' ').includes(w));
+      const sichtbar = (el: HTMLElement) =>
+        (!a.monat || el.dataset.monate!.split(' ').includes(a.monat)) &&
+        hat(el, 'typ', a.typ) &&
+        hat(el, 'fuer', a.fuer) &&
+        hat(el, 'thema', a.thema) &&
+        a.extra.every((x) => el.dataset.extra!.split(' ').includes(x));
+
+      const aktualisieren = () => {
+        let n = 0;
+        for (const el of karten) {
+          const zeigen = sichtbar(el);
+          el.hidden = !zeigen;
+          if (zeigen) n++;
+        }
+        anzahl.textContent = String(n);
+        leer.hidden = n > 0;
+      };
+      // Sanftes Umsortieren, wo der Browser es kann
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(aktualisieren);
+      else aktualisieren();
+
+      const params = new URLSearchParams();
+      if (a.monat) params.set('monat', a.monat);
+      for (const k of ['typ', 'fuer', 'thema', 'extra'] as const) if (a[k].length) params.set(k, a[k].join(','));
+      const qs = params.toString();
+      history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+    };
+
+    // Auswahl aus der URL übernehmen (z. B. /entdecken/?monat=2&fuer=paar)
+    const url = new URLSearchParams(location.search);
+    const monat = url.get('monat');
+    if (monat) form.querySelector<HTMLInputElement>(`input[name="monat"][value="${CSS.escape(monat)}"]`)?.click();
+    for (const k of ['typ', 'fuer', 'thema', 'extra']) {
+      for (const w of (url.get(k) ?? '').split(',').filter(Boolean)) {
+        const input = form.querySelector<HTMLInputElement>(`input[name="${k}"][value="${CSS.escape(w)}"]`);
+        if (input) input.checked = true;
+      }
+    }
+
+    form.addEventListener('change', anwenden);
+    form.addEventListener('reset', () => setTimeout(anwenden));
+    root.querySelector('[data-zuruecksetzen]')?.addEventListener('click', () => form.reset());
+    if (location.search) anwenden();
+    // Gewählten Monat in der scrollbaren Reihe sichtbar machen
+    form.querySelector('input[name="monat"]:checked')?.closest('label')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+</script>
+
+<style>
+  .filter { display: grid; gap: 1.25rem; margin-block: 2rem 2.5rem; padding-block: 1.5rem; border-block: 2px solid var(--text); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { font-stretch: 62%; font-weight: 800; font-size: 1.35rem; margin-bottom: .6rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .chips span {
+    display: inline-block;
+    padding: .4rem .85rem;
+    border-radius: var(--radius);
+    box-shadow: inset 0 0 0 1.5px var(--rule);
+    font-size: .95rem;
+    transition: background-color .15s, color .15s, box-shadow .15s;
+  }
+  .chips label:hover span { box-shadow: inset 0 0 0 1.5px var(--text); }
+  .chips input:checked + span { background: var(--text); color: var(--bg); box-shadow: none; }
+  .chips input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 40rem) {
+    /* Chips horizontal scrollen, damit die Ergebnisse schnell sichtbar sind */
+    .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -1rem; padding-inline: 1rem; }
+    .chips span { white-space: nowrap; }
+  }
+  .stand { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; }
+  .zuruecksetzen { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+  .karten { list-style: none; padding: 0; margin: 0; display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .karten > li[hidden] { display: none; }
+  .leer { padding-block: 2rem; }
+</style>

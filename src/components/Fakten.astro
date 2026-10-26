@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  fakten: CollectionEntry<'wohnungen'>['data']['fakten'];
+  hoehe?: number;
+}
+const { fakten, hoehe } = Astro.props;
+const items = [
+  { wert: fakten.personen, label: 'Gäste' },
+  { wert: fakten.schlafzimmer, label: 'Schlafzimmer' },
+  { wert: `${fakten.flaeche_m2} m²`, label: 'Wohnfläche' },
+  ...(hoehe ? [{ wert: `${hoehe} m`, label: 'über Meer' }] : []),
+];
+---
+
+<dl class="fakten">
+  {items.map((i) => (
+    <div>
+      <dd>{i.wert}</dd>
+      <dt>{i.label}</dt>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .fakten { display: flex; flex-wrap: wrap; margin: 0; }
+  .fakten div { display: flex; flex-direction: column-reverse; padding: .25rem 2rem .25rem 0; margin-right: 2rem; border-right: 2px solid var(--rule); }
+  .fakten div:last-child { border-right: 0; }
+  dt { color: var(--muted); font-size: .95rem; }
+  dd { margin: 0; font-stretch: 62%; font-weight: 800; font-size: clamp(2.4rem, 6vw, 3.5rem); line-height: 1; }
+  @media (max-width: 40rem) {
+    .fakten { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .fakten div { border: 0; margin: 0; padding: 0; }
+  }
+</style>

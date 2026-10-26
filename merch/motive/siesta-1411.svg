@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <!-- Kleiner Brustdruck (links), auch für Caps und Tassen -->
+  <style>
+    @font-face { font-family: "Archivo"; src: url("../fonts/archivo-wdth.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    svg { --ink: #f5f8f7; --akzent: #f0b38c; --zweit: #5cc8c2; }
+    svg.dunkel { --ink: #16233a; --akzent: #d9825a; --zweit: #0f7470; }
+    .t { font-family: "Archivo"; font-stretch: 62%; font-weight: 800; fill: var(--ink); }
+    .k { font-family: "Archivo"; font-stretch: 100%; font-weight: 500; fill: var(--ink); }
+  </style>
+  <path d="M330 520 L470 330 L540 420 L600 360 L760 560 Z" fill="none" style="stroke: var(--ink)" stroke-width="16" stroke-linejoin="round" />
+  <path d="M470 330 L540 420 L600 360" fill="none" style="stroke: var(--akzent)" stroke-width="16" stroke-linejoin="round" transform="translate(0,-26)" />
+  <text class="t" x="270" y="820" font-size="250" letter-spacing="-3">Siesta auf</text>
+  <text class="t" x="270" y="1060" font-size="250" letter-spacing="-3" style="fill: var(--akzent)">1411 m</text>
+  <text class="k" x="276" y="1170" font-size="56" letter-spacing="6">Alpine Siesta, Leukerbad</text>
+</svg>

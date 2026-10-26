@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import * as L from '../lib/labels';
+import { naechsterTermin, terminText } from '../lib/entdecken';
+
+interface Props {
+  aktivitaet: CollectionEntry<'aktivitaeten'>;
+}
+const { id, data: a } = Astro.props.aktivitaet;
+const termin = a.typ === 'event' ? naechsterTermin(Astro.props.aktivitaet) : undefined;
+---
+
+<article class="karte">
+  <div class="bild" style={`view-transition-name: bild-${id}`}>
+    {a.bild ? (
+      <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 100vw" />
+    ) : (
+      <span class="ohne-bild" data-pillar={a.pillar}>{L.pillars[a.pillar]}</span>
+    )}
+  </div>
+  <h3 style={`view-transition-name: titel-${id}`}><a href={`/entdecken/${id}/`}>{a.title}</a></h3>
+  <p class="muted">{a.kurz}</p>
+  {termin ? (
+    <p class="meta"><strong class="termin">{terminText(termin)}</strong>{a.veranstaltungsort && `, ${a.veranstaltungsort}`}</p>
+  ) : (
+    <p class="meta">{L.dauer[a.dauer]}, {a.anreise_min} min {a.anreise_wie}</p>
+  )}
+</article>
+
+<style>
+  .karte { position: relative; display: flex; flex-direction: column; gap: .6rem; }
+  .bild { overflow: hidden; border-radius: var(--radius); aspect-ratio: 3 / 2; }
+  .bild img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+  .karte:hover img { transform: scale(1.04); }
+  .ohne-bild { display: grid; place-items: end start; height: 100%; padding: 1rem; font-stretch: 62%; font-weight: 800; font-size: 1.6rem; line-height: 1; color: var(--dampf); background: var(--nacht); }
+  .ohne-bild[data-pillar='thermen'] { background: linear-gradient(160deg, #0f7470, #16233a); }
+  .ohne-bild[data-pillar='sommer'] { background: linear-gradient(160deg, #5f7f52, #16233a); }
+  .ohne-bild[data-pillar='winter'] { background: linear-gradient(160deg, #7d93b0, #16233a); }
+  .ohne-bild[data-pillar='familie'] { background: linear-gradient(160deg, #c98d6a, #16233a); }
+  .ohne-bild[data-pillar='reisetipps'] { background: linear-gradient(160deg, #6c5f86, #16233a); }
+  h3 { margin: .4rem 0 0; }
+  h3 a { color: inherit; text-decoration: none; }
+  h3 a::after { content: ''; position: absolute; inset: 0; }
+  .karte:hover h3 a { text-decoration: underline; text-decoration-thickness: 2px; }
+  p { margin: 0; }
+  .meta { font-size: .9rem; color: var(--muted); }
+  .termin { color: var(--accent); font-weight: 650; }
+</style>

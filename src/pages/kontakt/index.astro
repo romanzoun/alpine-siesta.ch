@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Anfrage from '../../components/Anfrage.astro';
+import { site } from '../../config';
+---
+
+<Base title={`Kontakt – ${site.name}`} description={`Fragen zur Ferienwohnung in ${site.ort} oder Buchungsanfrage: Schreib uns, wir antworten persönlich.`}>
+  <section class="section container schmal">
+    <Breadcrumbs pfad={[{ name: 'Kontakt', href: '/kontakt/' }]} />
+    <h1>Kontakt</h1>
+    <p class="lead">Fragen zur Wohnung, zu {site.ort} oder eine Buchungsanfrage? Schreib uns – wir antworten persönlich.</p>
+    <Anfrage />
+    <p class="muted">Oder per E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+  </section>
+</Base>
+
+<style>
+  .schmal { max-width: 40rem; }
+</style>
