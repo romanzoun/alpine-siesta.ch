@@ -8,7 +8,7 @@ import { site } from '../config';
 import { asLocale, mitLocale, type Locale } from '../i18n/config';
 import { ui } from '../i18n/ui';
 import { familieLocale, hubText } from '../i18n/familie';
-import { artikelText, pillarText } from '../i18n/reisefuehrer';
+import { artikelText, pillarIstMehrsprachig, pillarText } from '../i18n/reisefuehrer';
 
 interface Props {
   locale?: Locale;
@@ -16,7 +16,9 @@ interface Props {
 const locale = asLocale(Astro.props.locale);
 const t = ui(locale);
 const text = hubText(locale);
-const pillars = await Promise.all((await allePillars()).map(async (p) => ({ p, artikel: await artikelVon(p.id) })));
+// In anderen Sprachen nur Themen zeigen, die übersetzt sind – sonst führt der Link ins Leere
+const sichtbar = (await allePillars()).filter((p) => locale === 'de' || pillarIstMehrsprachig(p.id));
+const pillars = await Promise.all(sichtbar.map(async (p) => ({ p, artikel: await artikelVon(p.id) })));
 ---
 
 <Base locale={locale} title={text.title} description={text.description} sprachen={['de', 'en', 'fr', 'it']}>

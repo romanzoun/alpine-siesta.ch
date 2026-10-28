@@ -17,7 +17,7 @@ faq:
     antwort: Am Vormittag sind die Viertausender oft am klarsten. Auf dem Torrenttrail ist die Satellitenbodenstation Brentjong im Abendlicht das beste Fotomotiv.
   - frage: Wo stelle ich die Bikes in der Wohnung ab?
     antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
-entwurf: true
+entwurf: false
 ---
 
 Es gibt diese Stelle auf jeder guten Tour: Du bremst, stellst einen Fuss ab und schaust nur noch. Rund um Leukerbad kommt sie öfter, als dir lieb ist, wenn du eigentlich vorwärtskommen willst. Biketouren mit Aussicht sind hier die Regel, nicht die Ausnahme. Das Dorf liegt in einer Felsarena, oben auf Torrent stehen dir die Walliser Viertausender gegenüber, und an fast jedem Hang öffnet sich irgendwann das Rhonetal. Hier sind die Touren, auf denen wir am häufigsten anhalten, und was du dort siehst.
