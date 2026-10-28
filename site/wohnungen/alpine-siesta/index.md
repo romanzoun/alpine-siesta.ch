@@ -43,7 +43,7 @@ ausstattung:
   - kategorie: Familie
     items: [Hochstuhl, Spielküche, Brettspiele, Schaukelpferd, Babybett zum Ausklappen]
   - kategorie: Sonstiges
-    items: [Waschmaschine, Lift, Aussenparkplatz, Gästekarten]
+    items: [Waschmaschine, Lift, Aussenparkplatz, Veloraum im Keller, Gästekarten]
 
 hausregeln:
   checkin: "ab 15:00"
@@ -131,7 +131,7 @@ Für uns beginnt das Feriengefühl dort, wo nichts drängt. Die Wohnung liegt im
 
 Zur Leukerbad Therme, ins Zentrum und zur Sportarena sind es etwa zehn Minuten zu Fuss. Die Gemmibahn erreichst du in fünf Minuten, die Haltestelle La Boheme und die gleichnamige Bäckerei in zwei Minuten. Mit dem Bus bist du in sieben Minuten bei den Torrent-Bahnen.
 
-Ein Aussenparkplatz gehört zur Wohnung. Gästekarten liegen bereit und geben Rabatt bei Angeboten in der Region.
+Ein Aussenparkplatz gehört zur Wohnung, und eure Bikes stellt ihr im Keller ab. Gästekarten liegen bereit und geben Rabatt bei Angeboten in der Region.
 
 ## Die Räume
 
