@@ -47,7 +47,7 @@ Rohinhalte (Texte + Bilder) in `inbox/aktivitaeten/` verarbeitet der Skill `.cla
 
 ## Design
 
-Gestaltet nach `.claude/skills/frontend-design/SKILL.md`. Festgelegtes System – bei neuen Seiten beibehalten:
+Gestaltet nach `.claude/skills/frontend-design/SKILL.md`. Bauen und Umbauen mit dem Skill `ui-ux-experte`, prüfen mit `ui-pruefen` und `ux-pruefen`. Festgelegtes System – bei neuen Seiten beibehalten:
 
 - **Farben** (`src/styles/global.css`): Dampf `#F5F8F7` (Hintergrund), Kalk `#DCE3E0` (Linien), Nacht `#16233A` (Text, dunkle Bänder), Thermal `#0F7470` (Links, Buttons), Glut `#F0B38C` (Alpenglühen – nur Hero und Buttons auf dunklem Grund).
 - **Schrift**: nur Archivo. Titel extrem schmal (`font-stretch: 62%`, Gewicht 800) im Stil Schweizer Reiseplakate, Fliesstext normal breit.
