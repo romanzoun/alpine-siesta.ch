@@ -30,28 +30,28 @@ export type HubText = {
 
 const hub: Record<Locale, HubText> = {
   de: {
-    title: 'Leukerbad mit Kindern | Alpine Siesta',
-    description: 'Familienferien in Leukerbad: Therme, Gemmi und das Dorf zu Fuss ab der Wohnung.',
-    h1: 'Leukerbad mit Kindern',
-    lead: 'Kurze Wege, viel Natur, und ein Dorf, in dem ihr euch mit Kindern sofort zurechtfindet. Den Anfang machen die Familienferien.',
+    title: 'Reiseführer Leukerbad und Wallis | Alpine Siesta',
+    description: 'Reiseführer für Leukerbad und das Wallis: Ferien mit Kindern, ein Tag in Zermatt und Wein im Tal, alles ab unserer Ferienwohnung.',
+    h1: 'Leukerbad und das Wallis',
+    lead: 'Familienferien, ein Tag in Zermatt, ein Glas Wein im Tal: was wir unseren Gästen empfehlen, mit kurzen Wegen ab der Wohnung.',
   },
   en: {
-    title: 'Leukerbad with children',
-    description: 'A family stay in Leukerbad: the thermal baths, the Gemmi and the village, all on foot from the apartment.',
-    h1: 'Leukerbad with children',
-    lead: 'Short walks, a lot of outdoors, and a village you can read at a glance with children. The first article is the family stay.',
+    title: 'Leukerbad and Valais travel guide',
+    description: 'A guide to Leukerbad and Valais: holidays with children, a day in Zermatt and wine in the valley, all from our apartment.',
+    h1: 'Leukerbad and Valais',
+    lead: 'A family stay, a day in Zermatt, a glass of wine in the valley: what we tell our guests, all close to the apartment.',
   },
   fr: {
-    title: 'Loèche-les-Bains en famille',
-    description: 'Des vacances en famille à Loèche-les-Bains : thermes, Gemmi et village à pied depuis l’appartement.',
-    h1: 'Loèche-les-Bains en famille',
-    lead: 'Des trajets courts, beaucoup de nature, et un village que tu lis d’un coup d’œil avec des enfants. Le premier article parle des vacances en famille.',
+    title: 'Guide de Loèche-les-Bains et du Valais',
+    description: 'Un guide de Loèche-les-Bains et du Valais : vacances avec enfants, une journée à Zermatt et le vin dans la vallée, depuis notre appartement.',
+    h1: 'Loèche-les-Bains et le Valais',
+    lead: 'Des vacances en famille, une journée à Zermatt, un verre de vin dans la vallée : ce que nous conseillons à nos hôtes, à deux pas de l’appartement.',
   },
   it: {
-    title: 'Leukerbad in famiglia',
-    description: 'Vacanze in famiglia a Leukerbad: terme, Gemmi e paese, a piedi dall’appartamento.',
-    h1: 'Leukerbad in famiglia',
-    lead: 'Tragitti corti, tanta natura, e un paese che leggi in un colpo d’occhio con i bambini. Il primo articolo è sulle vacanze in famiglia.',
+    title: 'Guida di Leukerbad e del Vallese',
+    description: 'Una guida di Leukerbad e del Vallese: vacanze con i bambini, un giorno a Zermatt e il vino nella valle, tutto dal nostro appartamento.',
+    h1: 'Leukerbad e il Vallese',
+    lead: 'Vacanze in famiglia, un giorno a Zermatt, un bicchiere di vino nella valle: quello che consigliamo ai nostri ospiti, a pochi passi dall’appartamento.',
   },
 };
 

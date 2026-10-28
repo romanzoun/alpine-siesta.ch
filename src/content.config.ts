@@ -28,6 +28,8 @@ const wohnungen = defineCollection({
         badezimmer: z.number().optional(),
         flaeche_m2: z.number().optional(),
         stockwerk: z.string().optional(),
+        // Günstigster Preis pro Nacht bei Direktbuchung, ganze Franken. Ohne Angabe kein Preis-Hinweis.
+        preis_ab_chf: z.number().int().positive().optional(),
       }),
       lage: z.object({
         ort: z.string(),

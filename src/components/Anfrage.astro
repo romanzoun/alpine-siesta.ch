@@ -19,6 +19,8 @@ const { wohnung, daten = true, maxGaeste = 8 } = Astro.props;
 const locale = asLocale(Astro.props.locale ?? Astro.currentLocale);
 const t = ui(locale);
 const wohnungen = (await alleWohnungen()).map((w) => ({ id: w.id, name: w.data.name }));
+// Ordnername → Kurzname in Trizoun Travel
+const slugs = Object.fromEntries((await alleWohnungen()).map((w) => [w.id, w.data.trizounSlug ?? w.id]));
 const heute = new Date().toISOString().slice(0, 10);
 ---
 
@@ -38,16 +40,23 @@ const heute = new Date().toISOString().slice(0, 10);
     <div class="reihe">
       <label class="feld">{t.anreise}<input type="date" name="anreise" min={heute} /></label>
       <label class="feld">{t.abreise}<input type="date" name="abreise" min={heute} /></label>
-      <label class="feld">{t.gaeste}
-        <select name="gaeste">
+    </div>
+    <div class="reihe">
+      <label class="feld">{t.erwachsene}
+        <select name="erwachsene">
           {Array.from({ length: maxGaeste }, (_, i) => <option value={i + 1} selected={i + 1 === Math.min(2, maxGaeste)}>{i + 1}</option>)}
+        </select>
+      </label>
+      <label class="feld">{t.kinder}
+        <select name="kinder">
+          {Array.from({ length: maxGaeste }, (_, i) => <option value={i}>{i}</option>)}
         </select>
       </label>
     </div>
   )}
   <label class="feld">Name<input name="name" required maxlength="100" autocomplete="name" /></label>
   <label class="feld">E-Mail<input type="email" name="email" required maxlength="200" autocomplete="email" /></label>
-  <label class="feld">{t.nachricht}<textarea name="nachricht" rows="4" maxlength="5000" required></textarea></label>
+  <label class="feld">{daten ? t.nachrichtOptional : t.nachricht}<textarea name="nachricht" rows="4" maxlength="5000" required={!daten}></textarea></label>
   <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
   <label class="falle" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
   <input type="hidden" name="t" value="" />
@@ -56,22 +65,39 @@ const heute = new Date().toISOString().slice(0, 10);
   <p class="status" data-status role="status" aria-live="polite"></p>
 </form>
 
-<script define:vars={{ email: site.email, endpunkt: site.kontakt.endpunkt, trizounApi: trizoun.apiUrl ?? '', trizounKey: trizoun.key ?? '', name: site.name, texte: { anreise: t.anreise, abreise: t.abreise, gaeste: t.gaeste, mailOeffnet: t.mailOeffnet, wirdGesendet: t.wirdGesendet, danke: t.danke, nichtGeklappt: t.nichtGeklappt, anfrage: t.anfragen } }}>
+<script define:vars={{ slugs, email: site.email, endpunkt: site.kontakt.endpunkt, trizounApi: trizoun.apiUrl ?? '', trizounKey: trizoun.key ?? '', name: site.name, texte: { davonKinder: t.davonKinder, anreise: t.anreise, abreise: t.abreise, gaeste: t.gaeste, mailOeffnet: t.mailOeffnet, wirdGesendet: t.wirdGesendet, danke: t.danke, nichtGeklappt: t.nichtGeklappt, anfrage: t.anfragen } }}>
   document.querySelectorAll('[data-anfrage]').forEach((form) => {
     form.querySelector('[name="t"]').value = String(Math.floor(Date.now() / 1000));
     const status = form.querySelector('[data-status]');
     const anreise = form.querySelector('[name="anreise"]');
     const abreise = form.querySelector('[name="abreise"]');
     anreise?.addEventListener('change', () => { if (abreise) abreise.min = anreise.value; });
+    // Ist die E-Mail-Buchung der Wohnung in Trizoun eingeschaltet, geht das Formular an die API, sonst in die Mail-App.
+    const fest = form.querySelector('input[type="hidden"][name="wohnung"]')?.value;
+    if (trizounApi && trizounKey && fest) {
+      const knopf = form.querySelector('button[type="submit"]');
+      knopf.disabled = true;
+      fetch(`${trizounApi}/v1/public/listings/${encodeURIComponent(slugs[fest] ?? fest)}`, { headers: { authorization: `Bearer ${trizounKey}` } })
+        .then((res) => (res.ok ? res.json() : {}))
+        .then((json) => {
+          if (!json.data?.features?.emailBuchung) return;
+          form.dataset.versand = 'trizoun';
+          if (knopf.dataset.senden) knopf.textContent = knopf.dataset.senden;
+        })
+        .catch(() => {})
+        .finally(() => { knopf.disabled = false; });
+    }
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const f = Object.fromEntries(new FormData(form));
       if (f.website) return; // Spam-Falle
+      const kinder = Number(f.kinder || 0);
+      if (f.erwachsene) f.gaeste = String(Number(f.erwachsene) + kinder);
       const mailto = () => {
         const zeilen = [
           ...(f.anreise ? [`${texte.anreise}: ${f.anreise}`] : []),
           ...(f.abreise ? [`${texte.abreise}: ${f.abreise}`] : []),
-          ...(f.gaeste && f.anreise ? [`${texte.gaeste}: ${f.gaeste}`] : []),
+          ...(f.gaeste && f.anreise ? [`${texte.gaeste}: ${f.gaeste}${kinder ? `, ${texte.davonKinder.replace('{n}', kinder)}` : ''}`] : []),
           '',
           f.nachricht,
           '',
@@ -86,7 +112,7 @@ const heute = new Date().toISOString().slice(0, 10);
         knopf.disabled = true;
         status.textContent = texte.wirdGesendet;
         try {
-          const res = await fetch(`${trizounApi}/v1/public/listings/${encodeURIComponent(f.wohnung)}/kontakt`, {
+          const res = await fetch(`${trizounApi}/v1/public/listings/${encodeURIComponent(slugs[f.wohnung] ?? f.wohnung)}/kontakt`, {
             method: 'POST',
             headers: { authorization: `Bearer ${trizounKey}`, 'content-type': 'application/json' },
             body: JSON.stringify({
@@ -96,6 +122,7 @@ const heute = new Date().toISOString().slice(0, 10);
               ...(f.anreise ? { anreise: f.anreise } : {}),
               ...(f.abreise ? { abreise: f.abreise } : {}),
               ...(f.gaeste ? { gaeste: Number(f.gaeste) } : {}),
+              ...(kinder ? { kinder } : {}),
               website: f.website || '',
             }),
           });
@@ -140,8 +167,7 @@ const heute = new Date().toISOString().slice(0, 10);
 
 <style>
   .anfrage { display: grid; gap: .75rem; }
-  .reihe { display: grid; grid-template-columns: 1fr 1fr 5rem; gap: .6rem; }
-  @media (max-width: 30rem) { .reihe { grid-template-columns: 1fr 1fr; } }
+  .reihe { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
   .feld { display: grid; gap: .25rem; font-size: .95rem; }
   .feld :is(input, select, textarea) { font: inherit; padding: .55rem .7rem; border-radius: var(--radius); border: 1.5px solid var(--rule); background: var(--bg); color: var(--text); min-width: 0; }
   .feld :is(input, select, textarea):focus { outline: none; border-color: var(--accent); }

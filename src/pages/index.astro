@@ -7,6 +7,7 @@ import Fakten from '../components/Fakten.astro';
 import Faq from '../components/Faq.astro';
 import { site } from '../config';
 import { alleWohnungen, buchungsZiel, wohnungUrl } from '../lib/wohnungen';
+import { zeigeEntwuerfe } from '../lib/pillars';
 import { asLocale, htmlLang, type Locale } from '../i18n/config';
 import { ui } from '../i18n/ui';
 import { homeLocale } from '../i18n/home';
@@ -19,10 +20,12 @@ const seite = (await getEntry('seiten', 'startseite'))!.data;
 const wohnungen = await alleWohnungen();
 const wohnung = wohnungen[0].data;
 const hero = { ...seite.hero!, ...(lokal?.hero ?? {}) };
-const highlights = lokal?.highlights ?? seite.highlights;
-const vorteile = lokal?.vorteile ?? seite.vorteile;
-const bewertungen = lokal?.bewertungen ?? seite.bewertungen;
-const faq = lokal?.faq ?? seite.faq;
+// Einträge mit [TODO] sind wie Entwürfe: lokal sichtbar, im Build ausgeblendet.
+const fertig = <T,>(liste: T[]) => (zeigeEntwuerfe ? liste : liste.filter((e) => !JSON.stringify(e).includes('[TODO]')));
+const highlights = fertig(lokal?.highlights ?? seite.highlights);
+const vorteile = fertig(lokal?.vorteile ?? seite.vorteile);
+const bewertungen = fertig(lokal?.bewertungen ?? seite.bewertungen);
+const faq = fertig(lokal?.faq ?? seite.faq);
 const buchenZiel = await buchungsZiel(locale);
 const wohnTexte = wohnungLocale(locale);
 

@@ -16,6 +16,7 @@ const items = [
   { wert: fakten.badezimmer ?? '[TODO]', label: t.baeder },
   { wert: fakten.flaeche_m2 != null ? `${fakten.flaeche_m2} m²` : '[TODO]', label: t.flaeche },
   ...(hoehe ? [{ wert: `${hoehe} m`, label: t.hoehe }] : []),
+  ...(fakten.preis_ab_chf ? [{ wert: t.preisAb(fakten.preis_ab_chf), label: t.proNacht }] : []),
 ];
 ---
 

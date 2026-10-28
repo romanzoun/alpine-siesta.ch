@@ -1,15 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
+import { site } from '../config';
+import { wohnungenNav } from '../lib/wohnungen';
+import { allePillars, hubUrl } from '../lib/pillars';
 import { asLocale, mitLocale } from '../i18n/config';
 import { ui } from '../i18n/ui';
 
 const locale = asLocale(Astro.url.pathname.split('/').filter(Boolean)[0]);
 const t = ui(locale);
+const wohnNav = await wohnungenNav();
+// Wegweiser statt Sackgasse: die gleichen Ziele wie in der Navigation
+const wege = [
+  { href: mitLocale(locale, wohnNav.href), label: wohnNav.href.includes('/wohnungen/') && !wohnNav.href.endsWith('/wohnungen/') ? t.wohnung : t.wohnungen },
+  ...((await allePillars()).length ? [{ href: mitLocale(locale, hubUrl()), label: site.ort }] : []),
+  { href: mitLocale(locale, '/kontakt/'), label: t.kontakt },
+  { href: mitLocale(locale, '/'), label: t.zurStartseite },
+];
 ---
 
-<Base locale={locale} title={`${t.nichtGefunden} – Alpine Siesta`} description={t.nichtGefundenText}>
+<Base locale={locale} title={`${t.nichtGefunden} – ${site.name}`} description={t.nichtGefundenText} noindex>
   <section class="section container">
     <h1>{t.nichtGefunden}</h1>
-    <p><a href={mitLocale(locale, '/')}>{t.zurStartseite}</a></p>
+    <p class="lead">{t.nichtGefundenText}</p>
+    <ul class="wege">
+      {wege.map((w) => <li><a href={w.href}>{w.label}</a></li>)}
+    </ul>
   </section>
 </Base>
+
+<style>
+  .wege { list-style: none; padding: 0; margin: 2rem 0 0; max-width: 30rem; }
+  .wege li { border-top: 1px solid var(--rule); }
+  .wege a { display: block; padding-block: .9rem; font-size: 1.2rem; }
+</style>

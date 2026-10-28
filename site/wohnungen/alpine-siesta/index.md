@@ -14,6 +14,8 @@ fakten:
   badezimmer: 1
   flaeche_m2: 65
   stockwerk: "1. OG, mit Lift, ohne Stufen zugänglich"
+  # Günstigster Preis pro Nacht bei Direktbuchung, z. B. 150. Erscheint bei den Fakten.
+  # preis_ab_chf: 150
 
 lage:
   ort: Leukerbad, Wallis
