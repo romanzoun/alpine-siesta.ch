@@ -24,7 +24,7 @@ Schriften und Bilder laden wir vom eigenen Server. Es gibt keine Verbindung zu G
 
 Wenn du uns über das Formular auf der Wohnungsseite oder auf der Kontaktseite schreibst, erhalten wir Name, E-Mail-Adresse und Nachricht sowie, falls angegeben, Anreise, Abreise und die Anzahl Erwachsene und Kinder. Wir verwenden die Angaben, um deine Anfrage zu beantworten und eine Buchung abzuwickeln.
 
-Das Formular schickt die Anfrage über Trizoun Travel, unseren eigenen Dienst, per E-Mail an uns. Trizoun Travel speichert den Text der Nachricht nicht. Ist der Dienst nicht erreichbar, öffnet sich stattdessen dein E-Mail-Programm mit der vorbereiteten Nachricht.
+Das Formular schickt die Anfrage über Trizoun Travel, unseren eigenen Dienst, per E-Mail an uns. Damit wir alle Anfragen zu unserer Wohnung übersichtlich sehen, speichert Trizoun Travel Name, E-Mail-Adresse, Zeitraum und Anzahl Gäste, aber nicht den Text deiner Nachricht. Diese Angaben löschen wir zwölf Monate nach der Anfrage. Angebote schicken wir dir deswegen nicht: Dafür braucht es deine ausdrückliche Einwilligung. Ist der Dienst nicht erreichbar, öffnet sich stattdessen dein E-Mail-Programm mit der vorbereiteten Nachricht.
 
 Die Korrespondenz bewahren wir auf, solange es für die Anfrage oder Buchung nötig ist. Unterlagen zu Buchungen bewahren wir aus gesetzlichen Gründen zehn Jahre auf.
 
