@@ -20,7 +20,7 @@ faq:
     antwort: Ja. Eine Tour führt vom Lötschental über Torrent nach Leukerbad und am zweiten Tag über den Gemmipass nach Kandersteg.
   - frage: Wo stelle ich die Bikes in der Wohnung ab?
     antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
-entwurf: true
+entwurf: false
 ---
 
 Frühstück in Leukerbad, Kaffee in Albinen, Mittagessen in der Altstadt von Leuk und am Nachmittag ein Glas Wein in Varen. Und das alles auf dem Bike. Biken zwischen den Orten ist rund um Leukerbad die schönste Art, das Wallis kennenzulernen. Viele Touren hier sind keine Runden, sondern Wege von einem Dorf zum nächsten. Du startest im Dorf oder an der Bergstation auf über 2300 Metern und endest unten im Rhonetal, in Leuk, Varen oder Susten. Dazwischen liegen Albinen, Guttet, Feschel und Inden, alte Wege und Spycher. Zurück bringt dich der Bus, mit dem Bike im Anhänger.

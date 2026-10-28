@@ -20,7 +20,7 @@ faq:
     antwort: Bei trockenem Boden ja. Sprünge lassen sich umfahren. Nach Regen und im Herbst kann er rutschig sein, dann lieber eine Runde auf dem Forstweg.
   - frage: Wo stelle ich die Bikes in der Wohnung ab?
     antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
-entwurf: true
+entwurf: false
 ---
 
 Eine kleine Brücke über den Bach, ein Bergsee zum Steinewerfen und eine Welle, auf der das Bike kurz abhebt: Mehr braucht ein Kind nicht für einen perfekten Bike-Tag. In Leukerbad liegt das alles an einer Runde. Biken mit Kindern funktioniert hier, weil die leichten Touren hier im Dorf anfangen und hier wieder aufhören. Ihr müsst nicht zuerst ins Tal fahren, kein Auto umparken und keinen Shuttle buchen. Ihr steigt auf das Bike, fahrt los, und wenn es reicht, seid ihr in kurzer Zeit zurück in der Wohnung.

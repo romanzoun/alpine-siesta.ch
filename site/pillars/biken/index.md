@@ -21,7 +21,7 @@ faq:
     antwort: Zur Torrentbahn fährst du von Alpine Siesta etwa sieben Minuten mit dem Bus. Die Gemmibahn ist fünf Minuten zu Fuss.
   - frage: Wo stelle ich die Bikes in der Wohnung ab?
     antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
-entwurf: true
+entwurf: false
 ---
 
 Am Morgen stehst du auf 2300 Metern, vor dir eine Kette von Viertausendern, unter dir ein Trail, der fast 1700 Höhenmeter bis ins Rhonetal hinunterführt. Am Abend liegst du im warmen Thermalwasser. Biken in Leukerbad heisst: Du musst nicht wählen zwischen Bergtour und Feierabend. Die Bahn bringt dich und das Bike auf über 2300 Meter, von dort führen Trails zurück ins Dorf, über Alpen und Bergdörfer, oder 1700 Höhenmeter hinunter bis ins Rhonetal. Rund 225 Kilometer Wege gehören zur Bikeregion rund um Leukerbad, und 2021 wurde das ganze Netz neu gemacht. Danach gehst du in die Therme.
@@ -89,7 +89,7 @@ Ein Tipp aus Erfahrung: Nach Regen und im Herbst können die Flow-Trails rutschi
 
 Leukerbad ist für Bike-Familien ein guter Ort, weil viele leichte Touren hier im Dorf beginnen und auch hier enden. Die Beizu Tour führt vom Dorfplatz zum Majingsee, über einen lustigen Trail mit kleinen Brücken entlang der Dala und mit zwei Bergrestaurants auf dem Weg. Der Jales-Flow ist für Kinder, die schon sicher bremsen, ein Erlebnis, das sie nochmals fahren wollen.
 
-Kinderbikes kannst du im Dorf mieten. Die Bike School Leukerbad bietet die Kids Bike League an, und im Sommer gibt ein Guide jeden Donnerstag Fahrtechnik-Tipps. Was ihr sonst im Sommer mit Kindern machen könnt, steht auf [Sommer mit Kindern in Leukerbad](/leukerbad/familie/sommer-mit-kindern/).
+Kinderbikes kannst du im Dorf mieten. Die Bike School Leukerbad bietet die Kids Bike League an, und im Sommer gibt ein Guide jeden Donnerstag Fahrtechnik-Tipps. Die besten Familientouren und wie ihr einen Bike-Tag mit Kindern plant, stehen auf [Biken mit Kindern](/leukerbad/biken/mit-kindern/). Was ihr sonst im Sommer mit Kindern machen könnt, steht auf [Sommer mit Kindern in Leukerbad](/leukerbad/familie/sommer-mit-kindern/).
 
 ## Von Dorf zu Dorf bis ins Rhonetal
 
@@ -97,23 +97,23 @@ Viele Touren hier sind keine Runden, sondern Wege von A nach B. Du startest in L
 
 Zurück geht es mit dem Bus ab Leuk. Jeder zweite Bus fährt mit Anhänger, die anderen haben einen Bikehalter hinten. Eine Velo-Reservation über die SBB wird empfohlen. Wer Kraft hat, fährt die rund 900 Höhenmeter auf dem Dala Bärgüf selbst hinauf, über Leuk, St. Barbara und Albinen.
 
-Eine besondere Variante ist die zweitägige Tour vom Lötschental über Torrent nach Leukerbad und am zweiten Tag über den Gemmipass nach Kandersteg. Dazwischen übernachtest du im Dorf. Eine Wohnung mit Badewanne und Waschmaschine ist nach dem ersten Tag kein Luxus.
+Eine besondere Variante ist die zweitägige Tour vom Lötschental über Torrent nach Leukerbad und am zweiten Tag über den Gemmipass nach Kandersteg. Dazwischen übernachtest du im Dorf. Eine Wohnung mit Badewanne und Waschmaschine ist nach dem ersten Tag kein Luxus. Alle Touren von Dorf zu Dorf und die Rückfahrt mit dem Bus stehen auf [Von Dorf zu Dorf biken](/leukerbad/biken/zwischen-orten/).
 
 ## Aussicht: Viertausender, Felsarena, Rhonetal
 
-Fast jede Tour hier hat einen Punkt, an dem du anhältst und einfach schaust. Auf dem Torrenttrail sind es die Viertausender. Auf der Chällerflüe öffnet sich nach der Felsquerung das Rhonetal. Auf dem Gemmipass liegt der Daubensee vor dir, und von der Plattform an der Bergstation siehst du hinunter auf Leukerbad. Von der Torrentalp auf dem Weg zum Guggerhubel reicht der Blick von der Felsarena bis zu den Viertausendern der Südalpen.
+Fast jede Tour hier hat einen Punkt, an dem du anhältst und einfach schaust. Auf dem Torrenttrail sind es die Viertausender. Auf der Chällerflüe öffnet sich nach der Felsquerung das Rhonetal. Auf dem Gemmipass liegt der Daubensee vor dir, und von der Plattform an der Bergstation siehst du hinunter auf Leukerbad. Von der Torrentalp auf dem Weg zum Guggerhubel reicht der Blick von der Felsarena bis zu den Viertausendern der Südalpen. Unsere liebsten Aussichtspunkte stehen auf [Biketouren mit Aussicht](/leukerbad/biken/aussicht/).
 
 ## Herbst: die beste Zeit für lange Abfahrten
 
 Im Herbst ist es oben kühl und unten im Tal noch warm. Die Lärchen werden gelb, in den Weindörfern läuft die Lese, und die Wege sind leerer als im Hochsommer. Einige sonnige Routen am Hang über dem Rhonetal, etwa der Sunnubärga Loop oder der Jeizi Enduro, sind bis spät in den Herbst fahrbar.
 
-Rechne im Herbst mit kürzeren Tagen, nassen Wurzeln am Morgen und weniger Bahnen.
+Rechne im Herbst mit kürzeren Tagen, nassen Wurzeln am Morgen und weniger Bahnen. Was du dazu wissen musst, steht auf [Biken im Herbst](/leukerbad/biken/herbst/).
 
 ## E-Bike, Miete und Hilfe unterwegs
 
 Im Dorf gibt es eine Bikevermietung mit E-Mountainbikes, Mountainbikes und Kinderbikes, mit Service und Ersatzteilen vor Ort. Reservieren kannst du online. In Albinen gibt es eine mobile Bikestation, die vermietet, repariert und Bikes oder Personen auch zum Start einer Tour bringt.
 
-Mit dem E-Bike werden Touren möglich, die sonst nur mit der Bahn gehen. Der Torrent Loop zum Beispiel, rund 950 Höhenmeter auf einer schmalen Bergstrasse hinauf zur Rinderhütte. Oder die Flüealp, 750 Höhenmeter hinauf zu einer Alp, auf der es Käse und Brot gibt.
+Mit dem E-Bike werden Touren möglich, die sonst nur mit der Bahn gehen. Der Torrent Loop zum Beispiel, rund 950 Höhenmeter auf einer schmalen Bergstrasse hinauf zur Rinderhütte. Oder die Flüealp, 750 Höhenmeter hinauf zu einer Alp, auf der es Käse und Brot gibt. Mehr dazu auf [E-Bike in Leukerbad](/leukerbad/biken/e-bike/).
 
 Wer sich auf unbekannten Trails nicht allein bewegen will, findet in Leukerbad mehrere Bike-Guides mit Swiss-Cycling-Ausbildung. Sie stellen eine Tour nach deinem Niveau zusammen oder zeigen dir Wege, die nicht auf der Karte hervorgehoben sind.
 

@@ -20,7 +20,7 @@ faq:
     antwort: Dann ist ein Tag in der Therme die beste Wahl. Sie ist von der Wohnung zehn Minuten zu Fuss.
   - frage: Wo stelle ich die Bikes in der Wohnung ab?
     antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
-entwurf: true
+entwurf: false
 ---
 
 Gelbe Lärchen, klare Sicht bis zu den Viertausendern und Trails, die leerer sind als im Sommer. Biken im Herbst ist in Leukerbad vielleicht die schönste Zeit des Jahres. Oben auf über 2000 Metern ist die Luft klar und kühl, unten im Rhonetal ist es noch warm, und dazwischen liegen Hänge, die bis in den späten Herbst Sonne bekommen. Die Wege sind leerer als im Juli, und nach der Tour ist das warme Thermalwasser noch willkommener als im Sommer.
