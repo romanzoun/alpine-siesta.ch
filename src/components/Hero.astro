@@ -72,10 +72,12 @@ const { titel, untertitel, bild, alt, ctaHref, ctaLabel } = Astro.props;
   }
   @media (max-width: 40rem) { .lichter { display: none; } }
   .hintergrund { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgb(22 35 58 / .85), rgb(22 35 58 / 0) 55%); }
+  /* Verlauf von unten, damit weisse Schrift auch auf hellem Foto lesbar bleibt */
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgb(22 35 58 / .92), rgb(22 35 58 / .7) 40%, rgb(22 35 58 / 0) 75%); }
   .text { position: relative; z-index: 2; padding-block: 4rem clamp(3rem, 8vw, 5rem); }
 
-  h1 { font-size: clamp(3.4rem, 13vw, 10rem); line-height: .86; margin-bottom: 1.5rem; }
+  /* Auch auf niedrigen Bildschirmen bleiben Titel und Knopf über dem Falz */
+  h1 { font-size: clamp(3rem, min(13vw, 15svh), 10rem); line-height: .86; margin-bottom: 1.5rem; }
   .zeile { display: block; overflow: hidden; padding-bottom: .04em; }
   .zeile > span { display: block; animation: aufsteigen .9s var(--ease-out) both; animation-delay: calc(var(--i) * 140ms + 150ms); }
   .untertitel { font-size: clamp(1.1rem, 2vw, 1.3rem); max-width: 30rem; margin: 0 0 1.75rem; color: rgb(245 248 247 / .85); }

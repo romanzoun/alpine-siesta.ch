@@ -3,7 +3,7 @@ import type { Locale } from './config';
 export type HomeLocale = {
   title: string;
   description: string;
-  hero: { titel: string[]; untertitel: string };
+  hero: { titel: string[]; untertitel: string; alt?: string };
   highlights: { titel: string; text: string }[];
   vorteile: string[];
   bewertungen: { text: string; name: string; quelle: string }[];
@@ -13,7 +13,7 @@ export type HomeLocale = {
 const en: HomeLocale = {
   title: 'Alpine Siesta – family apartment in Leukerbad',
   description: 'A family apartment in Leukerbad. Book with us, a short walk from the thermal baths and the Gemmi cable car.',
-  hero: { titel: ['Thermal water.', 'The Gemmi face.', 'Siesta.'], untertitel: 'Our apartment in Leukerbad, a short walk from the hot springs. You arrive, and then you stop.' },
+  hero: { titel: ['Thermal water.', 'The Gemmi face.', 'Siesta.'], untertitel: 'Our apartment in Leukerbad, a short walk from the hot springs. You arrive, and then you stop.', alt: 'Mug on the Alpine Siesta balcony with the Gemmi face behind' },
   highlights: [
     { titel: 'The largest thermal village in the Alps', text: 'More than 3.9 million litres of hot water come out of the springs in Leukerbad every day. You walk there from the apartment.' },
     { titel: 'Summer and winter', text: 'A walk on the Gemmi, a via ferrata, skiing at Torrent, and then the warm water. You do not have to do all of it.' },
@@ -36,7 +36,7 @@ const en: HomeLocale = {
 const fr: HomeLocale = {
   title: 'Alpine Siesta – appartement pour familles à Loèche-les-Bains',
   description: 'Un appartement pour familles à Loèche-les-Bains. Tu réserves chez nous, à quelques minutes des thermes et du téléphérique de la Gemmi.',
-  hero: { titel: ['Eau thermale.', 'Paroi de la Gemmi.', 'Siesta.'], untertitel: 'Notre appartement à Loèche-les-Bains, à quelques pas des sources chaudes. Tu arrives, et ensuite tu t’arrêtes.' },
+  hero: { titel: ['Eau thermale.', 'Paroi de la Gemmi.', 'Siesta.'], untertitel: 'Notre appartement à Loèche-les-Bains, à quelques pas des sources chaudes. Tu arrives, et ensuite tu t’arrêtes.', alt: 'Tasse sur le balcon d’Alpine Siesta avec la paroi de la Gemmi' },
   highlights: [
     { titel: 'Le plus grand village thermal des Alpes', text: 'Plus de 3,9 millions de litres d’eau chaude sortent chaque jour des sources de Loèche-les-Bains. Depuis l’appartement, tu y vas à pied.' },
     { titel: 'Été comme hiver', text: 'Une marche à la Gemmi, une via ferrata, le ski à Torrent, puis l’eau chaude. Tu n’es pas obligé de tout faire.' },
@@ -59,7 +59,7 @@ const fr: HomeLocale = {
 const it: HomeLocale = {
   title: 'Alpine Siesta – appartamento per famiglie a Leukerbad',
   description: 'Un appartamento per famiglie a Leukerbad. Prenoti da noi, a pochi minuti dalle terme e dalla funivia della Gemmi.',
-  hero: { titel: ['Acqua termale.', 'Parete della Gemmi.', 'Siesta.'], untertitel: 'Il nostro appartamento a Leukerbad, a pochi passi dalle sorgenti calde. Arrivi, e poi ti fermi.' },
+  hero: { titel: ['Acqua termale.', 'Parete della Gemmi.', 'Siesta.'], untertitel: 'Il nostro appartamento a Leukerbad, a pochi passi dalle sorgenti calde. Arrivi, e poi ti fermi.', alt: 'Tazza sul balcone di Alpine Siesta con la parete della Gemmi' },
   highlights: [
     { titel: 'Il più grande paese termale delle Alpi', text: 'Più di 3,9 milioni di litri d’acqua calda escono ogni giorno dalle sorgenti di Leukerbad. Dall’appartamento ci vai a piedi.' },
     { titel: 'Estate e inverno', text: 'Una camminata sulla Gemmi, una via ferrata, lo sci a Torrent, e poi l’acqua calda. Non devi fare tutto.' },

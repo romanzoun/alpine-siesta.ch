@@ -82,6 +82,7 @@ const envDatei = existsSync('.env') ? readFileSync('.env', 'utf8') : '';
 const envWert = (k) => process.env[k] || envDatei.match(new RegExp(`^${k}=(.+)$`, 'm'))?.[1]?.trim();
 const wohnungsDateien = md.filter((p) => p.startsWith(join(SITE, 'wohnungen')));
 punkt(wohnungsDateien.every((p) => /plattformen:\s*\n(\s+(booking|airbnb):\s*https?:\/\/\S+\s*\n?)+/.test(readFileSync(p, 'utf8')) && !/rooms\/TODO|\/TODO\.html/.test(readFileSync(p, 'utf8'))), 'Links zu Booking.com/Airbnb pro Wohnung eingetragen (plattformen)');
+punkt(wohnungsDateien.every((p) => /preis_ab_chf:\s*\d+/.test(readFileSync(p, 'utf8'))), 'Preis-Hinweis pro Wohnung eingetragen (fakten.preis_ab_chf)');
 punkt(Boolean(envWert('PUBLIC_TRIZOUN_API_URL') && envWert('PUBLIC_TRIZOUN_KEY')), 'Online-Buchung (später): PUBLIC_TRIZOUN_API_URL und PUBLIC_TRIZOUN_KEY gesetzt – bis dahin Anfrageformular');
 
 console.log(`# Checkliste ${SITE}/\n` + zeilen.join('\n'));

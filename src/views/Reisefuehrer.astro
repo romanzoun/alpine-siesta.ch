@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BuchungsBand from '../components/BuchungsBand.astro';
 import { allePillars, artikelVon, pillarUrl, artikelUrl, hubUrl } from '../lib/pillars';
 import { site } from '../config';
 import { asLocale, mitLocale, type Locale } from '../i18n/config';
@@ -44,6 +45,7 @@ const pillars = await Promise.all((await allePillars()).map(async (p) => ({ p, a
       })}
     </div>
   </section>
+  <BuchungsBand locale={locale} />
 </Base>
 
 <style>
