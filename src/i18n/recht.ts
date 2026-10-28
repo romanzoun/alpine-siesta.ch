@@ -1,25 +1,28 @@
 import type { Locale } from './config';
 
 export type RechtBlock = { titel?: string; absatz: string[] };
-export type RechtText = { title: string; description: string; bloecke: RechtBlock[] };
+// «deutsch»: Hinweis, dass nur die deutsche Fassung existiert. Dann zeigt die Seite den deutschen Text aus site/rechtliches/.
+export type RechtText = { title: string; description: string; bloecke: RechtBlock[]; deutsch?: string };
 
 const texte: Record<Exclude<Locale, 'de'>, Record<string, RechtText>> = {
   en: {
     impressum: {
-      title: 'Legal notice',
-      description: 'Legal notice for Alpine Siesta, a holiday apartment in Leukerbad, Valais. Who is responsible for the content and bookings.',
+      title: "Legal notice",
+      description: "Legal notice for Alpine Siesta, a holiday apartment in Leukerbad, Valais. Operator, contact and who is responsible for the content.",
       bloecke: [
-        { titel: 'Responsible for the content', absatz: ['[TODO] First and last name', '[TODO] Street, postcode, place', 'Switzerland', 'Email: [TODO]', '[TODO] If applicable: company, UID number, commercial register entry.'] },
+        { titel: "Operator", absatz: ["Trizoun - Tourismus & Digital", "Simple partnership of Roman Zoun and Ivayla Trifonova", "Hauptstrasse 32d", "5506 Mägenwil", "Switzerland"] },
+        { titel: "Contact", absatz: ["Email: info@alpine-siesta.ch"] },
+        { titel: "Business identification number", absatz: ["UID CHE-280.882.880. The partnership is not entered in the commercial register and is not registered for VAT."] },
+        { titel: "Responsible for the content", absatz: ["Roman Zoun and Ivayla Trifonova"] },
+        { titel: "Liability", absatz: ["We check the content of this website carefully, but cannot guarantee that it is correct, complete and up to date. Details about cable cars, tours, opening hours and prices of third parties can change. The information of the respective provider applies.", "Links lead to third-party websites such as Booking.com, Airbnb or Leukerbad Tourismus. Their operators are responsible for their content."] },
+        { titel: "Images", absatz: ["The photos of the apartment and of many places are our own. Some photos in the travel guide come from Wikimedia Commons under free licences. The author and licence are given at the end of each page."] },
       ],
     },
     datenschutz: {
-      title: 'Privacy',
-      description: 'How Alpine Siesta handles personal data under the Swiss Data Protection Act.',
-      bloecke: [
-        { absatz: ['[TODO] Privacy notice under the revised Swiss Data Protection Act. It still has to name the person responsible, which data (booking, contact, shop orders), purposes, recipients and processors (hosting Infomaniak, Beds24, Stripe, Gelato, Resend, statistics), disclosure abroad, retention, and the rights of the people concerned. Have it reviewed before the site goes live.'] },
-        { titel: 'Contact form', absatz: ['[TODO] Have this text reviewed. Draft: if you write through the contact form, we receive your name, email address, message and, if you give them, travel dates and number of guests by email. We use these details only to answer your enquiry.'] },
-        { titel: 'Offers by email (booking calendar)', absatz: ['[TODO] Have this text reviewed. Draft: if you enter your email in the booking calendar and tick the box, we store the address, the dates you chose, the number of guests, and the time and wording of your consent. If you do not book, we send at most four emails: a reminder, a short question about whether something was missing, and offers if a date in your chosen period becomes free (possibly with a discount). We check whether a booking arrived for your address, and we count clicks on links in these emails so we can improve the offer. The data is processed by our provider Trizoun Travel (Switzerland) and deleted at the latest 30 days after your chosen date. You can unsubscribe any time with the link in each email.'] },
-      ],
+      title: "Privacy",
+      description: "How Alpine Siesta handles personal data under the Swiss Data Protection Act.",
+      bloecke: [],
+      deutsch: "This privacy policy exists in German only. The German version applies.",
     },
     agb: {
       title: 'Terms',
@@ -32,20 +35,22 @@ const texte: Record<Exclude<Locale, 'de'>, Record<string, RechtText>> = {
   },
   fr: {
     impressum: {
-      title: 'Mentions légales',
-      description: 'Mentions légales d’Alpine Siesta, appartement de vacances à Loèche-les-Bains, Valais. Qui répond du contenu et des réservations.',
+      title: "Mentions légales",
+      description: "Mentions légales d’Alpine Siesta, appartement de vacances à Loèche-les-Bains, Valais. Exploitant, contact et responsables du contenu.",
       bloecke: [
-        { titel: 'Responsable du contenu', absatz: ['[TODO] Prénom et nom', '[TODO] Rue, code postal, lieu', 'Suisse', 'E-mail : [TODO]', '[TODO] S’il y a lieu : société, numéro IDE, inscription au registre du commerce.'] },
+        { titel: "Exploitant", absatz: ["Trizoun - Tourismus & Digital", "Société simple de Roman Zoun et Ivayla Trifonova", "Hauptstrasse 32d", "5506 Mägenwil", "Suisse"] },
+        { titel: "Contact", absatz: ["E-mail : info@alpine-siesta.ch"] },
+        { titel: "Numéro d’identification des entreprises", absatz: ["IDE CHE-280.882.880. La société n’est pas inscrite au registre du commerce et n’est pas assujettie à la TVA."] },
+        { titel: "Responsables du contenu", absatz: ["Roman Zoun et Ivayla Trifonova"] },
+        { titel: "Responsabilité", absatz: ["Nous vérifions soigneusement le contenu de ce site, sans garantir qu’il soit exact, complet et à jour. Les informations sur les remontées, les tours, les horaires et les prix de tiers peuvent changer. Les indications du prestataire concerné font foi.", "Les liens mènent vers des sites de tiers, par exemple Booking.com, Airbnb ou Leukerbad Tourismus. Leurs exploitants sont responsables de leur contenu."] },
+        { titel: "Images", absatz: ["Les photos de l’appartement et de nombreux lieux sont les nôtres. Quelques photos du guide viennent de Wikimedia Commons sous licence libre. L’auteur et la licence figurent en bas de chaque page."] },
       ],
     },
     datenschutz: {
-      title: 'Protection des données',
-      description: 'Comment Alpine Siesta traite les données personnelles selon la loi suisse sur la protection des données.',
-      bloecke: [
-        { absatz: ['[TODO] Déclaration selon la nLPD. Elle doit encore nommer la personne responsable, les données (réservation, contact, commandes), les buts, les destinataires et les sous-traitants (hébergement Infomaniak, Beds24, Stripe, Gelato, Resend, statistique), la communication à l’étranger, la conservation et les droits des personnes concernées. À faire vérifier avant la mise en ligne.'] },
-        { titel: 'Formulaire de contact', absatz: ['[TODO] Faire vérifier ce texte. Proposition : si tu écris via le formulaire, nous recevons par e-mail le nom, l’adresse e-mail, le message et, si tu les indiques, les dates et le nombre d’hôtes. Nous utilisons ces données uniquement pour répondre à ta demande.'] },
-        { titel: 'Offres par e-mail (calendrier)', absatz: ['[TODO] Faire vérifier ce texte. Proposition : si tu indiques ton e-mail dans le calendrier et coches la case, nous enregistrons l’adresse, la période choisie, le nombre d’hôtes, ainsi que le moment et le texte de ton consentement. Sans réservation, nous envoyons au plus quatre e-mails : un rappel, une courte question, et des offres si une date se libère dans ta période (éventuellement avec un rabais). Nous vérifions si une réservation est arrivée pour ton adresse et nous comptons les clics sur les liens de ces e-mails pour améliorer l’offre. Les données sont traitées par notre prestataire Trizoun Travel (Suisse) et effacées au plus tard 30 jours après la date souhaitée. Désinscription à tout moment via le lien dans chaque e-mail.'] },
-      ],
+      title: "Protection des données",
+      description: "Comment Alpine Siesta traite les données personnelles selon la loi suisse sur la protection des données.",
+      bloecke: [],
+      deutsch: "Cette déclaration n’existe qu’en allemand. La version allemande fait foi.",
     },
     agb: {
       title: 'Conditions',
@@ -58,20 +63,22 @@ const texte: Record<Exclude<Locale, 'de'>, Record<string, RechtText>> = {
   },
   it: {
     impressum: {
-      title: 'Note legali',
-      description: 'Note legali di Alpine Siesta, appartamento per vacanze a Leukerbad, Vallese. Chi risponde dei contenuti e delle prenotazioni.',
+      title: "Note legali",
+      description: "Note legali di Alpine Siesta, appartamento per vacanze a Leukerbad, Vallese. Gestore, contatto e responsabili dei contenuti.",
       bloecke: [
-        { titel: 'Responsabile dei contenuti', absatz: ['[TODO] Nome e cognome', '[TODO] Via, CAP, luogo', 'Svizzera', 'E-mail: [TODO]', '[TODO] Se esiste: società, numero IDI, iscrizione al registro di commercio.'] },
+        { titel: "Gestore", absatz: ["Trizoun - Tourismus & Digital", "Società semplice di Roman Zoun e Ivayla Trifonova", "Hauptstrasse 32d", "5506 Mägenwil", "Svizzera"] },
+        { titel: "Contatto", absatz: ["E-mail: info@alpine-siesta.ch"] },
+        { titel: "Numero d’identificazione delle imprese", absatz: ["IDI CHE-280.882.880. La società non è iscritta al registro di commercio e non è assoggettata all’IVA."] },
+        { titel: "Responsabili dei contenuti", absatz: ["Roman Zoun e Ivayla Trifonova"] },
+        { titel: "Responsabilità", absatz: ["Controlliamo con cura i contenuti di questo sito, ma non garantiamo che siano corretti, completi e aggiornati. Le informazioni su impianti, tour, orari e prezzi di terzi possono cambiare. Fanno fede le indicazioni del rispettivo fornitore.", "I link portano a siti di terzi, per esempio Booking.com, Airbnb o Leukerbad Tourismus. Dei loro contenuti rispondono i rispettivi gestori."] },
+        { titel: "Immagini", absatz: ["Le foto dell’appartamento e di molti luoghi sono nostre. Alcune foto della guida vengono da Wikimedia Commons con licenza libera. Autore e licenza sono indicati in fondo a ogni pagina."] },
       ],
     },
     datenschutz: {
-      title: 'Protezione dei dati',
-      description: 'Come Alpine Siesta tratta i dati personali secondo la legge svizzera sulla protezione dei dati.',
-      bloecke: [
-        { absatz: ['[TODO] Informativa secondo la nLPD. Deve ancora indicare il responsabile, quali dati (prenotazione, contatto, ordini), scopi, destinatari e incaricati (hosting Infomaniak, Beds24, Stripe, Gelato, Resend, statistica), comunicazione all’estero, conservazione e diritti delle persone interessate. Da far controllare prima della messa online.'] },
-        { titel: 'Modulo di contatto', absatz: ['[TODO] Far controllare il testo. Bozza: se scrivi dal modulo, riceviamo per e-mail nome, indirizzo, messaggio e, se li indichi, date e numero di ospiti. Usiamo questi dati solo per rispondere alla richiesta.'] },
-        { titel: 'Offerte per e-mail (calendario)', absatz: ['[TODO] Far controllare il testo. Bozza: se indichi l’e-mail nel calendario e spunti la casella, salviamo indirizzo, periodo scelto, numero di ospiti, momento e testo del consenso. Se non prenoti, inviamo al massimo quattro e-mail: un promemoria, una breve domanda e offerte se si libera una data nel periodo scelto (eventualmente con uno sconto). Controlliamo se è arrivata una prenotazione per il tuo indirizzo e contiamo i clic sui link di queste e-mail per migliorare l’offerta. I dati sono trattati dal nostro fornitore Trizoun Travel (Svizzera) e cancellati al più tardi 30 giorni dopo la data scelta. Disiscrizione in ogni momento con il link in ogni e-mail.'] },
-      ],
+      title: "Protezione dei dati",
+      description: "Come Alpine Siesta tratta i dati personali secondo la legge svizzera sulla protezione dei dati.",
+      bloecke: [],
+      deutsch: "Questa informativa esiste solo in tedesco. Fa fede la versione tedesca.",
     },
     agb: {
       title: 'Condizioni',
