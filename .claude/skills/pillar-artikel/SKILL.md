@@ -33,10 +33,11 @@ Das Schema (`src/content.config.ts`, Collections `pillars` und `artikel`) ist ma
 
 ## 3. Text
 
-- Deutsch, Schweizer Rechtschreibung (ss statt ß), du-Form, aus Sicht der Gastgeber – persönlich, konkret, keine Werbefloskeln («atemberaubend», «unvergesslich»).
-- Kein H1 im Text. Gliederung mit `##` (und sparsam `###`). Jede Zwischenüberschrift beantwortet eine Frage oder benennt ein Teilthema.
+- Stimme nach dem Skill `engagierte-texte`: natürlich, positiv, konkret. Nach dem Lesen sind die Zweifel weg. Keine Absätze darüber, was die Seite nicht verspricht.
+- Deutsch, Schweizer Rechtschreibung (ss statt ß), du-Form, aus Sicht der Gastgeber. Keine Werbefloskeln («atemberaubend», «unvergesslich»).
+- Kein H1 im Text. Gliederung mit `##` (und sparsam `###`). Jede Zwischenüberschrift benennt, was an dem Tag geht.
 - Erster Absatz: Hauptbegriff natürlich nennen und die wichtigste Antwort sofort geben.
-- Fakten, die sich ändern (Preise, Öffnungszeiten, Fahrpläne, Saisondaten), nur aus Material des Nutzers oder als `[PRÜFEN]` markieren. Keine Zahlen erfinden.
+- Fakten, die sich ändern (Preise, Öffnungszeiten, Fahrpläne), nur aus Material des Nutzers. Fehlt die Zahl, fällt der Satz weg. Im Text, den der Gast liest, steht kein `[PRÜFEN]`. Eine Notiz für uns nur als HTML-Kommentar am Dateianfang.
 - Konkrete Hinweise aus Gastgeber-Sicht: Weg ab der Wohnung, beste Zeit, Insider-Tipp.
 - Kurze Absätze, Listen für Aufzählbares, Tabellen für Vergleiche (z. B. zwei Thermen).
 - **Interne Links** nur auf Seiten, die live sind: Aktivitäten (`/entdecken/<slug>/`), Themenseiten (`/entdecken/thema/<wert>/`), Wohnung. Auf Unterseiten im Entwurf **nicht** verlinken – die Pillar Page listet Unterseiten automatisch, sobald sie live sind.
@@ -46,4 +47,4 @@ Das Schema (`src/content.config.ts`, Collections `pillars` und `artikel`) ist ma
 
 1. `npm run build:entwuerfe` – muss fehlerfrei laufen.
 2. `npm run seo-check` – keine Fehler; Warnungen zu Länge beheben.
-3. Bericht an den Nutzer: Suchintention, Gliederung, Anzahl `[PRÜFEN]` mit Liste der zu prüfenden Fakten, fehlende Bilder.
+3. Bericht an den Nutzer: Suchintention, Gliederung, Fakten die bewusst weggefallen sind, fehlende Bilder.

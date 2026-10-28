@@ -28,6 +28,8 @@ export const site = {
   pillars: {
     thermen: 'Thermen & Wellness',
     familie: 'Familienferien',
+    zermatt: 'Zermatt',
+    wein: 'Wein im Wallis',
     sommer: 'Wandern & Sommer',
     winter: 'Winter & Ski',
     reisetipps: 'Anreise & Wallis-Ausflüge',

@@ -1,10 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import { asLocale, mitLocale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
+const locale = asLocale(Astro.url.pathname.split('/').filter(Boolean)[0]);
+const t = ui(locale);
 ---
 
-<Base title="Seite nicht gefunden – Alpine Siesta" description="Diese Seite gibt es nicht.">
+<Base locale={locale} title={`${t.nichtGefunden} – Alpine Siesta`} description={t.nichtGefundenText}>
   <section class="section container">
-    <h1>Seite nicht gefunden</h1>
-    <p><a href="/">Zur Startseite</a></p>
+    <h1>{t.nichtGefunden}</h1>
+    <p><a href={mitLocale(locale, '/')}>{t.zurStartseite}</a></p>
   </section>
 </Base>

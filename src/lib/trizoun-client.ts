@@ -23,6 +23,18 @@ export function createTrizoun({ key, baseUrl }: { key: string; baseUrl: string }
   return {
     verfuegbarkeit: (slug: string, von: string, bis: string) => get<Tag[]>(`${s(slug)}/availability`, { von, bis }),
     angebot: (slug: string, a: { anreise: string; abreise: string; erwachsene: number }) => get<Angebot>(`${s(slug)}/offer`, a),
+    kontakt: async (
+      slug: string,
+      a: { name: string; email: string; nachricht: string; anreise?: string; abreise?: string; gaeste?: number; website?: string },
+    ) => {
+      const res = await fetch(`${baseUrl}/v1/public${s(slug)}/kontakt`, {
+        method: 'POST',
+        headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+        body: JSON.stringify(a),
+      });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !body.ok) throw new Error(body.error ?? `Anfrage fehlgeschlagen (${res.status})`);
+    },
     anfrageSenden: async (
       slug: string,
       a: { email: string; anreise: string; abreise: string; erwachsene: number; sprache: string; einwilligungText: string; einwilligungUmfang: string },

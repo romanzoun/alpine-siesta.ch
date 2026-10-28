@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Faq from '../components/Faq.astro';
+import AktivitaetenListe from '../components/AktivitaetenListe.astro';
+import BuchungsBand from '../components/BuchungsBand.astro';
+import PillarInhalt from '../components/PillarInhalt.astro';
+import { artikelVon, pillarUrl, artikelUrl, hubUrl, type Artikel } from '../lib/pillars';
+import { sortiert } from '../lib/entdecken';
+import { site } from '../config';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import { familieLocale } from '../i18n/familie';
+import { artikelRahmen } from '../i18n/familie-artikel';
+import { artikelText, pillarIstMehrsprachig, pillarText } from '../i18n/reisefuehrer';
+
+interface Props {
+  a: Artikel;
+  pillarH1: string;
+  locale?: Locale;
+}
+const { a, pillarH1 } = Astro.props;
+const locale = asLocale(Astro.props.locale);
+const t = ui(locale);
+const rahmen = artikelRahmen(locale);
+const lokal = artikelText(locale, a.id);
+const pillar = a.id.split('/')[0];
+const pillarLokal = pillarText(pillar, locale);
+const { Content } = await render(a);
+const geschwister = (await artikelVon(pillar)).filter((x) => x.id !== a.id);
+const aktivitaeten = sortiert(await getCollection('aktivitaeten', (x) => x.data.pillar === pillar)).slice(0, 3);
+const title = lokal?.title ?? a.data.title;
+const description = lokal?.description ?? a.data.description;
+const h1 = lokal?.h1 ?? a.data.h1;
+const kurz = lokal?.kurz ?? a.data.kurz;
+const bildAlt = lokal?.bildAlt ?? a.data.bild_alt;
+const faq = lokal?.faq ?? a.data.faq;
+const ortName = familieLocale(locale)?.ort ?? site.ort;
+const kicker = pillarLokal?.kicker ?? site.pillars[pillar as keyof typeof site.pillars];
+const uebersicht = lokal ? rahmen.uebersicht : pillarH1;
+const sprachen = pillarIstMehrsprachig(pillar) ? undefined : (['de'] as Locale[]);
+const datum = a.data.aktualisiert
+  ? a.data.aktualisiert.toLocaleDateString(locale === 'de' ? 'de-CH' : locale === 'fr' ? 'fr-CH' : locale === 'it' ? 'it-CH' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  : '';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: locale,
+    author: { '@type': 'Organization', name: site.name, url: site.domain },
+    ...(a.data.aktualisiert && { dateModified: a.data.aktualisiert.toISOString().slice(0, 10) }),
+    ...(a.data.bild && { image: new URL(a.data.bild.src, Astro.site).href }),
+  },
+  ...(faq.length
+    ? [{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })),
+      }]
+    : []),
+];
+---
+
+<Base locale={locale} title={title} description={description} bild={a.data.bild} typ="article" noindex={a.data.entwurf} sprachen={sprachen}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <article class="section container guide">
+    <Breadcrumbs locale={locale} pfad={[
+      { name: ortName, href: mitLocale(locale, hubUrl()) },
+      { name: kicker, href: mitLocale(locale, pillarUrl(pillar)) },
+      { name: h1, href: mitLocale(locale, artikelUrl(a.id)) },
+    ]} />
+    {a.data.entwurf && <p class="entwurf">Entwurf – nicht öffentlich</p>}
+    <h1>{h1}</h1>
+    <p class="lead">{kurz}</p>
+    {datum && <p class="muted stand">{rahmen.stand} {datum}</p>}
+    {a.data.bild && <Image src={a.data.bild} alt={bildAlt!} widths={[800, 1400]} sizes="(min-width: 60rem) 40rem, 100vw" loading="eager" class="titelbild" />}
+    <div class="prose">
+      {lokal ? <PillarInhalt blocks={lokal.blocks} locale={locale} /> : <Content />}
+    </div>
+  </article>
+
+  {faq.length > 0 && (
+    <section class="section container">
+      <h2>{t.faq}</h2>
+      <Faq eintraege={faq} />
+    </section>
+  )}
+
+  {aktivitaeten.length > 0 && (
+    <section class="section container">
+      <h2>Das kannst du dazu unternehmen</h2>
+      <AktivitaetenListe aktivitaeten={aktivitaeten} />
+    </section>
+  )}
+
+  <section class="section container">
+    <h2>{rahmen.mehr} «{pillarLokal ? kicker : pillarH1}»</h2>
+    <ul class="weiter">
+      <li><a href={mitLocale(locale, pillarUrl(pillar))}>{rahmen.uebersicht}</a></li>
+      {geschwister.map((x) => {
+        const text = artikelText(locale, x.id);
+        return <li><a href={mitLocale(locale, artikelUrl(x.id))}>{text?.h1 ?? x.data.h1}</a></li>;
+      })}
+    </ul>
+  </section>
+
+  <BuchungsBand locale={locale} />
+</Base>
+
+<style>
+  .stand { margin-top: -.75rem; font-size: .95rem; }
+  .weiter { padding-left: 1.1rem; display: grid; gap: .4rem; }
+  .entwurf { display: inline-block; background: var(--glut); color: var(--nacht); padding: .2rem .6rem; border-radius: var(--radius); font-weight: 650; }
+</style>

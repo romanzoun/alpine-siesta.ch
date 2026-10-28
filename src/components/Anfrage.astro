@@ -2,7 +2,10 @@
 // Kontakt-/Buchungsanfrage. Mit site.kontakt.endpunkt: POST als JSON an das Backend.
 // Ohne Endpunkt (Phase 1): öffnet eine vorausgefüllte E-Mail an site.email – kein Server nötig.
 import { site } from '../config';
+import { trizoun } from '../lib/trizoun';
 import { alleWohnungen } from '../lib/wohnungen';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
 
 interface Props {
   // vorgewählte Wohnung (Ordnername); ohne Angabe Auswahl bei mehreren Wohnungen
@@ -10,8 +13,11 @@ interface Props {
   // mit Anreise/Abreise/Gäste (Buchungsanfrage) oder nur Nachricht
   daten?: boolean;
   maxGaeste?: number;
+  locale?: Locale;
 }
 const { wohnung, daten = true, maxGaeste = 8 } = Astro.props;
+const locale = asLocale(Astro.props.locale ?? Astro.currentLocale);
+const t = ui(locale);
 const wohnungen = (await alleWohnungen()).map((w) => ({ id: w.id, name: w.data.name }));
 const heute = new Date().toISOString().slice(0, 10);
 ---
@@ -21,18 +27,18 @@ const heute = new Date().toISOString().slice(0, 10);
     <input type="hidden" name="wohnung" value={wohnung ?? wohnungen[0]?.id} />
   ) : (
     <label class="feld">
-      Wohnung
+      {t.wohnung}
       <select name="wohnung">
-        <option value="">Noch offen</option>
+        <option value="">{t.nochOffen}</option>
         {wohnungen.map((w) => <option value={w.id}>{w.name}</option>)}
       </select>
     </label>
   )}
   {daten && (
     <div class="reihe">
-      <label class="feld">Anreise<input type="date" name="anreise" min={heute} /></label>
-      <label class="feld">Abreise<input type="date" name="abreise" min={heute} /></label>
-      <label class="feld">Gäste
+      <label class="feld">{t.anreise}<input type="date" name="anreise" min={heute} /></label>
+      <label class="feld">{t.abreise}<input type="date" name="abreise" min={heute} /></label>
+      <label class="feld">{t.gaeste}
         <select name="gaeste">
           {Array.from({ length: maxGaeste }, (_, i) => <option value={i + 1} selected={i + 1 === Math.min(2, maxGaeste)}>{i + 1}</option>)}
         </select>
@@ -41,16 +47,16 @@ const heute = new Date().toISOString().slice(0, 10);
   )}
   <label class="feld">Name<input name="name" required maxlength="100" autocomplete="name" /></label>
   <label class="feld">E-Mail<input type="email" name="email" required maxlength="200" autocomplete="email" /></label>
-  <label class="feld">Nachricht<textarea name="nachricht" rows="4" maxlength="5000" required></textarea></label>
+  <label class="feld">{t.nachricht}<textarea name="nachricht" rows="4" maxlength="5000" required></textarea></label>
   <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
   <label class="falle" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
   <input type="hidden" name="t" value="" />
-  <p class="hinweis">Wir verwenden deine Angaben nur, um deine Anfrage zu beantworten. <a href="/datenschutz/">Datenschutz</a></p>
-  <button class="btn" type="submit">{site.kontakt.endpunkt ? 'Anfrage senden' : 'E-Mail vorbereiten'}</button>
+  <p class="hinweis">{t.datenschutzHinweis} <a href={mitLocale(locale, '/datenschutz/')}>{t.datenschutz}</a></p>
+  <button class="btn" type="submit" data-senden={t.anfrageSenden}>{site.kontakt.endpunkt ? t.anfrageSenden : t.mailVorbereiten}</button>
   <p class="status" data-status role="status" aria-live="polite"></p>
 </form>
 
-<script define:vars={{ email: site.email, endpunkt: site.kontakt.endpunkt, name: site.name }}>
+<script define:vars={{ email: site.email, endpunkt: site.kontakt.endpunkt, trizounApi: trizoun.apiUrl ?? '', trizounKey: trizoun.key ?? '', name: site.name, texte: { anreise: t.anreise, abreise: t.abreise, gaeste: t.gaeste, mailOeffnet: t.mailOeffnet, wirdGesendet: t.wirdGesendet, danke: t.danke, nichtGeklappt: t.nichtGeklappt, anfrage: t.anfragen } }}>
   document.querySelectorAll('[data-anfrage]').forEach((form) => {
     form.querySelector('[name="t"]').value = String(Math.floor(Date.now() / 1000));
     const status = form.querySelector('[data-status]');
@@ -61,33 +67,66 @@ const heute = new Date().toISOString().slice(0, 10);
       e.preventDefault();
       const f = Object.fromEntries(new FormData(form));
       if (f.website) return; // Spam-Falle
-      if (!endpunkt) {
+      const mailto = () => {
         const zeilen = [
-          ...(f.anreise ? [`Anreise: ${f.anreise}`] : []),
-          ...(f.abreise ? [`Abreise: ${f.abreise}`] : []),
-          ...(f.gaeste && f.anreise ? [`Gäste: ${f.gaeste}`] : []),
+          ...(f.anreise ? [`${texte.anreise}: ${f.anreise}`] : []),
+          ...(f.abreise ? [`${texte.abreise}: ${f.abreise}`] : []),
+          ...(f.gaeste && f.anreise ? [`${texte.gaeste}: ${f.gaeste}`] : []),
           '',
           f.nachricht,
           '',
           f.name,
         ];
-        const betreff = `Anfrage ${name}${f.anreise ? ` für ${f.anreise}` : ''}`;
+        const betreff = `${texte.anfrage} ${name}${f.anreise ? ` ${f.anreise}` : ''}`;
         window.location.href = `mailto:${email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(zeilen.join('\n'))}`;
-        status.textContent = 'Dein E-Mail-Programm öffnet sich mit der fertigen Anfrage – bitte dort noch absenden.';
+        status.textContent = texte.mailOeffnet;
+      };
+      if (form.dataset.versand === 'trizoun' && trizounApi && trizounKey && f.wohnung) {
+        const knopf = form.querySelector('button[type="submit"]');
+        knopf.disabled = true;
+        status.textContent = texte.wirdGesendet;
+        try {
+          const res = await fetch(`${trizounApi}/v1/public/listings/${encodeURIComponent(f.wohnung)}/kontakt`, {
+            method: 'POST',
+            headers: { authorization: `Bearer ${trizounKey}`, 'content-type': 'application/json' },
+            body: JSON.stringify({
+              name: f.name,
+              email: f.email,
+              nachricht: f.nachricht,
+              ...(f.anreise ? { anreise: f.anreise } : {}),
+              ...(f.abreise ? { abreise: f.abreise } : {}),
+              ...(f.gaeste ? { gaeste: Number(f.gaeste) } : {}),
+              website: f.website || '',
+            }),
+          });
+          const json = await res.json().catch(() => ({}));
+          if (!res.ok || !json.ok) throw new Error(json.error || `Fehler ${res.status}`);
+          form.reset();
+          status.textContent = texte.danke;
+        } catch (err) {
+          mailto();
+          status.textContent = `${texte.nichtGeklappt} (${err.message}). ${texte.mailOeffnet}`;
+        } finally {
+          knopf.disabled = false;
+        }
+        return;
+      }
+      if (!endpunkt) {
+        mailto();
         return;
       }
       const knopf = form.querySelector('button[type="submit"]');
       knopf.disabled = true;
-      status.textContent = 'Wird gesendet …';
+      status.textContent = texte.wirdGesendet;
       try {
         const res = await fetch(endpunkt, { method: 'POST', body: JSON.stringify(f), headers: { 'Content-Type': 'application/json', Accept: 'application/json' } });
         const json = await res.json().catch(() => ({}));
         if (!res.ok || !json.ok) throw new Error(json.meldung || `Fehler ${res.status}`);
         form.reset();
-        status.textContent = 'Danke! Deine Anfrage ist bei uns angekommen – wir melden uns so bald wie möglich.';
+        status.textContent = texte.danke;
       } catch (err) {
         status.innerHTML = '';
-        status.append(`Das hat nicht geklappt (${err.message}). Schreib uns direkt: `);
+        status.append(`${texte.nichtGeklappt} (${err.message}). `);
         const a = document.createElement('a');
         a.href = `mailto:${email}`;
         a.textContent = email;

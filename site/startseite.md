@@ -29,9 +29,9 @@ faq:
   - frage: Wie komme ich nach Leukerbad?
     antwort: "[TODO] Mit dem Zug bis Leuk, von dort mit dem Bus in ca. 30 Minuten. Mit dem Auto über Leuk/Susten."
   - frage: Wann ist Check-in und Check-out?
-    antwort: Check-in ab 16:00, Check-out bis 10:00.
+    antwort: Check-in ab 15:00, Check-out bis 11:00.
   - frage: Gibt es einen Parkplatz?
-    antwort: "[TODO]"
+    antwort: Ja. Ein Aussenparkplatz gehört zur Wohnung.
   - frage: Sind Haustiere erlaubt?
-    antwort: "[TODO]"
+    antwort: Stubenreine Haustiere sind willkommen.
 ---

@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { allePillars, artikelVon, pillarUrl, artikelUrl, hubUrl } from '../lib/pillars';
+import { site } from '../config';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import { familieLocale, hubText } from '../i18n/familie';
+import { artikelText, pillarText } from '../i18n/reisefuehrer';
+
+interface Props {
+  locale?: Locale;
+}
+const locale = asLocale(Astro.props.locale);
+const t = ui(locale);
+const text = hubText(locale);
+const pillars = await Promise.all((await allePillars()).map(async (p) => ({ p, artikel: await artikelVon(p.id) })));
+---
+
+<Base locale={locale} title={text.title} description={text.description} sprachen={['de', 'en', 'fr', 'it']}>
+  <section class="section container">
+    <Breadcrumbs locale={locale} pfad={[{ name: familieLocale(locale)?.ort ?? site.ort, href: mitLocale(locale, hubUrl()) }]} />
+    <h1>{text.h1}</h1>
+    <p class="lead">{text.lead}</p>
+    <div class="liste">
+      {pillars.map(({ p, artikel }) => {
+        const lokal = pillarText(p.id, locale);
+        const name = lokal?.h1 ?? p.data.h1;
+        const lead = lokal?.lead ?? p.data.lead;
+        const alt = lokal?.bildAlt ?? p.data.bild_alt ?? name;
+        const href = mitLocale(locale, pillarUrl(p.id));
+        return (
+          <article>
+            {p.data.bild && (
+              <a href={href}><Image src={p.data.bild} alt={alt} widths={[800, 1400]} sizes="(min-width: 48rem) 40rem, 100vw" /></a>
+            )}
+            <h2><a href={href}>{name}</a></h2>
+            <p class="muted">{lead}</p>
+            <p><a class="btn btn--ghost" href={href}>{t.artikelLesen}</a></p>
+            {artikel.length > 0 && <ul>{artikel.map((a) => <li><a href={mitLocale(locale, artikelUrl(a.id))}>{artikelText(locale, a.id)?.h1 ?? a.data.h1}</a></li>)}</ul>}
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Base>
+
+<style>
+  img { width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 1rem; }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  h2 a { color: inherit; text-decoration: none; }
+  h2 a:hover { text-decoration: underline; }
+  ul { padding-left: 1.1rem; margin: 0; }
+  .btn { margin-top: .5rem; }
+</style>

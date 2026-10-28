@@ -1,9 +1,14 @@
 ---
 // Sichtbare Brotkrumen plus BreadcrumbList für Google. Das letzte Element ist die aktuelle Seite.
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
 interface Props {
   pfad: { name: string; href: string }[];
+  locale?: Locale;
 }
-const pfad = [{ name: 'Startseite', href: '/' }, ...Astro.props.pfad];
+const locale = asLocale(Astro.props.locale);
+const pfad = [{ name: ui(locale).start, href: mitLocale(locale, '/') }, ...Astro.props.pfad];
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -16,7 +21,7 @@ const schema = {
 };
 ---
 
-<nav class="brotkrumen" aria-label="Brotkrumen">
+<nav class="brotkrumen" aria-label={ui(locale).start}>
   <ol>
     {pfad.map((p, i) => (
       <li>{i === pfad.length - 1 ? <span aria-current="page">{p.name}</span> : <a href={p.href}>{p.name}</a>}</li>

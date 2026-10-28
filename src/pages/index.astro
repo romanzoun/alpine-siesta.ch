@@ -7,24 +7,36 @@ import Fakten from '../components/Fakten.astro';
 import Faq from '../components/Faq.astro';
 import { site } from '../config';
 import { alleWohnungen, buchungsZiel, wohnungUrl } from '../lib/wohnungen';
+import { asLocale, htmlLang, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import { homeLocale } from '../i18n/home';
+import { wohnungLocale } from '../i18n/wohnung';
 
+const locale = asLocale((Astro.props as { locale?: Locale }).locale ?? Astro.currentLocale);
+const t = ui(locale);
+const lokal = homeLocale(locale);
 const seite = (await getEntry('seiten', 'startseite'))!.data;
 const wohnungen = await alleWohnungen();
 const wohnung = wohnungen[0].data;
-const hero = seite.hero!;
-const buchenZiel = await buchungsZiel();
+const hero = { ...seite.hero!, ...(lokal?.hero ?? {}) };
+const highlights = lokal?.highlights ?? seite.highlights;
+const vorteile = lokal?.vorteile ?? seite.vorteile;
+const bewertungen = lokal?.bewertungen ?? seite.bewertungen;
+const faq = lokal?.faq ?? seite.faq;
+const buchenZiel = await buchungsZiel(locale);
+const wohnTexte = wohnungLocale(locale);
 
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'WebSite', '@id': `${site.domain}/#website`, url: site.domain, name: site.name, inLanguage: site.sprache, publisher: { '@id': `${site.domain}/#anbieter` } },
+    { '@type': 'WebSite', '@id': `${site.domain}/#website`, url: site.domain, name: site.name, inLanguage: htmlLang[locale], publisher: { '@id': `${site.domain}/#anbieter` } },
     {
       '@type': 'Organization',
       '@id': `${site.domain}/#anbieter`,
       name: site.name,
       url: site.domain,
       email: site.email,
-      logo: new URL('/favicon.svg', site.domain).href,
+      logo: new URL('/logo.svg', site.domain).href,
       address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
     },
   ],
@@ -33,7 +45,7 @@ const websiteSchema = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: seite.faq.map((f) => ({
+  mainEntity: faq.map((f) => ({
     '@type': 'Question',
     name: f.frage,
     acceptedAnswer: { '@type': 'Answer', text: f.antwort },
@@ -41,22 +53,22 @@ const faqSchema = {
 };
 ---
 
-<Base title={seite.title} description={seite.description} bild={hero.bild}>
+<Base locale={locale} title={lokal?.title ?? seite.title} description={lokal?.description ?? seite.description} bild={hero.bild}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
-  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={buchenZiel} ctaLabel="Verfügbarkeit & Preise" />
+  <Hero titel={hero.titel} untertitel={hero.untertitel} bild={hero.bild} alt={hero.alt} ctaHref={buchenZiel} ctaLabel={t.verfuegbarkeit} />
 
   {wohnungen.length === 1 && (
     <section class="container fakten-zeile">
-      <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} />
+      <Fakten fakten={wohnung.fakten} hoehe={wohnung.lage.hoehe_m} locale={locale} />
     </section>
   )}
 
   <section class="section container zweispaltig">
-    <h2>Warum {site.ort}</h2>
+    <h2>{t.warum(site.ort)}</h2>
     <div class="liste">
-      {seite.highlights.map((h) => (
+      {highlights.map((h) => (
         <article>
           <h3>{h.titel}</h3>
           <p class="muted">{h.text}</p>
@@ -70,13 +82,13 @@ const faqSchema = {
       <div class="wohnung">
         <ul class="mosaik">
           {w.galerie.slice(0, 3).map((b, i) => (
-            <li><Image src={b.bild} alt={b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
+            <li><Image src={b.bild} alt={wohnTexte?.bilder[i]?.alt ?? b.alt} widths={[480, 900]} sizes={i === 0 ? '(min-width: 60rem) 40vw, 100vw' : '(min-width: 60rem) 20vw, 50vw'} /></li>
           ))}
         </ul>
         <div>
-          <h2>{wohnungen.length === 1 ? 'Die Wohnung' : w.name}</h2>
-          <p class="lead">{w.claim}</p>
-          <a class="btn btn--ghost" href={wohnungUrl(id)}>{wohnungen.length === 1 ? 'Wohnung ansehen' : `${w.name} ansehen`}</a>
+          <h2>{wohnungen.length === 1 ? t.dieWohnung : w.name}</h2>
+          <p class="lead">{wohnTexte?.claim ?? w.claim}</p>
+          <a class="btn btn--ghost" href={wohnungUrl(id, locale)}>{wohnungen.length === 1 ? t.wohnungAnsehen : w.name}</a>
         </div>
       </div>
     ))}
@@ -84,21 +96,21 @@ const faqSchema = {
 
   <section class="section band">
     <div class="container zweispaltig">
-      <h2>Direkt buchen lohnt sich</h2>
+      <h2>{t.direkt}</h2>
       <div>
         <ul class="vorteile">
-          {seite.vorteile.map((v) => <li>{v}</li>)}
+          {vorteile.map((v) => <li>{v}</li>)}
         </ul>
-        <a class="btn" href={buchenZiel}>Verfügbarkeit &amp; Preise</a>
+        <a class="btn" href={buchenZiel}>{t.verfuegbarkeit}</a>
       </div>
     </div>
   </section>
 
-  {seite.bewertungen.length > 0 && (
+  {bewertungen.length > 0 && (
     <section class="section container">
-      <h2>Das sagen unsere Gäste</h2>
+      <h2>{t.gaesteSagen}</h2>
       <div class="liste">
-        {seite.bewertungen.map((b) => (
+        {bewertungen.map((b) => (
           <figure>
             <blockquote>«{b.text}»</blockquote>
             <figcaption class="muted">{b.name}, {b.quelle}</figcaption>
@@ -109,8 +121,8 @@ const faqSchema = {
   )}
 
   <section class="section container zweispaltig">
-    <h2>Häufige Fragen</h2>
-    <Faq eintraege={seite.faq} />
+    <h2>{t.faq}</h2>
+    <Faq eintraege={faq} />
   </section>
 </Base>
 

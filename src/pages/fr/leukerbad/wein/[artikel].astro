@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import ArtikelSeite from '../../../../views/ArtikelSeite.astro';
+import { weinArtikelIds } from '../../../../i18n/wein';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('artikel');
+  return weinArtikelIds.flatMap((id) => {
+    const a = alle.find((eintrag) => eintrag.id === id && !eintrag.data.entwurf);
+    return a ? [{ params: { artikel: id.split('/')[1] }, props: { a } }] : [];
+  });
+}
+
+const { a } = Astro.props;
+---
+
+<ArtikelSeite a={a} pillarH1="Vin" locale="fr" />

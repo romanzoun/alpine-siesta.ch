@@ -1,16 +1,21 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { asLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
 
 interface Props {
   fakten: CollectionEntry<'wohnungen'>['data']['fakten'];
   hoehe?: number;
+  locale?: Locale;
 }
 const { fakten, hoehe } = Astro.props;
+const t = ui(asLocale(Astro.props.locale ?? Astro.currentLocale));
 const items = [
-  { wert: fakten.personen, label: 'Gäste' },
-  { wert: fakten.schlafzimmer, label: 'Schlafzimmer' },
-  { wert: `${fakten.flaeche_m2} m²`, label: 'Wohnfläche' },
-  ...(hoehe ? [{ wert: `${hoehe} m`, label: 'über Meer' }] : []),
+  { wert: fakten.personen, label: t.gaeste },
+  { wert: fakten.schlafzimmer, label: t.zimmer },
+  { wert: fakten.badezimmer ?? '[TODO]', label: t.baeder },
+  { wert: fakten.flaeche_m2 != null ? `${fakten.flaeche_m2} m²` : '[TODO]', label: t.flaeche },
+  ...(hoehe ? [{ wert: `${hoehe} m`, label: t.hoehe }] : []),
 ];
 ---
 

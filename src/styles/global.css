@@ -62,7 +62,58 @@ h3 { font-size: 1.6rem; line-height: 1.05; }
 .lead { font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.5; color: var(--muted); max-width: 38rem; margin: 0 0 1.5rem; }
 .muted { color: var(--muted); }
 .prose { max-width: 40rem; }
+.prose img { width: 100%; height: auto; border-radius: var(--radius); }
 .prose h2 { margin-top: 3rem; font-size: clamp(1.9rem, 4vw, 2.6rem); }
+
+/* Reiseführer: Text läuft um die Bilder, ohne Bild über die ganze Breite. */
+.guide .prose { max-width: none; display: flow-root; }
+.guide .prose > p:has(img),
+.guide .prose > picture,
+.guide .prose > img {
+  float: right;
+  clear: right;
+  width: min(44%, 34rem);
+  margin: .25rem 0 1.15rem 2rem;
+}
+.guide .prose > p:has(img) img,
+.guide .prose > picture img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  animation: foto-herein linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 22%;
+}
+.guide .prose > img {
+  height: auto;
+  border-radius: var(--radius);
+  animation: foto-herein linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 22%;
+}
+.guide .prose > h2,
+.guide .prose > table { clear: both; }
+.guide .titelbild {
+  border-radius: var(--radius);
+  margin-block: 1rem 2.5rem;
+  width: 100%;
+  max-width: none;
+  animation: none;
+}
+@keyframes foto-herein {
+  from { opacity: 0; transform: translateY(1.4rem); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 52rem) {
+  .guide .prose > p:has(img),
+  .guide .prose > picture,
+  .guide .prose > img {
+    float: none;
+    clear: none;
+    width: 100%;
+    margin: 1.25rem 0;
+  }
+}
 
 .btn {
   display: inline-block;
@@ -74,6 +125,18 @@ h3 { font-size: 1.6rem; line-height: 1.05; }
   font-weight: 650;
   transition: transform .15s var(--ease-out), filter .15s;
 }
+.logo-svg .logo-berge,
+.logo-svg .logo-ort { fill: var(--thermal); }
+.logo-svg .logo-name { fill: var(--nacht); }
+.site-footer .logo-svg .logo-berge,
+.site-footer .logo-svg .logo-ort { fill: var(--glut); }
+.site-footer .logo-svg .logo-name { fill: var(--dampf); }
+@media (prefers-color-scheme: dark) {
+  .site-header .logo-svg .logo-berge,
+  .site-header .logo-svg .logo-ort { fill: var(--glut); }
+  .site-header .logo-svg .logo-name { fill: var(--dampf); }
+}
+
 .btn:hover { filter: brightness(1.1); }
 .btn:active { transform: scale(.97); }
 .btn--ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }

@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { mitLocale, type Locale } from '../i18n/config';
+import type { Block } from '../i18n/familie';
+import spielplatz from '../../site/pillars/familie/wallis-spielplatz-bergdorf.webp';
+import spur from '../../site/pillars/familie/wallis-winterwanderung-spur-im-schnee.webp';
+import ski from '../../site/pillars/familie/wallis-skikind-rote-zielbanner.webp';
+import schlucht from '../../site/pillars/familie/wallis-felsschlucht-steg-bergbach.webp';
+import bach from '../../site/pillars/familie/leukerbad-dorfbach-felswand-sommer.webp';
+import fondue from '../../site/pillars/familie/alpine-siesta-kaesefondue-salami-ananas.webp';
+import huette from '../../site/pillars/familie/winter-mit-kindern/leukerbad-winter-holzhutte-dorf.webp';
+import piste from '../../site/pillars/familie/winter-mit-kindern/wallis-skipiste-bergpanorama.webp';
+import spaziergang from '../../site/pillars/familie/winter-mit-kindern/wallis-winterspaziergang-holzhaus-hund.webp';
+import kegel from '../../site/pillars/familie/winter-mit-kindern/sportarena-leukerbad-skikind-kegel.webp';
+import bruecke from '../../site/pillars/familie/winter-mit-kindern/leukerbad-holzbruecke-schnee-felswand.webp';
+import blumen from '../../site/pillars/familie/sommer-mit-kindern/leukerbad-blumen-rutschbahn-felswand.webp';
+import spielplatzDorf from '../../site/pillars/familie/sommer-mit-kindern/leukerbad-spielplatz-rutsche-berg.webp';
+import bachWald from '../../site/pillars/familie/sommer-mit-kindern/wallis-bach-wald-sommer.webp';
+import grill from '../../site/pillars/familie/sommer-mit-kindern/wallis-grill-wurst-rost.webp';
+import wiese from '../../site/pillars/familie/sommer-mit-kindern/wallis-bergwiese-wasserfall-felsen.webp';
+import kirche from '../../site/pillars/familie/sommer-mit-kindern/wallis-weisse-kirche-wiese.webp';
+import regen from '../../site/pillars/familie/schlechtwetter-mit-kindern/regen-scheibe-roter-schirm.webp';
+import therme from '../../site/pillars/familie/schlechtwetter-mit-kindern/leukerbad-therme-aussenbecken-felswand.webp';
+import eis from '../../site/pillars/familie/schlechtwetter-mit-kindern/sportarena-leukerbad-eisbahn.webp';
+import schrank from '../../site/pillars/familie/schlechtwetter-mit-kindern/alpine-siesta-schrank-brettspiele.webp';
+import kinderzimmer from '../../site/pillars/familie/schlechtwetter-mit-kindern/alpine-siesta-kinderzimmer-fenster-schaukelpferd.webp';
+import huepfburg from '../../site/pillars/familie/schlechtwetter-mit-kindern/huepfburg-ile-aux-palmiers.webp';
+import treppchen from '../../site/pillars/familie/kinderfreundliche-skigebiete/sportarena-leukerbad-siegertreppchen.webp';
+import maskottchen from '../../site/pillars/familie/kinderfreundliche-skigebiete/sportarena-leukerbad-maskottchen-ski.webp';
+import breit from '../../site/pillars/familie/kinderfreundliche-skigebiete/wallis-breite-piste-kurven.webp';
+import skischule from '../../site/pillars/familie/kinderfreundliche-skigebiete/wallis-skischule-kinder-pistenbuelle.webp';
+
+interface Props {
+  blocks: Block[];
+  locale: Locale;
+}
+const { blocks, locale } = Astro.props;
+const bilder: Record<string, ImageMetadata> = { spielplatz, spur, ski, schlucht, bach, fondue, huette, piste, spaziergang, kegel, bruecke, blumen, spielplatzDorf, bachWald, grill, wiese, kirche, regen, therme, eis, schrank, kinderzimmer, huepfburg, treppchen, maskottchen, breit, skischule };
+const dateien = import.meta.glob<ImageMetadata>('../../site/pillars/**/*.webp', { eager: true, import: 'default' });
+for (const [pfad, bild] of Object.entries(dateien)) {
+  const name = pfad.split('/').pop()?.replace(/\.webp$/, '');
+  if (name && !(name in bilder)) bilder[name] = bild;
+}
+const wohnung = mitLocale(locale, '/wohnungen/alpine-siesta/');
+---
+
+{blocks.map((block) => {
+  if (block.typ === 'h2') return <h2>{block.text}</h2>;
+  if (block.typ === 'ul') return <ul>{block.items.map((item) => <li>{item}</li>)}</ul>;
+  if (block.typ === 'img') {
+    const src = bilder[block.bild];
+    if (!src) throw new Error(`Bild fehlt: ${block.bild}`);
+    return <Image src={src} alt={block.alt} widths={[800, 1400]} sizes="(min-width: 52rem) 34rem, 100vw" />;
+  }
+  if (block.typ === 'table') return (
+    <table>
+      <thead><tr><th>{block.kopf[0]}</th><th>{block.kopf[1]}</th></tr></thead>
+      <tbody>{block.zeilen.map((zeile) => <tr><td>{zeile[0]}</td><td>{zeile[1]}</td></tr>)}</tbody>
+    </table>
+  );
+  if (block.typ === 'wohnung') return <p>{block.davor}<a href={wohnung}>{block.name}</a>{block.danach}</p>;
+  if (block.typ === 'links') return <ul>{block.items.map((item) => <li><a href={mitLocale(locale, item.href)}>{item.label}</a></li>)}</ul>;
+  return <p>{block.text}</p>;
+})}

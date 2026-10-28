@@ -5,23 +5,31 @@ import Fakten from '../../components/Fakten.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { alleWohnungen, wohnungUrl } from '../../lib/wohnungen';
 import { site } from '../../config';
+import { asLocale, mitLocale, type Locale } from '../../i18n/config';
+import { ui } from '../../i18n/ui';
+import { wohnungLocale } from '../../i18n/wohnung';
 
+const locale = asLocale((Astro.props as { locale?: Locale }).locale ?? Astro.currentLocale);
+const t = ui(locale);
 const wohnungen = await alleWohnungen();
 ---
 
-<Base title={`Unsere Ferienwohnungen in ${site.ort} | ${site.name}`} description={`Alle Ferienwohnungen von ${site.name} in ${site.ort} im Überblick – direkt beim Gastgeber buchen.`}>
+<Base locale={locale} title={`${t.unsereWohnungen(site.ort)} | ${site.name}`} description={t.unsereWohnungenLead(site.name, site.ort)}>
   <section class="section container">
-    <Breadcrumbs pfad={[{ name: 'Wohnungen', href: '/wohnungen/' }]} />
-    <h1>Unsere Wohnungen</h1>
+    <Breadcrumbs pfad={[{ name: t.wohnungen, href: mitLocale(locale, '/wohnungen/') }]} />
+    <h1>{t.unsereWohnungenH1}</h1>
     <div class="liste">
-      {wohnungen.map(({ id, data: w }) => (
+      {wohnungen.map(({ id, data: w }) => {
+        const lokal = wohnungLocale(locale);
+        return (
         <article>
-          <a href={wohnungUrl(id)}><Image src={w.galerie[0].bild} alt={w.galerie[0].alt} widths={[480, 900]} sizes="(min-width: 48rem) 50vw, 100vw" /></a>
-          <h2><a href={wohnungUrl(id)}>{w.name}</a></h2>
-          <p class="lead">{w.claim}</p>
-          <Fakten fakten={w.fakten} />
+          <a href={wohnungUrl(id, locale)}><Image src={w.galerie[0].bild} alt={lokal?.bilder[0]?.alt ?? w.galerie[0].alt} widths={[480, 900]} sizes="(min-width: 48rem) 50vw, 100vw" /></a>
+          <h2><a href={wohnungUrl(id, locale)}>{w.name}</a></h2>
+          <p class="lead">{lokal?.claim ?? w.claim}</p>
+          <Fakten fakten={w.fakten} locale={locale} />
         </article>
-      ))}
+        );
+      })}
     </div>
   </section>
 </Base>

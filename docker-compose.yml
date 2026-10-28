@@ -1,0 +1,8 @@
+# Lokale Website, wie sie nach dem Build ausgeliefert wird: http://127.0.0.1:4321/
+# Die localhost-Werte stehen in .env.local. Astro liest sie beim Build.
+# Start: docker compose up --build
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:4321:4321"

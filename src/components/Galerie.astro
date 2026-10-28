@@ -1,33 +1,209 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { asLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
+type GalerieBild = CollectionEntry<'wohnungen'>['data']['galerie'][number] & { ursprung?: string };
 
 interface Props {
-  bilder: CollectionEntry<'wohnungen'>['data']['galerie'];
+  bilder: GalerieBild[];
+  locale?: Locale;
 }
 const { bilder } = Astro.props;
+const t = ui(asLocale(Astro.props.locale ?? Astro.currentLocale));
+const ansichten = await Promise.all(
+  bilder.map(async (b) => {
+    const gross = await getImage({ src: b.bild, width: 1800, fit: 'inside' });
+    return { src: gross.src, alt: b.alt, raum: b.raum ?? '', text: b.text ?? b.alt };
+  }),
+);
+const reihenfolge = ['Balkon', 'Wohnzimmer', 'Schlafzimmer', 'Küche', 'Kinderzimmer'];
+const gesehen = new Set<number>();
+const mosaik = reihenfolge.flatMap((raum) => {
+  const index = bilder.findIndex((b, i) => (b.ursprung || b.raum) === raum && !gesehen.has(i));
+  if (index < 0) return [];
+  gesehen.add(index);
+  return [index];
+});
 ---
 
-<ul class="galerie">
-  {bilder.map((b, i) => (
-    <li>
-      <a href={b.bild.src}>
-        <Image src={b.bild} alt={b.alt} widths={[480, 800, 1400]} sizes={i === 0 ? '(min-width: 48rem) 66vw, 100vw' : '(min-width: 48rem) 33vw, 50vw'} loading={i === 0 ? 'eager' : 'lazy'} />
-      </a>
-      {b.raum && <span class="raum">{b.raum}</span>}
-    </li>
-  ))}
-</ul>
+<div class="galerie-wurzel" data-galerie data-von={t.von}>
+  <div class="mosaik">
+    <ul class="galerie">
+      {mosaik.map((i) => {
+        const b = bilder[i];
+        return (
+          <li>
+            <button type="button" data-oeffnen={i} aria-label={`${b.raum ? b.raum + ': ' : ''}${b.alt}`}>
+              <Image src={b.bild} alt={b.alt} widths={[480, 800, 1400]} sizes={i === mosaik[0] ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 20vw, 50vw'} loading={i === mosaik[0] ? 'eager' : 'lazy'} />
+            </button>
+            {b.raum && <span class="raum">{b.raum}</span>}
+          </li>
+        );
+      })}
+    </ul>
+    <button type="button" class="alle" data-oeffnen="0">{t.alleFotos(bilder.length)}</button>
+  </div>
+
+  <dialog data-dialog aria-label={t.galerie}>
+    <div class="kopf">
+      <p class="stand" data-stand></p>
+      <button type="button" class="schliessen" data-schliessen>{t.schliessen}</button>
+    </div>
+    <img class="gross" data-bild alt={t.galerie} />
+    <div class="text">
+      <p class="ort" data-raum></p>
+      <p class="satz" data-text></p>
+    </div>
+    <div class="fuss">
+      <button type="button" class="schritt" data-zurueck>{t.zurueck}</button>
+      <button type="button" class="schritt" data-vor>{t.weiter}</button>
+    </div>
+  </dialog>
+  <script type="application/json" data-daten set:html={JSON.stringify(ansichten)} />
+</div>
+
+<script>
+  document.querySelectorAll('[data-galerie]').forEach((wurzel) => {
+    if (!(wurzel instanceof HTMLElement) || wurzel.dataset.bereit) return;
+    wurzel.dataset.bereit = '1';
+    const daten = JSON.parse(wurzel.querySelector('[data-daten]')!.textContent || '[]') as {
+      src: string; alt: string; raum: string; text: string;
+    }[];
+    const dialog = wurzel.querySelector('[data-dialog]') as HTMLDialogElement;
+    const bild = wurzel.querySelector('[data-bild]') as HTMLImageElement;
+    const raum = wurzel.querySelector('[data-raum]') as HTMLElement;
+    const text = wurzel.querySelector('[data-text]') as HTMLElement;
+    const stand = wurzel.querySelector('[data-stand]') as HTMLElement;
+    let index = 0;
+    let startX = 0;
+
+    const zeige = (i: number) => {
+      index = (i + daten.length) % daten.length;
+      const eintrag = daten[index];
+      bild.src = eintrag.src;
+      bild.alt = eintrag.alt;
+      raum.textContent = eintrag.raum;
+      raum.hidden = !eintrag.raum;
+      text.textContent = eintrag.text;
+      stand.textContent = `${index + 1} ${wurzel.dataset.von || 'von'} ${daten.length}`;
+    };
+
+    wurzel.querySelectorAll('[data-oeffnen]').forEach((knopf) => {
+      knopf.addEventListener('click', () => {
+        zeige(Number((knopf as HTMLElement).dataset.oeffnen));
+        dialog.showModal();
+      });
+    });
+    wurzel.querySelector('[data-schliessen]')!.addEventListener('click', () => dialog.close());
+    wurzel.querySelector('[data-zurueck]')!.addEventListener('click', () => zeige(index - 1));
+    wurzel.querySelector('[data-vor]')!.addEventListener('click', () => zeige(index + 1));
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); zeige(index - 1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); zeige(index + 1); }
+    });
+    bild.addEventListener('pointerdown', (event) => { startX = event.clientX; });
+    bild.addEventListener('pointerup', (event) => {
+      const weg = event.clientX - startX;
+      if (weg > 48) zeige(index - 1);
+      if (weg < -48) zeige(index + 1);
+    });
+  });
+</script>
 
 <style>
-  .galerie { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; grid-template-columns: repeat(2, 1fr); }
+  .mosaik { position: relative; }
+  .galerie { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; grid-template-columns: 1.6fr 1fr 1fr; grid-template-rows: 9.5rem 9.5rem; }
   .galerie li { position: relative; overflow: hidden; border-radius: var(--radius); }
-  .galerie li:first-child { grid-column: 1 / -1; }
-  @media (min-width: 48rem) {
-    .galerie { grid-template-columns: repeat(3, 1fr); }
-    .galerie li:first-child { grid-column: span 2; grid-row: span 2; }
+  .galerie li:first-child { grid-row: 1 / span 2; }
+  .alle {
+    position: absolute;
+    right: .6rem;
+    bottom: .6rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--dampf);
+    color: var(--nacht);
+    font: inherit;
+    font-weight: 650;
+    padding: .55rem .8rem;
+    cursor: pointer;
   }
+  @media (max-width: 48rem) {
+    .galerie { grid-template-columns: 1fr; grid-template-rows: 16rem; }
+    .galerie li { display: none; }
+    .galerie li:first-child { display: block; grid-row: auto; }
+  }
+  .galerie button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
   .galerie img { width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .6s var(--ease-out); }
-  .galerie a:hover img { transform: scale(1.03); }
+  .galerie button:hover img { transform: scale(1.03); }
   .raum { position: absolute; left: .75rem; bottom: .6rem; color: #fff; font-size: .9rem; font-weight: 600; text-shadow: 0 1px 6px rgb(0 0 0 / .5); pointer-events: none; }
+
+  dialog {
+    width: min(64rem, calc(100% - 1rem));
+    height: min(52rem, calc(100dvh - 1rem));
+    max-height: calc(100dvh - 1rem);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--nacht);
+    color: var(--dampf);
+    overflow: hidden;
+  }
+  dialog[open] { display: flex; flex-direction: column; }
+  dialog::backdrop { background: rgb(10 17 29 / .88); }
+  .kopf { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1rem .4rem; flex: none; }
+  .stand { margin: 0; color: var(--glut); font-weight: 650; }
+  .schliessen {
+    border: 0;
+    background: transparent;
+    color: var(--dampf);
+    cursor: pointer;
+    font: inherit;
+    min-height: 2.75rem;
+    padding: .35rem .2rem;
+  }
+  .gross { width: 100%; flex: 1; min-height: 0; object-fit: contain; background: #0a111d; }
+  .text { flex: none; padding: .85rem 1rem 0; max-height: 8.5rem; overflow: auto; }
+  .fuss {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex: none;
+    padding: .6rem 1rem 1rem;
+  }
+  .schritt {
+    border: 0;
+    background: transparent;
+    color: var(--glut);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+    min-height: 2.75rem;
+    padding: .4rem 0;
+  }
+  .ort { margin: 0; font-stretch: 62%; font-weight: 800; font-size: 1.7rem; line-height: 1; }
+  .satz { margin: .45rem 0 0; max-width: 38rem; color: var(--dampf); }
+  @media (max-width: 40rem) {
+    dialog {
+      width: 100%;
+      max-width: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      margin: 0;
+      border-radius: 0;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .kopf { padding-top: max(.5rem, env(safe-area-inset-top)); }
+    .schritt { flex: 1; font-size: 1.05rem; }
+    .satz { font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .galerie img { transition: none; }
+  }
 </style>

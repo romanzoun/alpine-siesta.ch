@@ -1,0 +1,9 @@
+node_modules
+dist
+.astro
+.git
+inbox
+trizoun-katalog
+trizoun-travel
+.env
+.DS_Store

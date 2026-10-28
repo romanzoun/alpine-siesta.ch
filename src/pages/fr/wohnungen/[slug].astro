@@ -1,0 +1,11 @@
+---
+import Seite from '../../../views/Wohnung.astro';
+import { alleWohnungen } from '../../../lib/wohnungen';
+
+export async function getStaticPaths() {
+  return (await alleWohnungen()).map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag } }));
+}
+
+const { eintrag } = Astro.props;
+---
+<Seite eintrag={eintrag} locale="fr" />

@@ -2,15 +2,22 @@
 // Dunkles Band mit Buchungsaufruf am Ende von Inhaltsseiten.
 import { site } from '../config';
 import { alleWohnungen, buchungsZiel } from '../lib/wohnungen';
+import { asLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
 
+interface Props {
+  locale?: Locale;
+}
+const locale = asLocale(Astro.props.locale);
+const t = ui(locale);
 const anzahl = (await alleWohnungen()).length;
-const ziel = await buchungsZiel();
+const ziel = await buchungsZiel(locale);
 ---
 
 <section class="section band">
   <div class="container">
-    <h2>Deine Unterkunft in {site.ort}</h2>
-    <p class="lead">{anzahl === 1 ? 'Unsere Ferienwohnung' : 'Unsere Ferienwohnungen'} – direkt bei uns gebucht zum besten Preis.</p>
-    <a class="btn" href={ziel}>Verfügbarkeit &amp; Preise</a>
+    <h2>{t.unterkunft(site.ort)}</h2>
+    <p class="lead">{anzahl === 1 ? t.unterkunftLead : t.unsereWohnungen(site.ort)}</p>
+    <a class="btn" href={ziel}>{t.verfuegbarkeit}</a>
   </div>
 </section>

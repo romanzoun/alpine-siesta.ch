@@ -1,14 +1,6 @@
 ---
-// Unterseite einer Pillar Page, z. B. /leukerbad/thermen/therme-guide/
-import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
-import Base from '../../../layouts/Base.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
-import Faq from '../../../components/Faq.astro';
-import AktivitaetenListe from '../../../components/AktivitaetenListe.astro';
-import BuchungsBand from '../../../components/BuchungsBand.astro';
-import { allePillars, artikelVon, pillarUrl, artikelUrl, hubUrl, type Artikel } from '../../../lib/pillars';
-import { sortiert } from '../../../lib/entdecken';
+import ArtikelSeite from '../../../views/ArtikelSeite.astro';
+import { allePillars, artikelVon, type Artikel } from '../../../lib/pillars';
 import { site } from '../../../config';
 
 export async function getStaticPaths() {
@@ -25,76 +17,6 @@ export async function getStaticPaths() {
 }
 
 const { a, pillarH1 } = Astro.props as { a: Artikel; pillarH1: string };
-const pillar = a.id.split('/')[0];
-const { Content } = await render(a);
-const geschwister = (await artikelVon(pillar)).filter((x) => x.id !== a.id);
-const aktivitaeten = sortiert(await getCollection('aktivitaeten', (x) => x.data.pillar === pillar)).slice(0, 3);
-const url = artikelUrl(a.id);
-
-const schema = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: a.data.h1,
-    description: a.data.description,
-    author: { '@type': 'Organization', name: site.name, url: site.domain },
-    ...(a.data.aktualisiert && { dateModified: a.data.aktualisiert.toISOString().slice(0, 10) }),
-    ...(a.data.bild && { image: new URL(a.data.bild.src, Astro.site).href }),
-  },
-  ...(a.data.faq.length
-    ? [{
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: a.data.faq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })),
-      }]
-    : []),
-];
 ---
 
-<Base title={a.data.title} description={a.data.description} bild={a.data.bild} typ="article" noindex={a.data.entwurf}>
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
-  <article class="section container">
-    <Breadcrumbs pfad={[
-      { name: site.ort, href: hubUrl() },
-      { name: site.pillars[pillar as keyof typeof site.pillars], href: pillarUrl(pillar) },
-      { name: a.data.h1, href: url },
-    ]} />
-    {a.data.entwurf && <p class="entwurf">Entwurf – nicht öffentlich</p>}
-    <h1>{a.data.h1}</h1>
-    <p class="lead">{a.data.kurz}</p>
-    {a.data.aktualisiert && <p class="muted stand">Aktualisiert am {a.data.aktualisiert.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}</p>}
-    {a.data.bild && <Image src={a.data.bild} alt={a.data.bild_alt!} widths={[800, 1400]} sizes="(min-width: 60rem) 60rem, 100vw" loading="eager" class="titelbild" />}
-    <div class="prose"><Content /></div>
-  </article>
-
-  {a.data.faq.length > 0 && (
-    <section class="section container">
-      <h2>Häufige Fragen</h2>
-      <Faq eintraege={a.data.faq} />
-    </section>
-  )}
-
-  {aktivitaeten.length > 0 && (
-    <section class="section container">
-      <h2>Das kannst du dazu unternehmen</h2>
-      <AktivitaetenListe aktivitaeten={aktivitaeten} />
-    </section>
-  )}
-
-  <section class="section container">
-    <h2>Mehr aus «{pillarH1}»</h2>
-    <ul class="weiter">
-      <li><a href={pillarUrl(pillar)}>Übersicht: {pillarH1}</a></li>
-      {geschwister.map((x) => <li><a href={artikelUrl(x.id)}>{x.data.h1}</a></li>)}
-    </ul>
-  </section>
-
-  <BuchungsBand />
-</Base>
-
-<style>
-  .titelbild { border-radius: var(--radius); margin-block: 1rem 2.5rem; width: 100%; max-width: 60rem; }
-  .stand { margin-top: -.75rem; font-size: .95rem; }
-  .weiter { padding-left: 1.1rem; display: grid; gap: .4rem; }
-  .entwurf { display: inline-block; background: var(--glut); color: var(--nacht); padding: .2rem .6rem; border-radius: var(--radius); font-weight: 650; }
-</style>
+<ArtikelSeite a={a} pillarH1={pillarH1} />

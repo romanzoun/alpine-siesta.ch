@@ -3,15 +3,20 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Anfrage from '../../components/Anfrage.astro';
 import { site } from '../../config';
+import { asLocale, mitLocale, type Locale } from '../../i18n/config';
+import { ui } from '../../i18n/ui';
+
+const locale = asLocale((Astro.props as { locale?: Locale }).locale ?? Astro.currentLocale);
+const t = ui(locale);
 ---
 
-<Base title={`Kontakt – ${site.name}`} description={`Fragen zur Ferienwohnung in ${site.ort} oder Buchungsanfrage: Schreib uns, wir antworten persönlich.`}>
+<Base locale={locale} title={t.kontaktTitel(site.name)} description={t.kontaktBeschreibung(site.ort)}>
   <section class="section container schmal">
-    <Breadcrumbs pfad={[{ name: 'Kontakt', href: '/kontakt/' }]} />
-    <h1>Kontakt</h1>
-    <p class="lead">Fragen zur Wohnung, zu {site.ort} oder eine Buchungsanfrage? Schreib uns – wir antworten persönlich.</p>
-    <Anfrage />
-    <p class="muted">Oder per E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    <Breadcrumbs pfad={[{ name: t.kontakt, href: mitLocale(locale, '/kontakt/') }]} />
+    <h1>{t.kontakt}</h1>
+    <p class="lead">{t.kontaktLead(site.ort)}</p>
+    <Anfrage locale={locale} />
+    <p class="muted">{t.oderMail}: <a href={`mailto:${site.email}`}>{site.email}</a></p>
   </section>
 </Base>
 

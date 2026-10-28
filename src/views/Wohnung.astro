@@ -1,0 +1,145 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Fakten from '../components/Fakten.astro';
+import Galerie from '../components/Galerie.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Buchung from '../components/Buchung.astro';
+import { site } from '../config';
+import { alleWohnungen, wohnungUrl, type Wohnung } from '../lib/wohnungen';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import { wohnungLocale } from '../i18n/wohnung';
+
+const anzahl = (await alleWohnungen()).length;
+
+const { eintrag, locale: localeProp } = Astro.props as { eintrag: Wohnung; locale?: Locale };
+const locale = asLocale(localeProp ?? Astro.currentLocale);
+const t = ui(locale);
+const lokal = wohnungLocale(locale);
+const w = eintrag.data;
+const { Content } = await render(eintrag);
+const bilder = w.galerie.map((bild, i) => {
+  const text = lokal?.bilder[i];
+  return text ? { ...bild, alt: text.alt, raum: text.raum, text: text.text, ursprung: bild.raum } : { ...bild, ursprung: bild.raum };
+});
+const ausstattung = lokal?.ausstattung ?? w.ausstattung;
+const hinweise = lokal?.hinweise ?? w.hinweise;
+const regeln = {
+  checkin: lokal?.checkin ?? w.hausregeln.checkin,
+  checkout: lokal?.checkout ?? w.hausregeln.checkout,
+  haustiere: lokal?.haustiere ?? w.hausregeln.haustiere,
+  rauchen: lokal?.rauchen ?? w.hausregeln.rauchen,
+};
+const stockwerk = lokal?.stockwerk ?? w.fakten.stockwerk;
+const parkplatz = lokal?.parkplatz ?? w.lage.parkplatz;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'VacationRental',
+  name: w.name,
+  description: lokal?.beschreibung ?? w.beschreibung,
+  url: new URL(wohnungUrl(eintrag.id, locale), Astro.site).href,
+  address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
+  containsPlace: {
+    '@type': 'Accommodation',
+    occupancy: { '@type': 'QuantitativeValue', value: w.fakten.personen },
+    numberOfBedrooms: w.fakten.schlafzimmer,
+    ...(w.fakten.badezimmer != null ? { numberOfBathroomsTotal: w.fakten.badezimmer } : {}),
+    ...(w.fakten.flaeche_m2 != null
+      ? { floorSize: { '@type': 'QuantitativeValue', value: w.fakten.flaeche_m2, unitCode: 'MTK' } }
+      : {}),
+    amenityFeature: ausstattung.flatMap((k) =>
+      k.items.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+    ),
+  },
+  ...(!regeln.checkin.includes('[TODO]') ? { checkinTime: regeln.checkin } : {}),
+  ...(!regeln.checkout.includes('[TODO]') ? { checkoutTime: regeln.checkout } : {}),
+};
+---
+
+<Base locale={locale} title={lokal ? lokal.titel(w.name, site.ort) : `Die Wohnung – ${w.name} in ${site.ort}`} description={lokal?.beschreibung ?? w.beschreibung} bild={w.galerie[0]?.bild}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <section class="section container">
+    <Breadcrumbs pfad={[...(anzahl > 1 ? [{ name: t.wohnungen, href: mitLocale(locale, '/wohnungen/') }] : []), { name: w.name, href: wohnungUrl(eintrag.id, locale) }]} />
+    <h1>{w.name}</h1>
+    <p class="lead">{lokal?.claim ?? w.claim}</p>
+    <Fakten fakten={w.fakten} hoehe={w.lage.hoehe_m} locale={locale} />
+  </section>
+
+  <section class="container">
+    <Galerie bilder={bilder} locale={locale} />
+  </section>
+
+  <section class="section container zweispaltig">
+    <div class="prose">
+      {lokal ? lokal.abschnitte.map((teil) => (
+        <section>
+          {teil.titel && <h2>{teil.titel}</h2>}
+          {teil.absatz.map((p) => <p>{p}</p>)}
+        </section>
+      )) : <Content />}
+    </div>
+    <aside class="buchen">
+      <Buchung locale={locale} slug={w.trizounSlug ?? eintrag.id} wohnung={eintrag.id} maxGaeste={w.fakten.personen} plattformen={w.plattformen} />
+      {hinweise.length > 0 && (
+        <ul class="hinweise">
+          {hinweise.map((h) => <li>{h}</li>)}
+        </ul>
+      )}
+    </aside>
+  </section>
+
+  <section class="section container">
+    <h2>{t.ausstattung}</h2>
+    <div class="liste">
+      {ausstattung.map((k) => (
+        <div>
+          <h3>{k.kategorie}</h3>
+          <ul>{k.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>{t.lage}</h2>
+    <p class="lead">{w.lage.ort}, {w.lage.hoehe_m} {lokal?.hoehe ?? 'm ü. M.'}</p>
+    <ul class="distanzen">
+      {w.lage.distanzen.map((d) => (
+        <li><strong>{lokal?.ziel[d.ziel] ?? d.ziel}</strong> <span class="muted">{d.minuten} min {lokal?.wie[d.wie] ?? d.wie}</span></li>
+      ))}
+    </ul>
+    {stockwerk && <p><strong>{t.stockwerk}:</strong> {stockwerk}</p>}
+    <p><strong>{t.parkplatz}:</strong> {parkplatz}</p>
+  </section>
+
+  <section class="section container">
+    <h2>{t.hausregeln}</h2>
+    <dl class="regeln">
+      <dt>{t.checkin}</dt><dd>{regeln.checkin}</dd>
+      <dt>{t.checkout}</dt><dd>{regeln.checkout}</dd>
+      <dt>{t.haustiere}</dt><dd>{regeln.haustiere}</dd>
+      <dt>{t.rauchen}</dt><dd>{regeln.rauchen}</dd>
+    </dl>
+    {w.hausregeln.weitere.length > 0 && <ul>{w.hausregeln.weitere.map((r) => <li>{r}</li>)}</ul>}
+  </section>
+</Base>
+
+<style>
+  .zweispaltig { display: grid; gap: 2rem; }
+  @media (min-width: 60rem) {
+    .zweispaltig { grid-template-columns: 1fr 22rem; align-items: start; }
+    .buchen { position: sticky; top: 6rem; }
+  }
+  .hinweise { margin: 1.25rem 0 0; padding: 0; list-style: none; display: grid; gap: .75rem; }
+  .hinweise li { padding-top: .75rem; border-top: 1px solid var(--rule); }
+  .liste ul { list-style: none; padding: 0; margin: 0; }
+  .liste li { padding-block: .2rem; }
+  .distanzen { list-style: none; padding: 0; display: grid; gap: .5rem; max-width: 30rem; }
+  .distanzen li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: .5rem; }
+  .regeln { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.5rem; }
+  .regeln dt { color: var(--muted); }
+  .regeln dd { margin: 0; }
+</style>

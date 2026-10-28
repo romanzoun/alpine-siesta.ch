@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AktivitaetenListe from '../components/AktivitaetenListe.astro';
+import BuchungsBand from '../components/BuchungsBand.astro';
+import Faq from '../components/Faq.astro';
+import PillarInhalt from '../components/PillarInhalt.astro';
+import { artikelVon, pillarUrl, artikelUrl, hubUrl, type Pillar } from '../lib/pillars';
+import { sortiert } from '../lib/entdecken';
+import { site } from '../config';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import { artikelRahmen } from '../i18n/familie-artikel';
+import { artikelText, pillarIstMehrsprachig, pillarText } from '../i18n/reisefuehrer';
+
+interface Props {
+  p: Pillar;
+  locale?: Locale;
+}
+const { p } = Astro.props;
+const locale = asLocale(Astro.props.locale);
+const t = ui(locale);
+const lokal = pillarText(p.id, locale);
+const { Content } = await render(p);
+const artikel = await artikelVon(p.id);
+const aktivitaeten = sortiert(await getCollection('aktivitaeten', (a) => a.data.pillar === p.id));
+const title = lokal?.title ?? p.data.title;
+const description = lokal?.description ?? p.data.description;
+const h1 = lokal?.h1 ?? p.data.h1;
+const lead = lokal?.lead ?? p.data.lead;
+const bildAlt = lokal?.bildAlt ?? p.data.bild_alt;
+const faq = lokal?.faq ?? p.data.faq;
+const ortName = lokal?.ort ?? site.ort;
+const kicker = lokal?.kicker ?? site.pillars[p.id as keyof typeof site.pillars];
+const sprachen = pillarIstMehrsprachig(p.id) ? undefined : (['de'] as Locale[]);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: locale,
+    author: { '@type': 'Organization', name: site.name, url: site.domain },
+    ...(p.data.aktualisiert && { dateModified: p.data.aktualisiert.toISOString().slice(0, 10) }),
+    ...(p.data.bild && { image: new URL(p.data.bild.src, Astro.site).href }),
+  },
+  ...(faq.length
+    ? [{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })),
+      }]
+    : []),
+];
+---
+
+<Base locale={locale} title={title} description={description} bild={p.data.bild} typ="article" noindex={p.data.entwurf} sprachen={sprachen}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <article class="section container guide">
+    <Breadcrumbs locale={locale} pfad={[{ name: ortName, href: mitLocale(locale, hubUrl()) }, { name: kicker, href: mitLocale(locale, pillarUrl(p.id)) }]} />
+    {p.data.entwurf && <p class="entwurf">Entwurf – nicht öffentlich</p>}
+    <h1>{h1}</h1>
+    <p class="lead">{lead}</p>
+    {p.data.bild && <Image src={p.data.bild} alt={bildAlt!} widths={[800, 1400, 2000]} sizes="100vw" loading="eager" class="titelbild" />}
+    <div class="prose">
+      {lokal ? <PillarInhalt blocks={lokal.blocks} locale={locale} /> : <Content />}
+    </div>
+  </article>
+
+  {artikel.length > 0 && (
+    <section class="section container">
+      <h2>{artikelRahmen(locale).thema}</h2>
+      <div class="liste">
+        {artikel.map((a) => {
+          const text = artikelText(locale, a.id);
+          return (
+          <article>
+            <h3><a href={mitLocale(locale, artikelUrl(a.id))}>{text?.h1 ?? a.data.h1}</a></h3>
+            <p class="muted">{text?.kurz ?? a.data.kurz}</p>
+          </article>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  {faq.length > 0 && (
+    <section class="section container">
+      <h2>{t.faq}</h2>
+      <Faq eintraege={faq} />
+    </section>
+  )}
+
+  {aktivitaeten.length > 0 && (
+    <section class="section container">
+      <h2>Passende Aktivitäten</h2>
+      <AktivitaetenListe aktivitaeten={aktivitaeten} />
+    </section>
+  )}
+
+  <BuchungsBand locale={locale} />
+</Base>
+
+<style>
+  h3 a { color: inherit; text-decoration: none; }
+  h3 a:hover { text-decoration: underline; }
+  .entwurf { display: inline-block; background: var(--glut); color: var(--nacht); padding: .2rem .6rem; border-radius: var(--radius); font-weight: 650; }
+</style>

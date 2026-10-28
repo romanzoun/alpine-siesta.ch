@@ -1,0 +1,6 @@
+[submodule "trizoun-katalog"]
+	path = trizoun-katalog
+	url = https://github.com/romanzoun/trizoun-katalog.git
+[submodule "trizoun-travel"]
+	path = trizoun-travel
+	url = https://github.com/romanzoun/trizoun-travel.git

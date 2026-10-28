@@ -25,8 +25,8 @@ const wohnungen = defineCollection({
         personen: z.number(),
         schlafzimmer: z.number(),
         betten: z.string(),
-        badezimmer: z.number(),
-        flaeche_m2: z.number(),
+        badezimmer: z.number().optional(),
+        flaeche_m2: z.number().optional(),
         stockwerk: z.string().optional(),
       }),
       lage: z.object({
@@ -43,7 +43,8 @@ const wohnungen = defineCollection({
         rauchen: z.string(),
         weitere: z.array(z.string()).default([]),
       }),
-      galerie: z.array(z.object({ bild: image(), alt: z.string(), raum: z.string().optional() })).min(1),
+      galerie: z.array(z.object({ bild: image(), alt: z.string(), raum: z.string().optional(), text: z.string().optional() })).min(1),
+      hinweise: z.array(z.string()).default([]),
       // Inserate auf Buchungsplattformen (solange es keine Online-Buchung gibt bzw. zusätzlich)
       plattformen: z.object({ booking: z.url().optional(), airbnb: z.url().optional() }).default({}),
     }),

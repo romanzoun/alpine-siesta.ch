@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import PillarSeite from '../../../../views/PillarSeite.astro';
+
+const p = (await getCollection('pillars')).find((eintrag) => eintrag.id === 'familie');
+if (!p) throw new Error('Pillar familie fehlt');
+---
+<PillarSeite p={p} locale="it" />
