@@ -1,0 +1,89 @@
+---
+// Besucherstatistik nur mit Einwilligung: Clarity lädt erst nach «Erlauben».
+// Ohne site.statistik.clarity wird nichts ausgegeben (Baustein abschaltbar).
+import { site } from '../config';
+import { asLocale, mitLocale, type Locale } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  locale?: Locale;
+}
+const locale = asLocale(Astro.props.locale);
+const t = ui(locale);
+const clarity = site.statistik.clarity;
+---
+
+{clarity && (
+  <div class="einwilligung" data-einwilligung hidden role="region" aria-label={t.statistikTitel}>
+    <p>{t.statistikText} <a href={mitLocale(locale, '/datenschutz/')}>{t.datenschutz}</a></p>
+    <div class="knoepfe">
+      <button type="button" class="btn btn--hell" data-wahl="nein">{t.statistikNein}</button>
+      <button type="button" class="btn" data-wahl="ja">{t.statistikJa}</button>
+    </div>
+  </div>
+)}
+
+{clarity && (
+  <script is:inline define:vars={{ clarity }}>
+    (() => {
+      const SCHLUESSEL = 'einwilligung-statistik';
+      const box = document.querySelector('[data-einwilligung]');
+      const lesen = () => { try { return localStorage.getItem(SCHLUESSEL); } catch { return null; } };
+      const merken = (wert) => { try { localStorage.setItem(SCHLUESSEL, wert); } catch {} };
+      let geladen = false;
+      const laden = () => {
+        if (geladen) return;
+        geladen = true;
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', clarity);
+        // Einwilligungssignal für Clarity: Statistik ja, Werbung nein
+        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+      };
+      const zeigen = () => { if (box) box.hidden = false; };
+      const wahl = lesen();
+      if (wahl === 'ja') laden();
+      else if (wahl !== 'nein') zeigen();
+      box?.addEventListener('click', (e) => {
+        const knopf = e.target.closest('[data-wahl]');
+        if (!knopf) return;
+        const ja = knopf.dataset.wahl === 'ja';
+        merken(ja ? 'ja' : 'nein');
+        box.hidden = true;
+        if (ja) laden();
+        // Widerruf: Clarity stoppt und löscht seine Cookies
+        else if (geladen) window.clarity('consent', false);
+      });
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-einwilligung-oeffnen]')) zeigen();
+      });
+    })();
+  </script>
+)}
+
+<style>
+  .einwilligung {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 30;
+    max-width: 26rem;
+    padding: 1.1rem 1.2rem 1.2rem;
+    border-radius: var(--radius);
+    background: var(--nacht);
+    color: var(--dampf);
+    box-shadow: 0 18px 40px -16px rgb(22 35 58 / .5);
+    animation: einwilligung-rein .35s var(--ease-out) both;
+  }
+  .einwilligung[hidden] { display: none; }
+  .einwilligung p { margin: 0 0 1rem; font-size: .95rem; line-height: 1.5; }
+  .einwilligung a { color: inherit; }
+  .knoepfe { display: flex; gap: .6rem; flex-wrap: wrap; }
+  .einwilligung .btn { background: var(--glut); color: var(--nacht); }
+  .einwilligung .btn--hell { background: transparent; color: var(--dampf); box-shadow: inset 0 0 0 1.5px rgb(245 248 247 / .5); }
+  @media (max-width: 30rem) { .einwilligung { left: .75rem; right: .75rem; bottom: .75rem; max-width: none; } }
+  @keyframes einwilligung-rein { from { opacity: 0; transform: translateY(.75rem); } }
+  @media (prefers-reduced-motion: reduce) { .einwilligung { animation: none; } }
+</style>

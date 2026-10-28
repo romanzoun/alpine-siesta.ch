@@ -11,9 +11,9 @@ export const site = {
   // Ort für Titel und Texte («Leukerbad im Winter»)
   ort: 'Leukerbad',
   region: 'Wallis',
-  email: 'hallo@alpine-siesta.ch', // [TODO] echte Adresse
+  email: 'info@alpine-siesta.ch',
   // Rückfallebene, falls die Online-Buchung (Trizoun Travel) nicht erreichbar oder nicht eingerichtet ist.
-  anfrageUrl: 'mailto:hallo@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
+  anfrageUrl: 'mailto:info@alpine-siesta.ch?subject=Buchungsanfrage%20Alpine%20Siesta',
   waehrung: 'CHF',
   // Einwilligung im Buchungs-Widget (Wortlaut wird mit der Anfrage gespeichert).
   // «kampagne»: Erinnerung, kurze Nachfrage und Angebote zu freien Terminen im Wunschzeitraum.
@@ -41,6 +41,10 @@ export const site = {
   module: {
     // «Entdecken» (Aktivitäten + Events aus dem Katalog, Zusatzdienst von Trizoun Travel)
     entdecken: false,
+  },
+  // Besucherstatistik mit Microsoft Clarity. Lädt erst, wenn der Gast im Banner zustimmt. Leer = aus.
+  statistik: {
+    clarity: 'z4y524ersy' as string,
   },
   // Kontaktformular: Ohne Endpunkt öffnet «Anfrage senden» eine vorausgefüllte E-Mail an «email».
   // Sobald das Backend läuft: URL eintragen (POST JSON → { ok: true }).

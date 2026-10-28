@@ -22,8 +22,9 @@ const description = text?.description ?? eintrag.data.description;
   <article class="section container">
     <Breadcrumbs pfad={[{ name: title, href: mitLocale(locale, `/${eintrag.id}/`) }]} />
     <h1>{title}</h1>
-    <div class="prose">
-      {text ? text.bloecke.map((block) => (
+    {text?.deutsch && <p class="hinweis-sprache">{text.deutsch}</p>}
+    <div class="prose" lang={text?.deutsch ? 'de-CH' : undefined}>
+      {text && !text.deutsch ? text.bloecke.map((block) => (
         <section>
           {block.titel && <h2>{block.titel}</h2>}
           {block.absatz.map((p) => <p>{p}</p>)}
@@ -32,3 +33,7 @@ const description = text?.description ?? eintrag.data.description;
     </div>
   </article>
 </Base>
+
+<style>
+  .hinweis-sprache { padding: .75rem 1rem; border-left: 3px solid var(--accent); max-width: 40rem; }
+</style>

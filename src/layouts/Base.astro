@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import Einwilligung from '../components/Einwilligung.astro';
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
 import { site } from '../config';
@@ -102,9 +103,13 @@ const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.r
       <div class="container">
         <a href={mitLocale(locale, '/')} class="footer-logo" aria-label={site.name}><Logo /></a>
         <p>{fusszeile(locale, site.ort, site.region)}<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
-        <ul class="footer-links">{rechtliches.map((r) => <li><a href={mitLocale(locale, `/${r.id}/`)}>{rechtText(locale, r.id)?.title ?? r.data.title}</a></li>)}</ul>
+        <ul class="footer-links">
+          {rechtliches.map((r) => <li><a href={mitLocale(locale, `/${r.id}/`)}>{rechtText(locale, r.id)?.title ?? r.data.title}</a></li>)}
+          {site.statistik.clarity && <li><button type="button" class="footer-knopf" data-einwilligung-oeffnen>{t.statistikEinstellungen}</button></li>}
+        </ul>
       </div>
     </footer>
+    <Einwilligung locale={locale} />
     <script>
       import { textBild } from '../scripts/text-bild';
       const rhythmus = () => document.querySelectorAll<HTMLElement>('.guide .prose').forEach(textBild);
@@ -202,4 +207,5 @@ const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.r
   .footer-links { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
   /* Tippflächen mindestens 44 px hoch */
   .footer-links a, .site-footer p a { display: inline-block; padding-block: .7rem; }
+  .footer-knopf { font: inherit; color: inherit; background: none; border: 0; padding: .7rem 0; text-decoration: underline; cursor: pointer; }
 </style>
