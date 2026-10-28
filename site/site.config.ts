@@ -31,6 +31,7 @@ export const site = {
     zermatt: 'Zermatt',
     wein: 'Wein im Wallis',
     sommer: 'Wandern & Sommer',
+    biken: 'Biken & E-Bike',
     winter: 'Winter & Ski',
     reisetipps: 'Anreise & Wallis-Ausflüge',
   },
