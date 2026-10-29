@@ -127,11 +127,29 @@ const schema = {
   </section>
 </Base>
 
+<script>
+  // Die Buchungsspalte klebt oben, solange sie ins Fenster passt. Ist sie höher (Kalender, Formular, Hinweise),
+  // klebt sie stattdessen mit ihrer Unterkante, so bleibt «Anfrage senden» erreichbar statt aus dem Bild zu ragen.
+  const spalte = document.querySelector<HTMLElement>('.buchen');
+  if (spalte) {
+    const oben = () => parseFloat(getComputedStyle(document.documentElement).fontSize) * 6;
+    const abstand = 24;
+    const setzen = () => {
+      const zuHoch = spalte.offsetHeight > innerHeight - oben() - abstand;
+      spalte.style.setProperty('--buchen-oben', zuHoch ? `${innerHeight - spalte.offsetHeight - abstand}px` : '6rem');
+    };
+    new ResizeObserver(setzen).observe(spalte);
+    addEventListener('resize', setzen, { passive: true });
+    setzen();
+  }
+</script>
+
 <style>
   .zweispaltig { display: grid; gap: 2rem; }
   @media (min-width: 60rem) {
     .zweispaltig { grid-template-columns: 1fr 22rem; align-items: start; }
-    .buchen { position: sticky; top: 6rem; }
+    /* --buchen-oben setzt das Skript unten: höher als das Fenster → erst mitscrollen, bis der Knopf sichtbar ist */
+    .buchen { position: sticky; top: var(--buchen-oben, 6rem); }
   }
   .hinweise { margin: 1.25rem 0 0; padding: 0; list-style: none; display: grid; gap: .75rem; }
   .hinweise li { padding-top: .75rem; border-top: 1px solid var(--rule); }

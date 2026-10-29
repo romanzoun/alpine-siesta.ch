@@ -54,7 +54,10 @@ const heute = new Date().toISOString().slice(0, 10);
       </label>
     </div>
   )}
-  <label class="feld">Name<input name="name" required maxlength="100" autocomplete="name" /></label>
+  <div class="reihe">
+    <label class="feld">{t.vorname}<input name="vorname" required maxlength="60" autocomplete="given-name" /></label>
+    <label class="feld">{t.nachname}<input name="nachname" maxlength="60" autocomplete="family-name" /></label>
+  </div>
   <label class="feld">E-Mail<input type="email" name="email" required maxlength="200" autocomplete="email" /></label>
   <label class="feld">{daten ? t.nachrichtOptional : t.nachricht}<textarea name="nachricht" rows="4" maxlength="5000" required={!daten}></textarea></label>
   <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
@@ -104,7 +107,7 @@ const heute = new Date().toISOString().slice(0, 10);
           '',
           f.nachricht,
           '',
-          f.name,
+          [f.vorname, f.nachname].filter(Boolean).join(' '),
         ];
         const betreff = `${texte.anfrage} ${name}${f.anreise ? ` ${f.anreise}` : ''}`;
         window.location.href = `mailto:${email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(zeilen.join('\n'))}`;
@@ -119,7 +122,8 @@ const heute = new Date().toISOString().slice(0, 10);
             method: 'POST',
             headers: { authorization: `Bearer ${trizounKey}`, 'content-type': 'application/json' },
             body: JSON.stringify({
-              name: f.name,
+              vorname: f.vorname,
+              ...(f.nachname ? { nachname: f.nachname } : {}),
               email: f.email,
               nachricht: f.nachricht,
               ...(f.anreise ? { anreise: f.anreise } : {}),
