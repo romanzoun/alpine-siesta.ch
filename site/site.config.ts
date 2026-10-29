@@ -42,9 +42,12 @@ export const site = {
     // «Entdecken» (Aktivitäten + Events aus dem Katalog, Zusatzdienst von Trizoun Travel)
     entdecken: false,
   },
-  // Besucherstatistik mit Microsoft Clarity. Lädt erst, wenn der Gast im Banner zustimmt. Leer = aus.
+  // Besucherstatistik. Lädt erst, wenn der Gast im Banner zustimmt (eine Wahl für alle Dienste). Leer = aus.
   statistik: {
+    // Microsoft Clarity: Projekt-ID
     clarity: 'z4y524ersy' as string,
+    // Cloudflare Web Analytics: Token des Beacons (Cloudflare → Web Analytics → Site)
+    cloudflare: 'd13bb73afdc547b2be8cdba27e80a2ec' as string,
   },
   // Kontaktformular: Ohne Endpunkt öffnet «Anfrage senden» eine vorausgefüllte E-Mail an «email».
   // Sobald das Backend läuft: URL eintragen (POST JSON → { ok: true }).

@@ -105,7 +105,7 @@ const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.r
         <p>{fusszeile(locale, site.ort, site.region)}<br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
         <ul class="footer-links">
           {rechtliches.map((r) => <li><a href={mitLocale(locale, `/${r.id}/`)}>{rechtText(locale, r.id)?.title ?? r.data.title}</a></li>)}
-          {site.statistik.clarity && <li><button type="button" class="footer-knopf" data-einwilligung-oeffnen>{t.statistikEinstellungen}</button></li>}
+          {(site.statistik.clarity || site.statistik.cloudflare) && <li><button type="button" class="footer-knopf" data-einwilligung-oeffnen>{t.statistikEinstellungen}</button></li>}
         </ul>
       </div>
     </footer>

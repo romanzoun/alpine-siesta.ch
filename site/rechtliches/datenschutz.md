@@ -6,7 +6,7 @@ reihenfolge: 2
 
 <!-- Vor Änderungen an Diensten (Hosting, Mail, Statistik, Online-Buchung, Shop) diesen Text anpassen. Die E-Mail-Kampagne des Buchungskalenders ist noch nicht live und deshalb nicht beschrieben. -->
 
-Diese Erklärung beschreibt, wie wir Personendaten auf alpine-siesta.ch bearbeiten. Wir richten uns nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, gilt sie ergänzend. Stand: 29. Oktober 2026.
+Diese Erklärung beschreibt, wie wir Personendaten auf alpine-siesta.ch bearbeiten. Wir richten uns nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, gilt sie ergänzend. Stand: 30. Oktober 2026.
 
 ## Verantwortlich
 
@@ -42,18 +42,31 @@ Die Korrespondenz bewahren wir auf, solange es für die Anfrage oder Buchung nö
 
 Auf der Wohnungsseite verlinken wir unsere Inserate auf Booking.com und Airbnb. Erst wenn du einen dieser Links anklickst, verlässt du unsere Website. Für die Buchung dort gelten die Datenschutzbestimmungen der jeweiligen Plattform. Wir erhalten von der Plattform die Angaben, die wir für deinen Aufenthalt brauchen.
 
-## Besucherstatistik mit Microsoft Clarity
+## Besucherstatistik
 
-Wir setzen Microsoft Clarity ein, aber nur, wenn du im Banner zustimmst. Clarity zeigt uns, wie die Website genutzt wird: aufgerufene Seiten, Klicks, Scrollen und Mausbewegungen, Gerät, Browser und ungefährer Standort. Daraus entstehen Heatmaps und Aufzeichnungen einzelner Besuche. Eingaben in Formularen werden verdeckt. So sehen wir, wo die Website verständlich ist und wo nicht.
+Für die Besucherstatistik setzen wir Microsoft Clarity und Cloudflare Web Analytics ein, aber nur, wenn du im Banner zustimmst. Eine Wahl gilt für beide.
+
+### Microsoft Clarity
+
+Clarity zeigt uns, wie die Website genutzt wird: aufgerufene Seiten, Klicks, Scrollen und Mausbewegungen, Gerät, Browser und ungefährer Standort. Daraus entstehen Heatmaps und Aufzeichnungen einzelner Besuche. Eingaben in Formularen werden verdeckt. So sehen wir, wo die Website verständlich ist und wo nicht.
 
 Clarity setzt dafür Cookies (_clck für ein Jahr, _clsk für einen Tag). Anbieterin ist die Microsoft Ireland Operations Limited, Irland. Daten können an die Microsoft Corporation in den USA gehen. Microsoft ist unter dem Swiss-U.S. Data Privacy Framework zertifiziert.
 
-Deine Einwilligung kannst du jederzeit über «Statistik-Einstellungen» unten auf der Seite widerrufen. Danach stoppt Clarity und löscht seine Cookies. Deine Wahl merken wir uns im Speicher deines Browsers.
+### Cloudflare Web Analytics
+
+Cloudflare Web Analytics zählt, welche Seiten aufgerufen werden, woher Besucher kommen und wie schnell die Seiten laden. Dafür übermittelt dein Browser die aufgerufene Adresse, die vorherige Seite, Browser, Betriebssystem, Bildschirmgrösse und Ladezeiten. Cloudflare setzt dafür keine Cookies und speichert nichts in deinem Browser. Wir sehen nur zusammengefasste Zahlen, keine einzelnen Besuche.
+
+Anbieterin ist die Cloudflare, Inc., USA. Cloudflare ist unter dem Swiss-U.S. Data Privacy Framework zertifiziert.
+
+### Widerruf
+
+Deine Einwilligung kannst du jederzeit über «Statistik-Einstellungen» unten auf der Seite widerrufen. Danach stoppt Clarity und löscht seine Cookies, und Cloudflare Web Analytics lädt ab der nächsten Seite nicht mehr. Deine Wahl merken wir uns im Speicher deines Browsers.
 
 ## Wer Daten von uns erhält
 
 - **Infomaniak Network SA**, Genf, Schweiz: Hosting der Website und von Trizoun Travel sowie Versand und Empfang von E-Mails
-- **Microsoft Ireland Operations Limited**: Besucherstatistik, nur mit Einwilligung
+- **Microsoft Ireland Operations Limited**: Besucherstatistik (Clarity), nur mit Einwilligung
+- **Cloudflare, Inc.**, USA: Besucherstatistik (Web Analytics), nur mit Einwilligung
 
 Wir verkaufen keine Personendaten und geben sie nicht für Werbung weiter.
 
