@@ -30,6 +30,8 @@ Das Formular schickt die Anfrage über Trizoun Travel, unseren eigenen Dienst, p
 
 Im Formular kannst du ankreuzen, dass wir dir Angebote und Neuigkeiten per E-Mail schicken dürfen. Nur dann bekommst du solche Mails. Wir speichern dafür in Trizoun Travel deinen Namen, deine E-Mail-Adresse, den Zeitpunkt und den Wortlaut deiner Einwilligung. Die Mails gehen über unseren eigenen Mailserver bei Infomaniak. Jede Mail enthält einen Link zum Abmelden. Danach löschen wir deine Einwilligung und schicken dir keine solchen Mails mehr. Betreff, Text und Empfänger gesendeter Mails bewahren wir zwölf Monate auf.
 
+Damit unsere Mails passen, können wir dich einer Gruppe zuordnen, zum Beispiel «Stammgäste». Diese Zuordnung löschen wir, sobald von dir weder eine Anfrage noch eine Einwilligung gespeichert ist.
+
 Auf eine Anfrage antworten wir dir persönlich per E-Mail, auch ohne diese Einwilligung.
 
 ## Aufbewahrung
