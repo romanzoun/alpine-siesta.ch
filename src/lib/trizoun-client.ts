@@ -25,7 +25,7 @@ export function createTrizoun({ key, baseUrl }: { key: string; baseUrl: string }
     angebot: (slug: string, a: { anreise: string; abreise: string; erwachsene: number }) => get<Angebot>(`${s(slug)}/offer`, a),
     kontakt: async (
       slug: string,
-      a: { name: string; email: string; nachricht: string; anreise?: string; abreise?: string; gaeste?: number; website?: string },
+      a: { vorname: string; nachname?: string; email: string; nachricht: string; anreise?: string; abreise?: string; gaeste?: number; website?: string },
     ) => {
       const res = await fetch(`${baseUrl}/v1/public${s(slug)}/kontakt`, {
         method: 'POST',
