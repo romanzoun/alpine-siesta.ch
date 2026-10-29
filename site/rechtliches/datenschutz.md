@@ -6,7 +6,7 @@ reihenfolge: 2
 
 <!-- Vor Änderungen an Diensten (Hosting, Mail, Statistik, Online-Buchung, Shop) diesen Text anpassen. Die E-Mail-Kampagne des Buchungskalenders ist noch nicht live und deshalb nicht beschrieben. -->
 
-Diese Erklärung beschreibt, wie wir Personendaten auf alpine-siesta.ch bearbeiten. Wir richten uns nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, gilt sie ergänzend. Stand: 28. Oktober 2026.
+Diese Erklärung beschreibt, wie wir Personendaten auf alpine-siesta.ch bearbeiten. Wir richten uns nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, gilt sie ergänzend. Stand: 29. Oktober 2026.
 
 ## Verantwortlich
 
@@ -25,6 +25,14 @@ Schriften und Bilder laden wir vom eigenen Server. Es gibt keine Verbindung zu G
 Wenn du uns über das Formular auf der Wohnungsseite oder auf der Kontaktseite schreibst, erhalten wir Name, E-Mail-Adresse und Nachricht sowie, falls angegeben, Anreise, Abreise und die Anzahl Erwachsene und Kinder. Wir verwenden die Angaben, um deine Anfrage zu beantworten und eine Buchung abzuwickeln.
 
 Das Formular schickt die Anfrage über Trizoun Travel, unseren eigenen Dienst, per E-Mail an uns. Damit wir alle Anfragen zu unserer Wohnung übersichtlich sehen, speichert Trizoun Travel Name, E-Mail-Adresse, Zeitraum und Anzahl Gäste, aber nicht den Text deiner Nachricht. Diese Angaben löschen wir zwölf Monate nach der Anfrage. Angebote schicken wir dir deswegen nicht: Dafür braucht es deine ausdrückliche Einwilligung. Ist der Dienst nicht erreichbar, öffnet sich stattdessen dein E-Mail-Programm mit der vorbereiteten Nachricht.
+
+## Angebote und Neuigkeiten per E-Mail
+
+Im Formular kannst du ankreuzen, dass wir dir Angebote und Neuigkeiten per E-Mail schicken dürfen. Nur dann bekommst du solche Mails. Wir speichern dafür in Trizoun Travel deinen Namen, deine E-Mail-Adresse, den Zeitpunkt und den Wortlaut deiner Einwilligung. Die Mails gehen über unseren eigenen Mailserver bei Infomaniak. Jede Mail enthält einen Link zum Abmelden. Danach löschen wir deine Einwilligung und schicken dir keine solchen Mails mehr. Betreff, Text und Empfänger gesendeter Mails bewahren wir zwölf Monate auf.
+
+Auf eine Anfrage antworten wir dir persönlich per E-Mail, auch ohne diese Einwilligung.
+
+## Aufbewahrung
 
 Die Korrespondenz bewahren wir auf, solange es für die Anfrage oder Buchung nötig ist. Unterlagen zu Buchungen bewahren wir aus gesetzlichen Gründen zehn Jahre auf.
 
