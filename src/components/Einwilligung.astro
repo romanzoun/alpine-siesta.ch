@@ -1,6 +1,6 @@
 ---
-// Besucherstatistik nur mit Einwilligung: Clarity lädt erst nach «Erlauben».
-// Ohne site.statistik.clarity wird nichts ausgegeben (Baustein abschaltbar).
+// Besucherstatistik nur mit Einwilligung: Clarity und Cloudflare Web Analytics laden erst nach «Erlauben».
+// Eine Wahl gilt für alle Dienste. Ohne Einträge in site.statistik wird nichts ausgegeben (Baustein abschaltbar).
 import { site } from '../config';
 import { asLocale, mitLocale, type Locale } from '../i18n/config';
 import { ui } from '../i18n/ui';
@@ -10,12 +10,14 @@ interface Props {
 }
 const locale = asLocale(Astro.props.locale);
 const t = ui(locale);
-const clarity = site.statistik.clarity;
+const { clarity, cloudflare } = site.statistik;
+const aktiv = Boolean(clarity || cloudflare);
+const dienste = [clarity && 'Microsoft Clarity', cloudflare && 'Cloudflare Web Analytics'].filter(Boolean).join(` ${t.und} `);
 ---
 
-{clarity && (
+{aktiv && (
   <div class="einwilligung" data-einwilligung hidden role="region" aria-label={t.statistikTitel}>
-    <p>{t.statistikText} <a href={mitLocale(locale, '/datenschutz/')}>{t.datenschutz}</a></p>
+    <p>{t.statistikText(dienste)} <a href={mitLocale(locale, '/datenschutz/')}>{t.datenschutz}</a></p>
     <div class="knoepfe">
       <button type="button" class="btn btn--hell" data-wahl="nein">{t.statistikNein}</button>
       <button type="button" class="btn" data-wahl="ja">{t.statistikJa}</button>
@@ -23,8 +25,8 @@ const clarity = site.statistik.clarity;
   </div>
 )}
 
-{clarity && (
-  <script is:inline define:vars={{ clarity }}>
+{aktiv && (
+  <script is:inline define:vars={{ clarity, cloudflare }}>
     (() => {
       const SCHLUESSEL = 'einwilligung-statistik';
       const box = document.querySelector('[data-einwilligung]');
@@ -34,13 +36,23 @@ const clarity = site.statistik.clarity;
       const laden = () => {
         if (geladen) return;
         geladen = true;
-        (function (c, l, a, r, i, t, y) {
-          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
-          t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
-          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, 'clarity', 'script', clarity);
-        // Einwilligungssignal für Clarity: Statistik ja, Werbung nein
-        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+        if (clarity) {
+          (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+            t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+          })(window, document, 'clarity', 'script', clarity);
+          // Einwilligungssignal für Clarity: Statistik ja, Werbung nein
+          window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+        }
+        if (cloudflare) {
+          // Cloudflare Web Analytics: ohne Cookies, zählt Seitenaufrufe und Ladezeiten
+          const s = document.createElement('script');
+          s.defer = true;
+          s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+          s.setAttribute('data-cf-beacon', JSON.stringify({ token: cloudflare }));
+          document.head.append(s);
+        }
       };
       const zeigen = () => { if (box) box.hidden = false; };
       const wahl = lesen();
@@ -53,8 +65,8 @@ const clarity = site.statistik.clarity;
         merken(ja ? 'ja' : 'nein');
         box.hidden = true;
         if (ja) laden();
-        // Widerruf: Clarity stoppt und löscht seine Cookies
-        else if (geladen) window.clarity('consent', false);
+        // Widerruf: Clarity stoppt und löscht seine Cookies. Cloudflare lädt ab der nächsten Seite nicht mehr.
+        else if (geladen && clarity) window.clarity('consent', false);
       });
       document.addEventListener('click', (e) => {
         if (e.target.closest('[data-einwilligung-oeffnen]')) zeigen();
