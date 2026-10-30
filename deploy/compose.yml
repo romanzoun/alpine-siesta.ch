@@ -1,0 +1,20 @@
+# Produktion auf dem VPS: /srv/sites/<SITE>/compose.yml (kopiert der Deploy-Workflow).
+# Läuft im Netz von Trizoun (trizoun-web). Der vordere Caddy erreicht die Website unter dem Namen <SITE>,
+# die Domains stehen in site/server.caddy.
+services:
+  web:
+    image: ${IMAGE:?}:${TAG:-latest}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    networks:
+      web:
+        aliases: ["${SITE:?}"]
+
+networks:
+  web:
+    name: trizoun-web
+    external: true
