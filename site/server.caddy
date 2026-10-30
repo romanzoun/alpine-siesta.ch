@@ -1,0 +1,10 @@
+# Domains dieser Website auf dem Trizoun-Server (wird nach /srv/sites/<SITE>/server.caddy kopiert).
+# Der Name hinter reverse_proxy ist SITE aus .github/workflows/deploy.yml.
+alpine-siesta.ch {
+	import sicher
+	reverse_proxy alpine-siesta:80
+}
+
+www.alpine-siesta.ch {
+	redir https://alpine-siesta.ch{uri} permanent
+}
