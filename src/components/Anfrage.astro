@@ -1,6 +1,8 @@
 ---
 // Kontakt-/Buchungsanfrage. Mit site.kontakt.endpunkt: POST als JSON an das Backend.
 // Ohne Endpunkt (Phase 1): öffnet eine vorausgefüllte E-Mail an site.email – kein Server nötig.
+// Mit Trizoun Travel geht die Anfrage immer über Trizoun (Absender Trizoun, Antworten nach Mandant und Wohnung).
+// Die Mail-App öffnet sich dann nur, wenn die Wohnung dort keine E-Mail-Buchung hat oder der Gast sie selbst wählt.
 import { site } from '../config';
 import { trizoun } from '../lib/trizoun';
 import { alleWohnungen } from '../lib/wohnungen';
@@ -22,6 +24,7 @@ const wohnungen = (await alleWohnungen()).map((w) => ({ id: w.id, name: w.data.n
 // Ordnername → Kurzname in Trizoun Travel
 const slugs = Object.fromEntries((await alleWohnungen()).map((w) => [w.id, w.data.trizounSlug ?? w.id]));
 const heute = new Date().toISOString().slice(0, 10);
+const mitTrizoun = Boolean(trizoun.apiUrl && trizoun.key);
 ---
 
 <form class="anfrage" method="post" action={site.kontakt.endpunkt || `mailto:${site.email}`} enctype={site.kontakt.endpunkt ? undefined : 'text/plain'} data-anfrage>
@@ -66,11 +69,11 @@ const heute = new Date().toISOString().slice(0, 10);
   <!-- Nur sichtbar, wenn der Vermieter in Trizoun Gäste-Post nutzt -->
   <label class="haken" data-angebote hidden><input type="checkbox" name="angebote" /><span>{t.angeboteEinwilligung.replace('{name}', site.name)}</span></label>
   <p class="hinweis">{t.datenschutzHinweis} <a href={mitLocale(locale, '/datenschutz/')}>{t.datenschutz}</a></p>
-  <button class="btn" type="submit" data-senden={t.anfrageSenden}>{site.kontakt.endpunkt ? t.anfrageSenden : t.mailVorbereiten}</button>
+  <button class="btn" type="submit" data-senden={t.anfrageSenden} data-mail={t.mailVorbereiten}>{site.kontakt.endpunkt || mitTrizoun ? t.anfrageSenden : t.mailVorbereiten}</button>
   <p class="status" data-status role="status" aria-live="polite"></p>
 </form>
 
-<script define:vars={{ slugs, email: site.email, endpunkt: site.kontakt.endpunkt, trizounApi: trizoun.apiUrl ?? '', trizounKey: trizoun.key ?? '', name: site.name, texte: { davonKinder: t.davonKinder, anreise: t.anreise, abreise: t.abreise, gaeste: t.gaeste, mailOeffnet: t.mailOeffnet, wirdGesendet: t.wirdGesendet, danke: t.danke, nichtGeklappt: t.nichtGeklappt, anfrage: t.anfragen } }}>
+<script define:vars={{ slugs, email: site.email, endpunkt: site.kontakt.endpunkt, trizounApi: trizoun.apiUrl ?? '', trizounKey: trizoun.key ?? '', name: site.name, texte: { mailVorbereiten: t.mailVorbereiten, davonKinder: t.davonKinder, anreise: t.anreise, abreise: t.abreise, gaeste: t.gaeste, mailOeffnet: t.mailOeffnet, wirdGesendet: t.wirdGesendet, danke: t.danke, nichtGeklappt: t.nichtGeklappt, anfrage: t.anfragen } }}>
   document.querySelectorAll('[data-anfrage]').forEach((form) => {
     form.querySelector('[name="t"]').value = String(Math.floor(Date.now() / 1000));
     const status = form.querySelector('[data-status]');
@@ -85,11 +88,16 @@ const heute = new Date().toISOString().slice(0, 10);
       fetch(`${trizounApi}/v1/public/listings/${encodeURIComponent(slugs[fest] ?? fest)}`, { headers: { authorization: `Bearer ${trizounKey}` } })
         .then((res) => (res.ok ? res.json() : {}))
         .then((json) => {
-          if (!json.data?.features?.emailBuchung) return;
+          // Nur eine klare Antwort ohne E-Mail-Buchung schaltet auf die Mail-App um
+          if (!json.data?.features?.emailBuchung) {
+            form.dataset.versand = 'mail';
+            knopf.textContent = knopf.dataset.mail;
+            return;
+          }
           form.dataset.versand = 'trizoun';
           if (json.data.features.gaestePost) form.querySelector('[data-angebote]').hidden = false;
-          if (knopf.dataset.senden) knopf.textContent = knopf.dataset.senden;
         })
+        // Netz weg oder Trizoun kurz nicht erreichbar: beim Absenden trotzdem über Trizoun versuchen
         .catch(() => {})
         .finally(() => { knopf.disabled = false; });
     }
@@ -113,7 +121,7 @@ const heute = new Date().toISOString().slice(0, 10);
         window.location.href = `mailto:${email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(zeilen.join('\n'))}`;
         status.textContent = texte.mailOeffnet;
       };
-      if (form.dataset.versand === 'trizoun' && trizounApi && trizounKey && f.wohnung) {
+      if (form.dataset.versand !== 'mail' && trizounApi && trizounKey && f.wohnung) {
         const knopf = form.querySelector('button[type="submit"]');
         knopf.disabled = true;
         status.textContent = texte.wirdGesendet;
@@ -140,8 +148,13 @@ const heute = new Date().toISOString().slice(0, 10);
           form.reset();
           status.textContent = texte.danke;
         } catch (err) {
-          mailto();
-          status.textContent = `${texte.nichtGeklappt} (${err.message}). ${texte.mailOeffnet}`;
+          // Nicht still in die Mail-App ausweichen: der Gast entscheidet selbst
+          status.textContent = `${texte.nichtGeklappt} (${err.message}). `;
+          const link = document.createElement('a');
+          link.href = '#';
+          link.textContent = texte.mailVorbereiten;
+          link.addEventListener('click', (ev) => { ev.preventDefault(); mailto(); });
+          status.append(link);
         } finally {
           knopf.disabled = false;
         }
