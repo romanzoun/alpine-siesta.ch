@@ -4,6 +4,7 @@ import type { Loader } from 'astro/loaders';
 import { parse } from 'yaml';
 import { z } from 'astro/zod';
 import { site } from '../../site/site.config';
+import { terminNochBevorstehend } from './zeit';
 
 // Aktivitäten für «Entdecken» aus zwei Quellen:
 //   site/katalog/aktivitaeten/  – zentraler Katalog der Region (per Sync gespiegelt, nie von Hand ändern)
@@ -67,6 +68,7 @@ export function entdeckenLoader(): Loader {
       for (const [slug, datei] of ordner) {
         if (ausblenden.includes(slug)) continue;
         const { daten, text } = frontmatter(readFileSync(datei, 'utf8'), datei);
+        if (datei.startsWith('site/katalog/') && (daten.geprueft !== true || daten.ausgeblendet)) continue;
         const a = anpassungen[slug] ?? {};
         const body = a.tipp ? `${text}\n\n## Tipp von uns\n\n${a.tipp.trim()}` : text;
         const { tipp: _t, ...felder } = a;
@@ -74,7 +76,7 @@ export function entdeckenLoader(): Loader {
         // Vergangene Events nicht mehr veröffentlichen (täglicher Sync/Build räumt auf)
         const geprueft = data as { typ?: string; termine?: { beginn: Date; ende?: Date }[] };
         const termine = geprueft.termine ?? [];
-        if (geprueft.typ === 'event' && termine.every((t) => (t.ende ?? t.beginn).getTime() < Date.now() - 86_400_000)) {
+        if (geprueft.typ === 'event' && !termine.some((t) => terminNochBevorstehend(t))) {
           vorbei++;
           continue;
         }

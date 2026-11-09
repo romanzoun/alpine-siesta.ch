@@ -2,14 +2,20 @@
 // Quelle: KATALOG_DIR (lokaler Ordner, z. B. zum Testen) oder das Git-Repo aus site.config.ts
 // (privat: KATALOG_TOKEN mit Leserecht; KATALOG_REPO überschreibt die Adresse, z. B. für Tests). site/katalog/ nie von Hand ändern – Anpassungen in site/entdecken.yaml.
 import { execFileSync } from 'node:child_process';
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync, readdirSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, rmSync, writeFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { site } from '../site/site.config.ts';
+import { katalogVonApi } from './katalog-api-sync.mjs';
 
 const ZIEL = 'site/katalog';
 if (!site.module?.entdecken) {
   console.log('Entdecken ist ausgeschaltet (site.module.entdecken) – kein Sync.');
+  process.exit(0);
+}
+if (process.env.PUBLIC_TRIZOUN_API_URL && process.env.PUBLIC_TRIZOUN_KEY) {
+  const anzahl = await katalogVonApi({ apiUrl: process.env.PUBLIC_TRIZOUN_API_URL, key: process.env.PUBLIC_TRIZOUN_KEY, region: site.katalog.region });
+  console.log(`Katalog «${site.katalog.region}» aus Trizoun Travel: ${anzahl} Einträge.`);
   process.exit(0);
 }
 const { region, ref } = site.katalog;

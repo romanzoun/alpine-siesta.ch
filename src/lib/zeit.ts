@@ -24,3 +24,9 @@ export function ortszeit(wert: string | Date): Date {
 
 export const teile = (d: Date) =>
   Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: ZEITZONE, hourCycle: 'h23', month: 'numeric', hour: 'numeric', minute: 'numeric', year: 'numeric', day: 'numeric' }).formatToParts(d).map((p) => [p.type, Number(p.value)])) as Record<'year' | 'month' | 'day' | 'hour' | 'minute', number>;
+
+export const tagSchluessel = (d: Date) => new Intl.DateTimeFormat('sv-SE', { timeZone: ZEITZONE }).format(d);
+
+// Ein Event mit festem Datum erscheint nur bis zum Vortag seines Beginns.
+export const terminNochBevorstehend = (t: { beginn: Date }, heute = new Date()) =>
+  tagSchluessel(t.beginn) > tagSchluessel(heute);

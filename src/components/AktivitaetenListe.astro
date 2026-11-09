@@ -4,6 +4,7 @@
 import type { CollectionEntry } from 'astro:content';
 import AktivitaetKarte from './AktivitaetKarte.astro';
 import * as L from '../lib/labels';
+import { tagSchluessel } from '../lib/zeit';
 
 interface Props {
   aktivitaeten: CollectionEntry<'aktivitaeten'>[];
@@ -80,6 +81,7 @@ const schema = {
         data-fuer={a.data.zielgruppen.join(' ')}
         data-thema={a.data.kategorien.join(' ')}
         data-extra={extrasVon(a)}
+        data-letzter-termin={a.data.typ === 'event' ? a.data.termine.map((t) => tagSchluessel(t.beginn)).sort().at(-1) : undefined}
         style={`view-transition-name: karte-${a.id}`}
       >
         <AktivitaetKarte aktivitaet={a} />
@@ -100,8 +102,15 @@ const schema = {
   // Filterlogik: innerhalb einer Gruppe ODER, zwischen Gruppen UND. Extras: alle gewählten müssen passen.
   for (const root of document.querySelectorAll<HTMLElement>('[data-entdecken]')) {
     const form = root.querySelector<HTMLFormElement>('[data-filter]');
-    if (!form) continue;
     const karten = [...root.querySelectorAll<HTMLElement>('.karten > li')];
+    const heute = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Zurich' }).format(new Date());
+    const nochOffen = (el: HTMLElement) => !el.dataset.letzterTermin || el.dataset.letzterTermin > heute();
+    if (!form) {
+      const aktualisieren = () => { for (const el of karten) el.hidden = !nochOffen(el); };
+      aktualisieren();
+      setInterval(aktualisieren, 60_000);
+      continue;
+    }
     const anzahl = root.querySelector('[data-anzahl]')!;
     const leer = root.querySelector<HTMLElement>('[data-leer]')!;
 
@@ -116,11 +125,12 @@ const schema = {
       };
     };
 
-    const anwenden = () => {
+    const anwenden = (animieren = true) => {
       const a = auswahl();
       const hat = (el: HTMLElement, key: string, werte: string[]) =>
         !werte.length || werte.some((w) => el.dataset[key]!.split(' ').includes(w));
       const sichtbar = (el: HTMLElement) =>
+        nochOffen(el) &&
         (!a.monat || el.dataset.monate!.split(' ').includes(a.monat)) &&
         hat(el, 'typ', a.typ) &&
         hat(el, 'fuer', a.fuer) &&
@@ -138,7 +148,7 @@ const schema = {
         leer.hidden = n > 0;
       };
       // Sanftes Umsortieren, wo der Browser es kann
-      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(aktualisieren);
+      if (animieren && document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(aktualisieren);
       else aktualisieren();
 
       const params = new URLSearchParams();
@@ -159,10 +169,11 @@ const schema = {
       }
     }
 
-    form.addEventListener('change', anwenden);
+    form.addEventListener('change', () => anwenden());
     form.addEventListener('reset', () => setTimeout(anwenden));
+    setInterval(() => anwenden(false), 60_000);
     root.querySelector('[data-zuruecksetzen]')?.addEventListener('click', () => form.reset());
-    if (location.search) anwenden();
+    anwenden(false);
     // Gewählten Monat in der scrollbaren Reihe sichtbar machen
     form.querySelector('input[name="monat"]:checked')?.closest('label')?.scrollIntoView({ block: 'nearest', inline: 'center' });
   }

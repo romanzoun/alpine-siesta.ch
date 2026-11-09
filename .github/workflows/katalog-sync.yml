@@ -1,4 +1,4 @@
-# Discovery: spiegelt die Region aus dem zentralen Katalog (trizoun-katalog) nach site/katalog/,
+# Discovery: holt die Region über Trizoun Travel nach site/katalog/ (Git als Übergang),
 # baut und prüft die Website und schlägt die Änderungen als Pull Request vor.
 name: Katalog-Sync
 
@@ -28,6 +28,8 @@ jobs:
       - name: Katalog spiegeln
         run: npm run katalog:sync
         env:
+          PUBLIC_TRIZOUN_API_URL: ${{ vars.PUBLIC_TRIZOUN_API_URL }}
+          PUBLIC_TRIZOUN_KEY: ${{ vars.PUBLIC_TRIZOUN_KEY }}
           # Fine-grained Token mit Leserecht auf das Katalog-Repo
           KATALOG_TOKEN: ${{ secrets.KATALOG_TOKEN }}
       - name: Bauen und prüfen

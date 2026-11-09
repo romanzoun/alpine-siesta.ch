@@ -27,7 +27,7 @@ site/
 │       └── therme-guide/
 │           ├── index.md      Unterseite /leukerbad/thermen/therme-guide/
 │           └── titel.jpg     Bilder der Unterseite
-├── katalog/                  Aktivitäten + Events der Region aus trizoun-katalog (npm run katalog:sync – nicht von Hand ändern)
+├── katalog/                  Aktivitäten + Events der Region aus Trizoun Travel (npm run katalog:sync – nicht von Hand ändern)
 ├── entdecken.yaml            Anpassungen am Katalog: ausblenden, eigener Tipp, Anreise ab Wohnung, Geheimtipp
 ├── aktivitaeten/             eigene Aktivitäten nur dieser Website → /entdecken/<ordner>/  (Vorlage: _vorlage.md)
 ├── themenseiten/             optionale Texte für /entdecken/saison/winter/ usw. (saison-winter.md)

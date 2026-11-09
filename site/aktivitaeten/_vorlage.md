@@ -19,11 +19,20 @@ kinderwagen: false
 hund: true
 geheimtipp: false
 website: https://example.ch     # optional
-# Bilder liegen im selben Ordner wie diese Datei:
-# bild: ./titel.jpg
+quelle:
+  name: Name der Informationsquelle
+  url: https://example.ch/aktivitaet
+  abgerufen: 2026-11-05
+# Bilder liegen im selben Ordner wie diese Datei; Bild und Nachweis sind Pflicht:
+bild: ./titel.jpg
+bild_alt: Beschreibung des Bildes
+bild_quelle:
+  name: Name der Bildquelle
+  url: https://example.ch/bild.jpg
 # galerie:
-#   - { bild: ./galerie-1.jpg, alt: Beschreibung }
-# bild_alt: Beschreibung des Bildes
+#   - bild: ./galerie-1.jpg
+#     alt: Beschreibung
+#     quelle: { name: Name der Bildquelle, url: https://example.ch/galerie-1.jpg }
 geprueft: false                 # erst auf true, wenn Fakten (Preise, Zeiten) von Hand geprüft sind
 ---
 

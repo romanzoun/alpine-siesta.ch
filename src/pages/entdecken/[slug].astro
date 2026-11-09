@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import AktivitaetKarte from '../../components/AktivitaetKarte.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { naechsterTermin, saisonsVon, terminText, themenUrl, themenH1 } from '../../lib/entdecken';
+import { terminNochBevorstehend } from '../../lib/zeit';
 import * as L from '../../lib/labels';
 import { site } from '../../config';
 import { buchungsZiel } from '../../lib/wohnungen';
@@ -40,7 +41,7 @@ const aehnlich = alle
   .map((s) => s.x);
 
 const istEvent = a.typ === 'event';
-const kommende = istEvent ? a.termine.filter((t) => (t.ende ?? t.beginn) >= new Date(Date.now() - 86_400_000)).sort((x, y) => x.beginn.getTime() - y.beginn.getTime()) : [];
+const kommende = istEvent ? a.termine.filter((t) => terminNochBevorstehend(t)).sort((x, y) => x.beginn.getTime() - y.beginn.getTime()) : [];
 const fakten = [
   ...(istEvent
     ? [['Wann', kommende.map(terminText).join(' · ')], ...(a.veranstaltungsort ? [['Wo', a.veranstaltungsort]] : [])]
@@ -96,20 +97,30 @@ const schema = istEvent
     ]} />
     <h1 style={`view-transition-name: titel-${eintrag.id}`}>{a.title}</h1>
     <p class="lead">{a.kurz}</p>
-    {a.bild && <Image src={a.bild} alt={a.bild_alt ?? ''} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />}
+    <figure class="titelbild-rahmen">
+      <Image src={a.bild} alt={a.bild_alt} widths={[800, 1400]} sizes="100vw" loading="eager" class="titelbild" style={`view-transition-name: bild-${eintrag.id}`} />
+      <figcaption class="bildnachweis">
+        {a.bild_ki ? 'KI-Illustration: ' : 'Foto: '}{a.bild_quelle.urheber && `${a.bild_quelle.urheber}, `}<a href={a.bild_quelle.url} rel="nofollow noopener" target="_blank">{a.bild_quelle.name}</a>
+        {a.bild_quelle.lizenz && <> · {a.bild_quelle.lizenz_url ? <a href={a.bild_quelle.lizenz_url} rel="nofollow noopener" target="_blank">{a.bild_quelle.lizenz}</a> : a.bild_quelle.lizenz}</>}
+        {a.bild_ki && <> · Symbolische Darstellung</>}
+      </figcaption>
+    </figure>
 
     <div class="zweispaltig">
       <div class="prose">
         <Content />
-        {a.quelle && (
-          <p class="quelle">
-            Quelle: <a href={a.quelle.url} rel="nofollow noopener" target="_blank">{a.quelle.name}</a>, Stand {a.quelle.abgerufen.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}.
-            {istEvent && ' Angaben ohne Gewähr – Details und Änderungen beim Veranstalter.'}
-          </p>
-        )}
+        <p class="quelle">
+          Quelle: <a href={a.quelle.url} rel="nofollow noopener" target="_blank">{a.quelle.name}</a>, Stand {a.quelle.abgerufen.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}.
+          {istEvent && ' Angaben ohne Gewähr – Details und Änderungen beim Veranstalter.'}
+        </p>
         {a.galerie.length > 0 && (
           <ul class="galerie">
-            {a.galerie.map((g) => <li><Image src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" /></li>)}
+            {a.galerie.map((g) => <li>
+              <figure>
+                <Image src={g.bild} alt={g.alt} widths={[400, 800]} sizes="(min-width: 60rem) 20rem, 50vw" />
+                <figcaption class="bildnachweis">Foto: {g.quelle.urheber && `${g.quelle.urheber}, `}<a href={g.quelle.url} rel="nofollow noopener" target="_blank">{g.quelle.name}</a>{g.quelle.lizenz && <> · {g.quelle.lizenz_url ? <a href={g.quelle.lizenz_url} rel="nofollow noopener" target="_blank">{g.quelle.lizenz}</a> : g.quelle.lizenz}</>}</figcaption>
+              </figure>
+            </li>)}
           </ul>
         )}
       </div>
@@ -141,7 +152,10 @@ const schema = istEvent
   .fakten { border-top: 2px solid var(--text); padding-top: 1rem; }
   .quelle { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .9rem; color: var(--muted); }
   .karten { display: grid; gap: 2.5rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
-  .titelbild { border-radius: var(--radius); margin-block: 1.5rem; width: 100%; }
+  .titelbild-rahmen, .galerie figure { margin: 0; }
+  .titelbild-rahmen { margin-block: 1.5rem; }
+  .titelbild { border-radius: var(--radius); width: 100%; }
+  .bildnachweis { display: block; margin-top: .35rem; color: var(--muted); font-size: .8rem; line-height: 1.4; }
   .zweispaltig { display: grid; gap: 2rem; margin-top: 1.5rem; }
   @media (min-width: 60rem) { .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; } }
   dl { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0 0 1rem; font-size: .95rem; }

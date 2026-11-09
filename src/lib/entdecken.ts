@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 import * as L from './labels';
 import { site } from '../config';
-import { teile, ZEITZONE } from './zeit';
+import { tagSchluessel, teile, terminNochBevorstehend, ZEITZONE } from './zeit';
 
 type Aktivitaet = CollectionEntry<'aktivitaeten'>;
 
@@ -70,7 +70,7 @@ export const saisonsVon = (a: Aktivitaet) =>
 
 // Nächster Termin eines Events (oder undefined)
 export const naechsterTermin = (a: Aktivitaet, ab = new Date()) =>
-  a.data.termine.filter((t) => (t.ende ?? t.beginn) >= new Date(ab.getTime() - 86_400_000)).sort((x, y) => x.beginn.getTime() - y.beginn.getTime())[0];
+  a.data.termine.filter((t) => terminNochBevorstehend(t, ab)).sort((x, y) => x.beginn.getTime() - y.beginn.getTime())[0];
 
 // Geheimtipps zuerst, dann Events nach Datum, dann Aktivitäten alphabetisch
 export const sortiert = (alle: Aktivitaet[]) =>
@@ -83,7 +83,6 @@ export const sortiert = (alle: Aktivitaet[]) =>
 
 const datumsFormat = new Intl.DateTimeFormat('de-CH', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric', timeZone: ZEITZONE });
 const zeitFormat = new Intl.DateTimeFormat('de-CH', { hour: '2-digit', minute: '2-digit', timeZone: ZEITZONE });
-const tagSchluessel = (d: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: ZEITZONE }).format(d);
 // «Sa., 14. Februar 2027, 20:00» – Uhrzeit nur, wenn angegeben (nicht Mitternacht)
 export const terminText = (t: { beginn: Date; ende?: Date }) => {
   const mitZeit = (d: Date) => {

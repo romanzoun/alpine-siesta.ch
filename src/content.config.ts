@@ -82,8 +82,8 @@ const aktivitaeten = defineCollection({
       // Events: ein oder mehrere Termine (Datum oder Datum mit Uhrzeit, Ortszeit)
       termine: z.array(z.object({ beginn: z.union([z.string(), z.date()]).transform(ortszeit), ende: z.union([z.string(), z.date()]).transform(ortszeit).optional() })).default([]),
       veranstaltungsort: z.string().optional(),
-      // Woher die Information stammt (Pflicht bei Events und bei KI-gesammelten Einträgen)
-      quelle: z.object({ name: z.string(), url: z.url(), abgerufen: z.coerce.date() }).optional(),
+      // Quelle und Bildnachweise sind für jeden sichtbaren Eintrag Pflicht.
+      quelle: z.object({ name: z.string(), url: z.url(), abgerufen: z.coerce.date() }),
       zielgruppen: z.array(z.enum(L.keys(L.zielgruppen))).min(1),
       kategorien: z.array(z.enum(L.keys(L.kategorien))).min(1),
       pillar: z.enum(L.keys(L.pillars)),
@@ -98,14 +98,20 @@ const aktivitaeten = defineCollection({
       geheimtipp: z.boolean().default(false),
       website: z.url().optional(),
       ort: z.string().default(site.ort),
-      bild: image().optional(),
-      bild_alt: z.string().optional(),
-      galerie: z.array(z.object({ bild: image(), alt: z.string() })).default([]),
+      bild: image(),
+      bild_alt: z.string().min(1),
+      bild_quelle: z.object({
+        name: z.string().min(1), url: z.url(),
+        urheber: z.string().optional(), lizenz: z.string().optional(), lizenz_url: z.url().optional(),
+      }),
+      bild_ki: z.object({ modell: z.string(), erstellt_am: z.coerce.date(), runden: z.number().int().min(1).max(2), freigabe_von: z.string(), bewertung: z.number().int().min(6).max(10).optional() }).optional(),
+      galerie: z.array(z.object({
+        bild: image(), alt: z.string().min(1),
+        quelle: z.object({ name: z.string().min(1), url: z.url(), urheber: z.string().optional(), lizenz: z.string().optional(), lizenz_url: z.url().optional() }),
+      })).default([]),
       geprueft: z.boolean().default(false),
     })
-      .refine((a) => !a.bild || a.bild_alt, { message: 'bild_alt fehlt: jedes Bild braucht einen Alternativtext', path: ['bild_alt'] })
       .refine((a) => a.typ !== 'event' || a.termine.length > 0, { message: 'Events brauchen mindestens einen Termin', path: ['termine'] })
-      .refine((a) => a.typ !== 'event' || a.quelle, { message: 'Events brauchen eine Quelle (name, url, abgerufen)', path: ['quelle'] })
       .refine((a) => a.typ === 'event' || a.monate, { message: 'Aktivitäten brauchen «monate»', path: ['monate'] })
       .transform((a) => ({ ...a, monate: a.monate ?? [...new Set(a.termine.map((t) => teile(t.beginn).month))].sort((x, y) => x - y) })),
 });

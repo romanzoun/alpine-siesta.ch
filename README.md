@@ -31,14 +31,14 @@ Die Website wächst in Stufen; was aktiv ist, steht in `site/site.config.ts`:
 
 Ausgeschaltet, solange `module.entdecken: false` (keine Seiten, kein Menüpunkt, Sync macht nichts).
 
-Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) kommen aus dem Git-Repo **`trizoun-katalog`** und werden statisch gerendert – mit Filter, Themenseiten und Detailseite pro Eintrag.
+Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) werden zentral in **Trizoun Travel** gespeichert. Der Katalog-Sync holt sie bei aktivem Discovery-Modul per API und rendert sie statisch – mit Filter, Themenseiten und Detailseite pro Eintrag. Ohne API-Konfiguration bleibt der Git-Sync als Übergang verfügbar.
 
 ```sh
 npm run katalog:sync                          # Region aus site.config.ts (katalog) nach site/katalog/ spiegeln
 KATALOG_DIR=../trizoun-katalog npm run katalog:sync   # aus lokalem Checkout
 ```
 
-Täglich läuft `.github/workflows/katalog-sync.yml`: Sync, Build und SEO-Check, dann ein PR mit den Änderungen. Für ein privates Katalog-Repo braucht das Repo das Secret `KATALOG_TOKEN` (Fine-grained Token, nur Lesezugriff auf `trizoun-katalog`). Anpassungen pro Website: `site/entdecken.yaml`; eigene Aktivitäten: `site/aktivitaeten/`.
+Täglich läuft `.github/workflows/katalog-sync.yml`: API-Sync, Build und SEO-Check, dann ein PR mit den Änderungen. Dafür braucht das Repo die Variablen `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` sowie die Discovery-Freischaltung für die Organisation. Ohne API-Konfiguration nutzt der Übergangsweg das Secret `KATALOG_TOKEN` (nur Lesezugriff auf `trizoun-katalog`). Anpassungen pro Website: `site/entdecken.yaml`; eigene Aktivitäten: `site/aktivitaeten/`.
 
 ## Online-Buchung
 

@@ -1,8 +1,10 @@
 /** Bild vor den Absatz ziehen, und höher als der Text daneben auf dessen Höhe kürzen. */
 
 function istBild(el: Element) {
-  return el.matches('img, picture') || (el.tagName === 'P' && !!el.querySelector('img'));
+  return el instanceof HTMLElement && (el.matches('img, picture') || (el.tagName === 'P' && !!el.querySelector('img')));
 }
+
+const bildElement = (el: Element): el is HTMLElement => el instanceof HTMLElement && istBild(el);
 
 function foto(bild: HTMLElement) {
   return bild.tagName === 'IMG' ? (bild as HTMLImageElement) : bild.querySelector('img');
@@ -20,7 +22,7 @@ function textDaneben(bild: HTMLElement) {
 }
 
 function kappen(root: HTMLElement) {
-  for (const bild of [...root.children].filter(istBild)) {
+  for (const bild of [...root.children].filter(bildElement)) {
     const img = foto(bild);
     if (!img) continue;
     const text = textDaneben(bild);
@@ -44,7 +46,7 @@ function kappen(root: HTMLElement) {
 
 export function textBild(root: HTMLElement) {
   if (root.dataset.rhythmus !== 'an') {
-    const bilder = [...root.children].filter(istBild);
+    const bilder = [...root.children].filter(bildElement);
     for (const bild of bilder) {
       const vor = bild.previousElementSibling;
       if (vor && /^(P|UL|OL)$/.test(vor.tagName) && !istBild(vor)) {

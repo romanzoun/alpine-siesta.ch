@@ -55,7 +55,8 @@ export const site = {
     endpunkt: '' as string,
   },
 
-  // Zentraler Aktivitäten-Katalog (Git-Repo). Der Sync spiegelt die Region nach site/katalog/.
+  // Zentraler Aktivitäten-Katalog. Der Sync holt die Region über Trizoun Travel,
+  // sobald PUBLIC_TRIZOUN_API_URL und PUBLIC_TRIZOUN_KEY gesetzt sind; sonst über Git.
   katalog: {
     repo: 'https://github.com/romanzoun/trizoun-katalog.git',
     region: 'leukerbad',
