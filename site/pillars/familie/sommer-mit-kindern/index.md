@@ -1,72 +1,90 @@
 ---
 title: "Sommer mit Kindern in Leukerbad"
-description: "Sommer mit Kindern in Leukerbad: Spielplatz, Bach und Wiesen zu Fuss, und ein Tag, der mittags schon wieder zu Hause sein darf."
-h1: "Sommer mit Kindern in Leukerbad: draussen, und mittags wieder zu Hause"
-kurz: "Spielplatz, Bach und Wiesen in der Nähe. Der Tag darf mittags schon wieder zu Hause enden."
+description: "Sommer mit Kindern in Leukerbad: Spielplätze, Wanderungen, Gemmi, der Thermi-Erlebnisweg und der Monster Ride auf Torrent."
+h1: "Sommer mit Kindern in Leukerbad – gemeinsam die Berge entdecken"
+kurz: "Spielplätze, Wanderungen, Gemmi, Thermi-Erlebnisweg und Monster Ride. Danach das warme Thermalbad."
 reihenfolge: 2
-aktualisiert: 2026-10-26
+aktualisiert: 2026-11-09
 bild: ./leukerbad-blumen-rutschbahn-felswand.webp
 bild_alt: "Blumen schreiben Leukerbad, dahinter bunte Rutschen, ein Holzhaus und eine Felswand"
 faq:
   - frage: Braucht man im Sommer ein Auto für Ausflüge ab Leukerbad?
     antwort: Für Spielplatz, Dorf und den Weg zur Gemmibahn nicht. Die Gemmibahn ist fünf Minuten zu Fuss, Zentrum und Therme etwa zehn.
-  - frage: Ist der Majingsee ein Ausflug für einen ganzen Tag?
-    antwort: "Er passt in einen Vormittag: hinauf, eine Pause, und wieder zurück ins Dorf."
-  - frage: Was tun, wenn die Kinder nach dem Essen nicht mehr laufen wollen?
-    antwort: Ihr geht zurück. Die Wohnung ist nah. Ein Nachmittag auf dem Spielplatz oder dem Balkon ist ein voller Sommertag.
+  - frage: Was können Kinder auf Torrent im Sommer machen?
+    antwort: "Den Thermi-Erlebnisweg, rund 2,5 Kilometer mit zehn Stationen, und mit grösseren Kindern den Monster Ride von der Rinderhütte ins Tal. Betriebszeiten und Teilnahmebedingungen stehen bei Leukerbad Tourismus."
+  - frage: Was tun, wenn das Wetter nicht mitspielt?
+    antwort: Auf der Seite Schlechtwetter mit Kindern stehen Therme, Sportarena und Ideen für den Tag in der Wohnung. Beides ist etwa zehn Minuten zu Fuss entfernt.
 entwurf: false
 ---
 
-Sommer mit Kindern in Leukerbad hat Zeit. Ihr seid draussen, und mittags seid ihr schon wieder zu Hause, wenn es reicht. Das Dorf ist klein, die Felswand ist immer da, und viele Wege fangen an der Tür an.
+Sonnige Bergtage, blühende Wiesen, plätschernde Bäche und jede Menge Möglichkeiten für kleine und grosse Abenteuer. Im Sommer verwandelt sich Leukerbad in einen wunderbaren Ort für Familien, die gerne draussen unterwegs sind.
 
-## Ein Sommer im Tempo der Kinder
+Ob gemütlicher Spaziergang, spannende Entdeckungstour oder ein entspannter Nachmittag im Thermalbad – hier findet jedes Familienmitglied sein persönliches Ferienhighlight.
 
-Was Familien hier schätzen, ist ein Ort, an dem ein Kind stehen bleiben darf. Spielplatz, Bach und der Weg zur Bahn liegen im selben kleinen Kreis. Die Bergbahn nimmt die Höhenmeter, wenn die Beine kurz sind. Eine Wiese braucht keinen Eintritt.
+## Spielplätze und kleine Abenteuer
 
-![Spielplatz mit roter Rutsche und Karussell, Kinder und ein Berghang dahinter](./leukerbad-spielplatz-rutsche-berg.webp)
+Manchmal braucht es gar nicht viel für einen gelungenen Ferientag. Ein Spielplatz mit Rutschen, Schaukeln und Klettermöglichkeiten, eine grüne Wiese zum Herumtoben oder ein plätschernder Bach, an dem kleine Entdecker die Natur erkunden können.
 
-Der Spielplatz auf dem Foto hat Rutsche, Karussell und Klettergerüst, die Felswand bleibt im Rücken. Das ist ein ganzer Nachmittag. Wenn jemand müde wird, seid ihr in wenigen Minuten wieder in der Wohnung.
+In und rund um Leukerbad gibt es viele schöne Plätze, an denen Kinder spielen, entdecken und einfach Kind sein dürfen. Während die Kleinen auf Entdeckungstour gehen, geniessen die Grossen die frische Bergluft und das beeindruckende Panorama.
 
-## Wege, die ihr abbrechen könnt
+## Wandern mit Kindern – die Natur entdecken
 
-Ein guter Sommerweg mit Kindern hat Wasser, Schatten oder eine Wiese, und ein klares Ende. Ihr geht, so weit die Beine wollen.
+Rund um Leukerbad warten wunderschöne Wanderwege, die auch für Familien einiges zu bieten haben.
 
-![Ein Bach zwischen Nadelwald und grüner Wiese, hinten ein Berg mit Schnee](./wallis-bach-wald-sommer.webp)
+Ein Spaziergang auf dem Römerweg, eine Wanderung zum idyllischen Majingsee oder eine Entdeckungstour durch die grünen Wälder und blühenden Bergwiesen – unterwegs gibt es immer wieder etwas Neues zu entdecken.
 
-Der Bach im Wald ist so ein Stück: laut, grün, und ihr dreht um, wenn die Beine wollen.
+Besonders schön sind die kleinen Naturerlebnisse am Wegesrand: ein Wasserfall, ein schattiger Platz am Bach oder eine Wiese voller Bergblumen.
 
-Der Majingsee oberhalb des Dorfs passt in einen Vormittag: hinauf, eine Pause, und wieder zurück. Der Römerweg bei Leukerbad ist ein kurzer Gang ab der Tür, ohne Auto.
+Und wer Lust auf ein gemütliches Picknick hat, findet in der Bergwelt zahlreiche schöne Plätze für eine gemeinsame Pause.
 
-![Blühende Wiese, links ein Wasserfall, dahinter gezackte Felswände](./wallis-bergwiese-wasserfall-felsen.webp)
+## Mit den Bergbahnen hoch hinaus – Gemmi und Torrent entdecken
 
-Die Wiese mit dem dünnen Wasserfall ist genau das, was «draussen bleiben» heisst: Blumen, Fels, und ihr bleibt, solange es schön ist.
+Auch die Berge rund um Leukerbad laden zu unvergesslichen Familienausflügen ein.
 
-![Bratwürste und eine Wurstschnecke auf einem schwarzen Grillrost über Glut](./wallis-grill-wurst-rost.webp)
+### Gemmi – Natur und beeindruckende Aussichten
 
-Draussen essen verlängert den Tag. Ein Grillrost, Würste, und ihr bleibt, solange es schön ist. Wenn ihr drin bleiben wollt, gehen Fondue und Raclette in der Wohnung. Das steht auch bei [Schlechtwetter mit Kindern](/leukerbad/familie/schlechtwetter-mit-kindern/), und es gilt an einem heissen Nachmittag genauso.
+Die Gemmibahn bringt euch bequem hinauf in eine beeindruckende alpine Landschaft. Ob ein gemütlicher Spaziergang am Daubensee oder einfach die fantastische Aussicht auf die umliegenden Gipfel geniessen – ein Ausflug auf die Gemmi ist ein besonderes Erlebnis.
 
-![Weisse Kirche mit Glockenturm auf einer Wiese, Berge und Sonne dahinter](./wallis-weisse-kirche-wiese.webp)
+### Torrent – Spielerisch die Bergwelt entdecken auf dem Thermi-Erlebnisweg
 
-Eine weisse Kirche auf einer Wiese, Berge dahinter: ein schöner Halt unterwegs, Schatten, und dann geht es weiter oder zurück.
+Auf Torrent wartet ein ganz besonderes Abenteuer für kleine Entdecker: der Thermi-Erlebnisweg!
 
-## Ab der Wohnung
+Gemeinsam mit Thermi, dem fröhlichen Thermalwassertropfen und Maskottchen von Leukerbad, geht es auf einen rund 2,5 Kilometer langen Erlebnisweg mit zehn abwechslungsreichen Stationen.
 
-Von [Alpine Siesta](/wohnungen/alpine-siesta/) ist die Gemmibahn fünf Minuten zu Fuss, die Bäckerei an der Haltestelle La Boheme zwei, Therme und Zentrum etwa zehn. Ihr geht morgens los, seid mittags zurück und könnt am Nachmittag noch einmal raus, ohne das Auto zu starten.
+Unterwegs dürfen die Kinder rätseln, spielen, ihre Sinne einsetzen und spannende Aufgaben lösen. Mit einer Holzkugel und einem kleinen Rätselheft wird die Wanderung zu einer spielerischen Entdeckungsreise. Wer am Ende das Lösungswort herausfindet, darf sich sogar über eine kleine Überraschung freuen.
 
-Die Wohnung selbst ist 65 Quadratmeter, im ersten Stock, mit Lift und ohne Stufen. Drei Zimmer mit je zwei Schlafplätzen, plus ein Babybett zum Ausklappen. Wenn die Kinder im Bett sind, bleibt das Wohnzimmer für euch. Das ist im Sommer derselbe Vorteil wie im Winter: der Tag darf draussen laut sein, der Abend nicht.
+So macht Wandern auch den jüngeren Familienmitgliedern richtig Spass!
 
-Mit einem Baby sind das kurze Wege und die Trage. Mit Kleinkindern der Spielplatz, Wasser und die Erlaubnis stehen zu bleiben. Mit grösseren Kindern darf der Weg länger werden. Er muss nicht bis zum Abend dauern.
+Alle Informationen findet ihr beim [Thermi-Erlebnisweg auf Torrent](https://leukerbad.ch/tour/thermi-erlebnisweg-de-fr-804594982).
 
-## Ein Sommertag ohne Liste
+### Torrent – Bergabenteuer mit dem Monster Ride
 
-Am Morgen die Bäckerei, zwei Minuten. Dann eine Sache: Spielplatz, Bach oder die Bahn. Das Mittagessen ist zu Hause.
+Für Familien mit grösseren Kindern, die etwas mehr Action mögen, wartet auf Torrent ein weiteres Highlight: der Monster Ride!
 
-Am Mittag zurück. Sechs Personen essen in der Wohnung, der Hochstuhl steht schon: vier schlafen nachts in den beiden Zimmern, zwei auf dem Schlafsofa, das Babybett zusätzlich. Tagsüber ist der Tisch einfach der Tisch. Fondue und Raclette sind der Abend, wenn ihr drin bleiben wollt.
+Mit speziellen Monster-Trottinetts, breiten Reifen und kräftigen Bremsen geht es von der Rinderhütte auf einer abwechslungsreichen Strecke bergab Richtung Leukerbad. Unterwegs geniesst ihr fantastische Ausblicke auf das Gemmimassiv – Fahrtwind und jede Menge Fahrspass inklusive!
 
-Am Nachmittag dürft ihr noch einmal raus oder auf dem Balkon bleiben. Einer der beiden Balkone ist zum Sitzen, mit Blick auf die Gemmi. Der andere hat den Elektrogrill. Geraucht wird nur dort.
+Ein besonderes Erlebnis für abenteuerlustige Familien. Informiert euch vorab über die Teilnahmebedingungen und die aktuellen Betriebszeiten.
 
-Mit Grosseltern gilt dasselbe wie mit dem Kinderwagen: der Lift bis zur Wohnung, ein eigenes Zimmer, und die Möglichkeit, mittags heimzugehen, während die anderen noch draussen sind.
+Mehr Informationen findet ihr direkt bei [Monster Ride Torrent – Leukerbad](https://leukerbad.ch/tour/monster-ride-torrent-leukerbad-804516173).
 
-Wenn der Himmel zuzieht, gehen Therme und Halle in denselben zehn Minuten. Das steht bei [Schlechtwetter mit Kindern](/leukerbad/familie/schlechtwetter-mit-kindern/).
+## Badespass und Entspannung im Thermalbad
 
-Der Winter ist die andere Jahreszeit: [Winter mit Kindern](/leukerbad/familie/winter-mit-kindern/). Die Übersicht steht bei [Familienferien in Leukerbad](/leukerbad/familie/).
+Nach einem erlebnisreichen Tag in den Bergen gibt es kaum etwas Schöneres, als gemeinsam ins warme Thermalwasser einzutauchen.
+
+Während die Erwachsenen entspannen und die Aussicht auf die beeindruckende Bergkulisse geniessen, können sich die Kinder in den verschiedenen Kinderbereichen nach Herzenslust austoben und planschen.
+
+So lässt sich ein aktiver Sommertag wunderbar mit etwas Erholung verbinden.
+
+## Sommererlebnisse für jedes Alter
+
+Für die Kleinsten sind Spielplätze, kurze Spaziergänge und die ersten Entdeckungen in der Natur oft schon ein grosses Abenteuer.
+
+Für jüngere Kinder bieten Bäche, Wälder, Bergwiesen und der abwechslungsreiche Thermi-Erlebnisweg jede Menge Möglichkeiten zum Spielen und Entdecken.
+
+Für grössere Kinder und Jugendliche darf es auch etwas abenteuerlicher werden – mit längeren Wanderungen, spannenden Ausflügen in die Berge und neuen Herausforderungen wie dem Monster Ride auf Torrent.
+
+Das Schönste an Familienferien in Leukerbad ist die gemeinsame Zeit und die Vielfalt an Erlebnissen, die jeden Tag besonders machen.
+
+Und falls das Wetter einmal nicht mitspielt, findet ihr auf unserer Seite [Schlechtwetter mit Kindern](/leukerbad/familie/schlechtwetter-mit-kindern/) weitere Ideen für abwechslungsreiche Familientage.
+
+Noch mehr Inspiration findet ihr unter [Winter mit Kindern](/leukerbad/familie/winter-mit-kindern/) und auf unserer Übersichtsseite [Familienferien in Leukerbad](/leukerbad/familie/).

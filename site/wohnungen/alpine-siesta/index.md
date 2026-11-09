@@ -4,8 +4,8 @@ reihenfolge: 1
 plattformen:
   booking: https://www.booking.com/hotel/ch/alpine-siesta.html
   airbnb: https://www.airbnb.com/rooms/1214577007104234021
-claim: Entspannt wohnen in Leukerbad, mit Platz für die Familie und Blick auf die Gemmi.
-beschreibung: "Ferienwohnung in Leukerbad, 65 m². Drei Zimmer mit je zwei Schlafplätzen, plus ausklappbares Babybett."
+claim: Entspannte Ferien inmitten der Walliser Bergwelt, mit viel Platz für Familie und Freunde und Blick auf die Gemmi.
+beschreibung: "Ferienwohnung in Leukerbad, 65 m², für bis zu sechs Personen. Blick auf die Gemmi, kurze Wege zu Therme, Sportarena und Dorf."
 
 fakten:
   personen: 6
@@ -26,7 +26,7 @@ lage:
     - { ziel: Gemmibahn, minuten: 5, wie: zu Fuss }
     - { ziel: Haltestelle La Boheme, minuten: 2, wie: zu Fuss }
     - { ziel: Torrentbahn, minuten: 7, wie: Bus }
-  parkplatz: "1 Aussenparkplatz inklusive"
+  parkplatz: "1 Aussenparkplatz, kostenlos"
 
 hinweise:
   - "Bei einer Direktbuchung ist die Kurtaxe bereits im Preis enthalten."
@@ -61,6 +61,10 @@ galerie:
     alt: Wohnzimmer der Alpine Siesta mit Sofa, Balkontür und Blick auf die Berge
     raum: Wohnzimmer
     text: "Das Wohnzimmer ist das dritte Zimmer und hat ein Schlafsofa für zwei Personen. Dazu die Balkontür mit Blick auf die Berge."
+  - bild: ./alpine-siesta-wohnzimmer-sessel-balkon.jpg
+    alt: Gemütliches Wohnzimmer der Ferienwohnung Alpine Siesta in Leukerbad mit Sitzbereich, Fernseher und Balkonzugang.
+    raum: Wohnzimmer
+    text: "Sitzbereich am Balkon, Fernseher und der elektrische Kamin."
   - bild: ./alpine-siesta-wohnzimmer-sessel-weihnacht.webp
     alt: Wohnzimmer der Alpine Siesta mit Sessel, Fernseher und geschmücktem Weihnachtsbaum
     raum: Wohnzimmer
@@ -123,36 +127,56 @@ galerie:
     text: "Grill auf der Alp oberhalb von Leukerbad. Ein Umgebungsbild, kein Foto aus der Wohnung."
 ---
 
-Die Alpine Siesta ist unsere Ferienwohnung in Leukerbad, 65 Quadratmeter, ruhig und grosszügig. Es sind drei Zimmer mit je zwei Schlafplätzen: ein Doppelzimmer, ein Kinderzimmer mit zwei Einzelbetten und das Wohnzimmer mit einem Schlafsofa für zwei. Zusätzlich gibt es ein Babybett zum Ausklappen. Die Wohnung eignet sich für Ferien mit Kindern, Grosseltern oder Freunden.
+Die Alpine Siesta ist unsere gemütliche, 65 m² grosse Ferienwohnung im Herzen von Leukerbad. Mit Platz für bis zu sechs Personen und einem zusätzlichen Babybett ist sie ideal für Familien, gemeinsame Ferien mit den Grosseltern oder eine Auszeit mit Freunden.
 
-## Ankommen
+Ob aktive Tage in den Bergen, entspannte Stunden im Thermalbad oder gemütliche Abende zusammen – hier findet ihr alles, was schöne Ferien ausmacht.
 
-Für uns beginnt das Feriengefühl dort, wo nichts drängt. Die Wohnung liegt im 1. OG, mit Lift und ohne Stufen erreichbar. Sie ist ruhig und trotzdem gut angebunden. Nach einem aktiven Tag kommst du an und schaltest ab.
+## Ankommen und wohlfühlen
 
-Zur Leukerbad Therme, ins Zentrum und zur Sportarena sind es etwa zehn Minuten zu Fuss. Die Gemmibahn erreichst du in fünf Minuten, die Haltestelle La Boheme und die gleichnamige Bäckerei in zwei Minuten. Mit dem Bus bist du in sieben Minuten bei den Torrent-Bahnen.
+Unsere Ferienwohnung liegt in einer ruhigen Umgebung und ist gleichzeitig ein idealer Ausgangspunkt, um Leukerbad zu entdecken.
 
-Ein Aussenparkplatz gehört zur Wohnung, und eure Bikes stellt ihr im Keller ab. Gästekarten liegen bereit und geben Rabatt bei Angeboten in der Region.
+Die Wohnung befindet sich im ersten Obergeschoss und ist bequem mit dem Lift und ohne Treppen erreichbar.
 
-## Die Räume
+Viele der schönsten Ausflugsziele liegen ganz in der Nähe: Die Leukerbad Therme, die Sportarena und das Dorfzentrum erreicht ihr in etwa zehn Minuten zu Fuss. Zur Gemmibahn sind es nur fünf Minuten, zur Bushaltestelle La Bohème und der nahegelegenen Bäckerei sogar nur zwei Minuten. Mit dem Bus gelangt ihr in rund sieben Minuten zu den Torrent-Bahnen.
 
-Die Wohnung hat drei separate Räume. Wenn die Kinder abends im Bett sind, bleibt für die Eltern noch Raum: für ein Gespräch, einen Film oder einfach Ruhe.
+Ein eigener Aussenparkplatz steht euch kostenlos zur Verfügung. Eure Fahrräder könnt ihr bequem im Keller unterbringen.
 
-Jedes der drei Zimmer hat zwei Schlafplätze. Das Doppelzimmer hat ein Doppelbett, das Kinderzimmer zwei Einzelbetten, das Wohnzimmer ein Schlafsofa für zwei. Ein Babybett lässt sich zusätzlich ausklappen.
+Mit den Gästekarten profitiert ihr ausserdem von attraktiven Vergünstigungen bei verschiedenen Freizeitangeboten in der Region.
 
-Das Badezimmer ist frisch renoviert. Es hat eine Badewanne, einen Spiegelschrank und eine Toilette, dazu Föhn und Waage.
+## Gemütliche Räume für gemeinsame Ferien
 
-## Küche und gemeinsame Abende
+Die Wohnung bietet drei Räume mit jeweils zwei Schlafplätzen und genügend Platz, damit sich alle wohlfühlen.
 
-Die Küche ist frisch renoviert, mit neuen Möbeln und modernen Elektrogeräten. Es gibt ein Induktionskochfeld, einen schnellheizenden Backofen, eine neue Spülmaschine und ein grosses Waschbecken, damit nach dem Familienessen aufgeräumt werden kann.
+Im Schlafzimmer erwartet euch ein gemütliches Doppelbett, während das Kinderzimmer mit zwei Einzelbetten einen eigenen Rückzugsort für die kleinen Gäste bietet.
 
-Fondue geht auf dem Induktionsherd, dazu ein modernes Raclette. Für den Kaffee stehen eine umweltfreundliche CoffeeB-Maschine und eine Mokka-Kanne bereit, wenn du italienischen Kaffee magst.
+Das Wohnzimmer lädt zum gemeinsamen Entspannen ein. Das bequeme Schlafsofa lässt sich bei Bedarf in einen zusätzlichen Schlafplatz für zwei Personen verwandeln. Für die kleinsten Gäste steht ausserdem ein ausklappbares Babybett bereit.
 
-Nach dem Tag draussen wird es drinnen gemütlich: elektrischer Kamin, Smart-TV, Xbox 360, Brettspiele und eine Spielküche für die Kleinen.
+Das frisch renovierte Badezimmer ist mit einer Badewanne, einem Spiegelschrank, einer Toilette sowie Föhn und Waage ausgestattet.
 
-## Zwei Balkone
+## Gemeinsam kochen und gemütliche Abende geniessen
 
-Es gibt zwei Balkone. Einer ist zum Chillen, mit Aussicht auf die Gemmi: frische Bergluft, Frühstück in der Sonne und Zeit, die sich nicht gehetzt anfühlt. Der andere hat einen Elektrogrill. Geraucht wird nur auf dem Balkon, nicht in der Wohnung.
+In unserer frisch renovierten Küche macht das gemeinsame Kochen gleich doppelt Freude. Moderne Elektrogeräte, ein Induktionskochfeld, ein schnellheizender Backofen und eine Spülmaschine sorgen dafür, dass ihr euch auch in den Ferien ganz wie zu Hause fühlt.
 
-## Umgebung
+Für einen gemütlichen Abend stehen euch ein Fondue- und ein Raclette-Set zur Verfügung – perfekt, um nach einem erlebnisreichen Tag gemeinsam am Tisch zu sitzen und die Walliser Spezialitäten zu geniessen.
 
-Ein paar Bilder zeigen nicht die Wohnung, sondern den Ort: die Wohnstrasse, den Gemmipass, die Aussicht auf der Gemmi und einen Grill auf der Alp.
+Kaffeeliebhaber können zwischen einer umweltfreundlichen CoffeeB-Maschine und einer klassischen Mokka-Kanne wählen.
+
+Und wenn der Tag langsam ausklingt, wird es im Wohnzimmer besonders gemütlich: Ein elektrischer Kamin sorgt für eine angenehme Atmosphäre, während Smart-TV, Xbox 360 und verschiedene Brettspiele Unterhaltung für Gross und Klein bieten. Für unsere jüngsten Gäste gibt es ausserdem eine Spielküche.
+
+## Zwei Balkone mit Bergblick
+
+Was gibt es Schöneres, als den Tag mit einer Tasse Kaffee und Blick auf die beeindruckende Gemmiwand zu beginnen?
+
+Unsere Ferienwohnung verfügt über zwei Balkone. Auf dem ersten könnt ihr die frische Bergluft, die Aussicht und gemütliche Stunden in der Sonne geniessen.
+
+Auf dem zweiten Balkon steht euch ein Elektrogrill zur Verfügung – ideal für einen entspannten Grillabend nach einem Tag in den Bergen.
+
+Wir bitten euch, ausschliesslich auf dem Balkon zu rauchen, damit die Wohnung für alle Gäste angenehm und rauchfrei bleibt.
+
+## Leukerbad direkt vor der Haustür
+
+Ob Wandern, Skifahren, Schlitteln, Biken oder Entspannen im warmen Thermalwasser – Leukerbad bietet zu jeder Jahreszeit unzählige Möglichkeiten für unvergessliche Ferien.
+
+Die imposante Gemmiwand, die wunderschöne Berglandschaft und die gemütliche Atmosphäre des Dorfes machen jeden Aufenthalt zu etwas Besonderem.
+
+Wir freuen uns darauf, euch in unserer Alpine Siesta willkommen zu heissen!

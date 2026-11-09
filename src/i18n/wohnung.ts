@@ -25,6 +25,7 @@ export type WohnungLocale = {
 const bilderEn: Bildtext[] = [
   { raum: 'Balcony', alt: 'Mug on the Alpine Siesta balcony with the Gemmi face behind', text: 'This is the balcony for sitting. The Gemmi face is right there. Morning starts with coffee in the sun.' },
   { raum: 'Living room', alt: 'Alpine Siesta living room with sofa, balcony door and mountain view', text: 'The living room is the third room: a sofa bed for two, and the door out to the mountains.' },
+  { raum: 'Living room', alt: 'Cosy living room of the Alpine Siesta apartment in Leukerbad, with seating, a television and the balcony door', text: 'Seating by the balcony door, the television and the electric fire.' },
   { raum: 'Living room', alt: 'Alpine Siesta living room with armchair, TV and Christmas tree', text: 'Armchair, television, and a Christmas tree in winter. Once the children are in bed, this room is still yours.' },
   { raum: 'Living room', alt: 'Alpine Siesta living room with Christmas tree, TV and electric fire', text: 'The electric fire and the television share this corner. One of the three rooms.' },
   { raum: 'Living room', alt: 'Supper at the wooden table in front of the electric fire', text: 'Supper at the wooden table, in front of the fire. There is room for the whole family.' },
@@ -45,6 +46,7 @@ const bilderEn: Bildtext[] = [
 const bilderFr: Bildtext[] = [
   { raum: 'Balcon', alt: 'Tasse sur le balcon d’Alpine Siesta avec la paroi de la Gemmi', text: 'C’est le balcon pour s’asseoir. La Gemmi est juste là. Le matin commence par le café au soleil.' },
   { raum: 'Séjour', alt: 'Séjour d’Alpine Siesta avec canapé, porte du balcon et vue sur les montagnes', text: 'Le séjour est la troisième pièce : un canapé-lit pour deux, et la porte vers les montagnes.' },
+  { raum: 'Séjour', alt: 'Séjour douillet d’Alpine Siesta à Loèche-les-Bains, avec sièges, télévision et accès au balcon', text: 'Les sièges près du balcon, la télévision et la cheminée électrique.' },
   { raum: 'Séjour', alt: 'Séjour d’Alpine Siesta avec fauteuil, télévision et sapin de Noël', text: 'Fauteuil, télévision, et en hiver le sapin. Quand les enfants sont au lit, cette pièce reste à toi.' },
   { raum: 'Séjour', alt: 'Séjour d’Alpine Siesta avec sapin, télévision et cheminée électrique', text: 'La cheminée électrique et la télévision partagent ce coin. Une des trois pièces.' },
   { raum: 'Séjour', alt: 'Souper à la table en bois devant la cheminée électrique', text: 'Le souper à la table en bois, devant le feu. Il y a de la place pour toute la famille.' },
@@ -65,6 +67,7 @@ const bilderFr: Bildtext[] = [
 const bilderIt: Bildtext[] = [
   { raum: 'Balcone', alt: 'Tazza sul balcone di Alpine Siesta con la parete della Gemmi', text: 'Questo è il balcone per stare seduti. La parete della Gemmi è lì. La mattina inizia con il caffè al sole.' },
   { raum: 'Soggiorno', alt: 'Soggiorno di Alpine Siesta con divano, porta del balcone e vista sulle montagne', text: 'Il soggiorno è la terza stanza: un divano letto per due, e la porta verso le montagne.' },
+  { raum: 'Soggiorno', alt: 'Soggiorno accogliente di Alpine Siesta a Leukerbad, con zona seduta, televisore e accesso al balcone', text: 'Sedute vicino al balcone, il televisore e il camino elettrico.' },
   { raum: 'Soggiorno', alt: 'Soggiorno di Alpine Siesta con poltrona, televisione e albero di Natale', text: 'Poltrona, televisione e in inverno l’albero. Quando i bambini sono a letto, questa stanza resta tua.' },
   { raum: 'Soggiorno', alt: 'Soggiorno di Alpine Siesta con albero, televisione e camino elettrico', text: 'Il camino elettrico e la televisione stanno nello stesso angolo. Una delle tre stanze.' },
   { raum: 'Soggiorno', alt: 'Cena al tavolo di legno davanti al camino elettrico', text: 'La cena al tavolo di legno, davanti al fuoco. C’è posto per tutta la famiglia.' },
@@ -92,10 +95,10 @@ function seiten(locale: 'en' | 'fr' | 'it', bilder: Bildtext[]): WohnungLocale {
     return {
       ...gemeinsam,
       titel: (name, ort) => `${name} in ${ort} – the apartment`,
-      claim: 'Room for the whole family in Leukerbad, with the Gemmi face outside.',
-      beschreibung: 'Family apartment in Leukerbad, 65 m². Three rooms, two beds in each, plus a cot you can fold out.',
+      claim: 'Relaxed holidays in the Valais mountains, with room for family and friends and a view of the Gemmi.',
+      beschreibung: 'Holiday apartment in Leukerbad, 65 m², for up to six people. A view of the Gemmi, and short walks to the baths, the Sportarena and the village.',
       stockwerk: '1st floor, with a lift, no steps',
-      parkplatz: '1 outdoor parking space included',
+      parkplatz: '1 outdoor parking space, free',
       haustiere: 'House-trained pets are welcome.',
       rauchen: 'On the balcony only.',
       hinweise: [
@@ -120,12 +123,12 @@ function seiten(locale: 'en' | 'fr' | 'it', bilder: Bildtext[]): WohnungLocale {
         { kategorie: 'Other', items: ['Washing machine', 'Lift', 'Outdoor parking', 'Bike storage in the cellar', 'Guest cards'] },
       ],
       abschnitte: [
-        { titel: '', absatz: ['This is our place in Leukerbad. 65 square metres, quiet, and enough room that nobody is on top of each other. Three rooms, two beds in each: a double room, a children’s room with two singles, and the living room with a sofa bed. A cot folds out if you are travelling with a baby. It works for a week with the children, with grandparents, or with friends.'] },
-        { titel: 'Getting here', absatz: ['The holiday starts when you stop organising. We are on the first floor. The lift comes up, and there are no steps. After a day out you walk back in and the day is over.', 'The thermal baths, the village centre and the sports arena are about ten minutes on foot. The Gemmi cable car is five. The La Boheme bus stop, and the bakery of the same name, are two. The bus to the Torrent cable car takes seven minutes.', 'One outdoor parking space is yours, and your bikes go in the cellar. The guest cards are in the apartment. They get you a discount on things to do around here.'] },
-        { titel: 'Where you sleep', absatz: ['Three rooms, and they close. When the children are in bed, the living room is still yours: a film, a talk, or just quiet.', 'Two beds in each room. A double bed in one, two singles in the children’s room, a sofa bed in the living room. The cot is extra.', 'The bathroom is new: a bath, a mirror cabinet, a toilet, a hairdryer and scales.'] },
-        { titel: 'Supper and the evening', absatz: ['The kitchen is new as well. New cupboards, an induction hob, an oven that heats quickly, a new dishwasher, and a sink big enough for the pans after supper.', 'Fondue goes on the induction hob, and there is a raclette too. Coffee is either the CoffeeB machine or the moka pot.', 'Once you are in: the electric fire, the TV, an Xbox 360, board games, and a play kitchen for the small ones.'] },
-        { titel: 'Two balconies', absatz: ['One balcony is for sitting, facing the Gemmi. Coffee in the morning, and no reason to be anywhere else. The other has an electric grill. Smoke outside, on the balcony, not in the rooms.'] },
-        { titel: 'The village', absatz: ['A few photos are Leukerbad, not the apartment: the street, the Gemmi pass, the view down from the Gemmi, and a barbecue on the alp above the village.'] },
+        { titel: '', absatz: ['Alpine Siesta is our comfortable 65 m² holiday apartment in the heart of Leukerbad. With room for up to six people and an extra cot, it suits families, a holiday with grandparents, or time away with friends.', 'Active days in the mountains, easy hours in the thermal baths, or quiet evenings together: this is what a good holiday needs.'] },
+        { titel: 'Arriving and settling in', absatz: ['The apartment is in a quiet spot and a good base for discovering Leukerbad.', 'It is on the first floor, easy to reach by lift and without stairs.', 'Many of the best places are close. The Leukerbad thermal baths, the Sportarena and the village centre are about ten minutes on foot. The Gemmi cable car is five minutes, the La Bohème bus stop and the nearby bakery only two. The bus reaches the Torrent cable cars in about seven minutes.', 'Your own outdoor parking space is free. Bikes go in the cellar.', 'With the guest cards you also get discounts on things to do in the area.'] },
+        { titel: 'Comfortable rooms for a holiday together', absatz: ['The apartment has three rooms with two beds each, and enough space for everyone to feel at home.', 'The bedroom has a comfortable double bed. The children’s room, with two singles, is a place of their own for the younger guests.', 'The living room is for relaxing together. The sofa bed becomes an extra bed for two when you need it. For the smallest guests there is a fold-out cot.', 'The newly renovated bathroom has a bath, a mirror cabinet, a toilet, a hairdryer and scales.'] },
+        { titel: 'Cooking together and easy evenings', absatz: ['In the newly renovated kitchen, cooking together is a pleasure. Modern appliances, an induction hob, an oven that heats quickly and a dishwasher make the holiday feel like home.', 'For an easy evening there is a fondue set and a raclette set, so that after a full day you can sit at the table and enjoy Valais food.', 'Coffee drinkers can choose between an environmentally friendly CoffeeB machine and a classic moka pot.', 'As the day slows down, the living room gets comfortable: an electric fire, a smart TV, an Xbox 360 and board games for children and adults. For the youngest guests there is also a play kitchen.'] },
+        { titel: 'Two balconies with a mountain view', absatz: ['Few things are better than starting the day with a cup of coffee and the Gemmi wall in front of you.', 'The apartment has two balconies. On the first you have the mountain air, the view and easy hours in the sun.', 'On the second there is an electric grill, a good way to end a day in the mountains.', 'Please smoke only on the balcony, so the apartment stays pleasant and smoke-free for every guest.'] },
+        { titel: 'Leukerbad right outside', absatz: ['Walking, skiing, sledding, cycling or resting in the warm thermal water: in every season Leukerbad has a lot of ways to spend a holiday.', 'The Gemmi wall, the mountain landscape and the easy pace of the village make each stay its own.', 'We look forward to welcoming you at Alpine Siesta.'] },
       ],
     };
   }
@@ -133,10 +136,10 @@ function seiten(locale: 'en' | 'fr' | 'it', bilder: Bildtext[]): WohnungLocale {
     return {
       ...gemeinsam,
       titel: (name, ort) => `${name} à ${ort} – l’appartement`,
-      claim: 'À Loèche-les-Bains, de la place pour toute la famille, avec la Gemmi en face.',
-      beschreibung: 'Appartement pour familles à Loèche-les-Bains, 65 m². Trois pièces, deux lits dans chacune, plus un lit bébé à déplier.',
+      claim: 'Des vacances tranquilles au milieu des montagnes valaisannes, avec de la place pour la famille et les amis, et la vue sur la Gemmi.',
+      beschreibung: 'Appartement de vacances à Loèche-les-Bains, 65 m², jusqu’à six personnes. Vue sur la Gemmi, courts chemins vers thermes, Sportarena et village.',
       stockwerk: '1er étage, avec ascenseur, sans marches',
-      parkplatz: '1 place de parc extérieure comprise',
+      parkplatz: '1 place de parc extérieure, gratuite',
       haustiere: 'Les animaux propres sont les bienvenus.',
       rauchen: 'Uniquement sur le balcon.',
       hinweise: [
@@ -161,22 +164,22 @@ function seiten(locale: 'en' | 'fr' | 'it', bilder: Bildtext[]): WohnungLocale {
         { kategorie: 'Divers', items: ['Machine à laver', 'Ascenseur', 'Place de parc', 'Local à vélos au sous-sol', 'Cartes d’hôte'] },
       ],
       abschnitte: [
-        { titel: '', absatz: ['C’est notre appartement à Loèche-les-Bains. 65 mètres carrés, au calme, avec assez de place pour que personne ne se marche dessus. Trois pièces, deux lits dans chacune : une chambre double, une chambre d’enfants avec deux lits simples, et le séjour avec un canapé-lit. Un lit bébé se déplie si tu voyages avec un tout-petit. Ça tient une semaine avec les enfants, les grands-parents ou des amis.'] },
-        { titel: 'En arrivant', absatz: ['Les vacances commencent quand tu arrêtes d’organiser. On est au premier étage. L’ascenseur monte, il n’y a pas de marches. Après la journée dehors, tu rentres et la journée est finie.', 'Les thermes, le centre du village et l’arène de sport sont à environ dix minutes à pied. Le téléphérique de la Gemmi, cinq. L’arrêt La Boheme, et la boulangerie du même nom, deux. Le bus jusqu’au téléphérique de Torrent met sept minutes.', 'Une place de parc extérieure est pour toi, et tes vélos dorment au sous-sol. Les cartes d’hôte sont dans l’appartement. Elles donnent une réduction sur ce qu’on fait dans la région.'] },
-        { titel: 'Où l’on dort', absatz: ['Trois pièces, et elles se ferment. Quand les enfants sont au lit, le séjour reste à toi : un film, une discussion, ou simplement le calme.', 'Deux lits par pièce. Un lit double dans l’une, deux lits simples chez les enfants, un canapé-lit dans le séjour. Le lit bébé est en plus.', 'La salle de bain est neuve : baignoire, armoire à miroir, toilettes, sèche-cheveux et balance.'] },
-        { titel: 'Le soir à table', absatz: ['La cuisine est neuve aussi. Des meubles neufs, une plaque à induction, un four qui chauffe vite, un lave-vaisselle neuf, et un évier assez grand pour les casseroles après le souper.', 'La fondue se fait sur l’induction, et il y a une raclette. Le café, c’est la machine CoffeeB ou la cafetière moka.', 'Une fois rentrés : la cheminée électrique, la télé, une Xbox 360, des jeux de société, et une cuisine jouet pour les petits.'] },
-        { titel: 'Deux balcons', absatz: ['Un balcon est pour s’asseoir, face à la Gemmi. Le café du matin, et aucune raison d’être ailleurs. L’autre a un grill électrique. On fume dehors, sur le balcon, pas dans les pièces.'] },
-        { titel: 'Le village', absatz: ['Quelques photos montrent Loèche-les-Bains, pas l’appartement : la rue, le col de la Gemmi, la vue depuis là-haut, et un grill sur l’alpage au-dessus du village.'] },
+        { titel: '', absatz: ['Alpine Siesta est notre appartement de vacances confortable de 65 m², au cœur de Loèche-les-Bains. Avec de la place pour six personnes et un lit bébé en plus, il convient aux familles, à des vacances avec les grands-parents ou à un moment entre amis.', 'Journées actives en montagne, heures tranquilles aux thermes ou soirées ensemble : vous trouvez ici ce qui fait de belles vacances.'] },
+        { titel: 'Arriver et se sentir bien', absatz: ['L’appartement est dans un endroit calme et un bon point de départ pour découvrir Loèche-les-Bains.', 'Il est au premier étage, facile à atteindre par l’ascenseur et sans escalier.', 'Beaucoup des plus beaux endroits sont tout près. Les thermes de Loèche-les-Bains, la Sportarena et le centre du village sont à environ dix minutes à pied. Le téléphérique de la Gemmi est à cinq minutes, l’arrêt La Bohème et la boulangerie voisine à deux. Le bus rejoint les remontées de Torrent en environ sept minutes.', 'Votre place de parc extérieure est gratuite. Les vélos se rangent à la cave.', 'Avec les cartes d’hôte, vous profitez aussi de réductions sur les loisirs de la région.'] },
+        { titel: 'Des pièces confortables pour des vacances ensemble', absatz: ['L’appartement a trois pièces avec deux lits chacune, et assez de place pour que chacun se sente bien.', 'Dans la chambre, un lit double confortable. La chambre d’enfants, avec deux lits simples, est un endroit à eux pour les plus jeunes.', 'Le séjour invite à se détendre ensemble. Le canapé-lit devient un couchage pour deux si vous en avez besoin. Pour les plus petits, un lit bébé se déplie.', 'La salle de bain fraîchement rénovée a une baignoire, une armoire à miroir, des toilettes, un sèche-cheveux et une balance.'] },
+        { titel: 'Cuisiner ensemble et des soirées tranquilles', absatz: ['Dans la cuisine fraîchement rénovée, cuisiner ensemble fait plaisir. Des appareils modernes, une plaque à induction, un four qui chauffe vite et un lave-vaisselle font que les vacances ressemblent à la maison.', 'Pour une soirée tranquille, un service à fondue et une raclette sont là, pour vous asseoir à table après une journée bien remplie et goûter les spécialités valaisannes.', 'Pour le café, vous choisissez entre une machine CoffeeB respectueuse de l’environnement et une cafetière moka.', 'Quand la journée ralentit, le séjour devient particulièrement agréable : une cheminée électrique, une smart TV, une Xbox 360 et des jeux de société pour petits et grands. Pour les plus jeunes, il y a aussi une cuisine jouet.'] },
+        { titel: 'Deux balcons avec vue sur la montagne', absatz: ['Quoi de plus beau que de commencer la journée avec une tasse de café et la paroi de la Gemmi devant vous ?', 'L’appartement a deux balcons. Sur le premier, l’air de la montagne, la vue et des heures tranquilles au soleil.', 'Sur le second, un grill électrique, une bonne façon de finir une journée en montagne.', 'Nous vous demandons de fumer uniquement sur le balcon, pour que l’appartement reste agréable et sans fumée pour tous les hôtes.'] },
+        { titel: 'Loèche-les-Bains juste devant la porte', absatz: ['Randonnée, ski, luge, vélo ou détente dans l’eau thermale chaude : en toute saison, Loèche-les-Bains offre beaucoup de façons de passer des vacances.', 'La paroi de la Gemmi, le paysage de montagne et l’atmosphère du village rendent chaque séjour particulier.', 'Nous nous réjouissons de vous accueillir à Alpine Siesta.'] },
       ],
     };
   }
   return {
     ...gemeinsam,
     titel: (name, ort) => `${name} a ${ort} – l’appartamento`,
-    claim: 'A Leukerbad c’è posto per tutta la famiglia, con la parete della Gemmi fuori.',
-    beschreibung: 'Appartamento per famiglie a Leukerbad, 65 m². Tre stanze, due posti in ciascuna, più un lettino da aprire.',
+    claim: 'Vacanze tranquille in mezzo alle montagne del Vallese, con posto per famiglia e amici e vista sulla Gemmi.',
+    beschreibung: 'Appartamento per vacanze a Leukerbad, 65 m², fino a sei persone. Vista sulla Gemmi, percorsi brevi verso terme, Sportarena e paese.',
     stockwerk: '1° piano, con ascensore, senza scalini',
-    parkplatz: '1 posto auto esterno compreso',
+    parkplatz: '1 posto auto esterno, gratuito',
     haustiere: 'Gli animali puliti sono i benvenuti.',
     rauchen: 'Solo sul balcone.',
     hinweise: [
@@ -201,12 +204,12 @@ function seiten(locale: 'en' | 'fr' | 'it', bilder: Bildtext[]): WohnungLocale {
       { kategorie: 'Altro', items: ['Lavatrice', 'Ascensore', 'Posto auto', 'Deposito bici in cantina', 'Guest card'] },
     ],
     abschnitte: [
-      { titel: '', absatz: ['È il nostro appartamento a Leukerbad. 65 metri quadrati, tranquillo, con abbastanza spazio perché nessuno stia addosso all’altro. Tre stanze, due posti in ciascuna: una camera matrimoniale, una camera dei bambini con due letti singoli, e il soggiorno con un divano letto. Un lettino si apre se viaggi con un bebè. Va bene per una settimana con i bambini, con i nonni o con gli amici.'] },
-      { titel: 'Quando arrivate', absatz: ['La vacanza inizia quando smetti di organizzare. Siamo al primo piano. L’ascensore sale, non ci sono scalini. Dopo la giornata fuori rientri e la giornata è finita.', 'Terme, centro del paese e arena sportiva sono a circa dieci minuti a piedi. La funivia della Gemmi, cinque. La fermata La Boheme, e il forno con lo stesso nome, due. Il bus fino alla funivia di Torrent ci mette sette minuti.', 'Un posto auto esterno è tuo, e le bici stanno in cantina. Le carte ospite sono in appartamento. Con quelle paghi meno per quello che si fa in zona.'] },
-      { titel: 'Dove si dorme', absatz: ['Tre stanze, e si chiudono. Quando i bambini sono a letto, il soggiorno resta tuo: un film, due chiacchiere, o semplicemente silenzio.', 'Due posti per stanza. Un letto matrimoniale in una, due letti singoli dai bambini, un divano letto in soggiorno. Il lettino è in più.', 'Il bagno è nuovo: vasca, armadio a specchio, WC, asciugacapelli e bilancia.'] },
-      { titel: 'La cena e la sera', absatz: ['Anche la cucina è nuova. Mobili nuovi, piano a induzione, un forno che scalda in fretta, lavastoviglie nuova, e un lavello abbastanza grande per le pentole dopo cena.', 'La fonduta si fa sull’induzione, e c’è anche la raclette. Il caffè è la macchina CoffeeB oppure la moka.', 'Una volta dentro: il camino elettrico, la TV, una Xbox 360, i giochi da tavolo e una cucina giocattolo per i piccoli.'] },
-      { titel: 'Due balconi', absatz: ['Un balcone è per stare seduti, di fronte alla Gemmi. Il caffè del mattino, e nessun motivo di essere altrove. L’altro ha una griglia elettrica. Si fuma fuori, sul balcone, non nelle stanze.'] },
-      { titel: 'Il paese', absatz: ['Alcune foto sono Leukerbad, non l’appartamento: la strada, il passo della Gemmi, la vista da lassù, e una griglia sull’alpe sopra il paese.'] },
+      { titel: '', absatz: ['Alpine Siesta è il nostro appartamento per vacanze, comodo, di 65 m², nel cuore di Leukerbad. Con posto per sei persone e un lettino in più, va bene per famiglie, vacanze con i nonni o un periodo con gli amici.', 'Giornate attive in montagna, ore tranquille alle terme o sere insieme: qui trovate quello che fa una bella vacanza.'] },
+      { titel: 'Arrivare e sentirsi a casa', absatz: ['L’appartamento sta in un posto tranquillo ed è una buona base per scoprire Leukerbad.', 'È al primo piano, comodo da raggiungere con l’ascensore e senza scale.', 'Molti dei posti più belli sono vicini. Terme di Leukerbad, Sportarena e centro del paese sono a circa dieci minuti a piedi. La funivia della Gemmi è a cinque minuti, la fermata La Bohème e il forno vicino solo a due. Il bus arriva alle funivie di Torrent in circa sette minuti.', 'Il vostro posto auto esterno è gratuito. Le bici stanno in cantina.', 'Con le guest card avete anche sconti sulle offerte della zona.'] },
+      { titel: 'Stanze comode per vacanze insieme', absatz: ['L’appartamento ha tre stanze con due posti ciascuna, e abbastanza spazio perché tutti stiano bene.', 'In camera c’è un letto matrimoniale comodo. La camera dei bambini, con due letti singoli, è un angolo loro per gli ospiti più piccoli.', 'Il soggiorno invita a rilassarsi insieme. Il divano letto diventa un posto in più per due, quando serve. Per gli ospiti più piccoli c’è un lettino da aprire.', 'Il bagno appena rinnovato ha vasca, armadio a specchio, WC, asciugacapelli e bilancia.'] },
+      { titel: 'Cucinare insieme e sere tranquille', absatz: ['Nella cucina appena rinnovata, cucinare insieme fa piacere. Elettrodomestici moderni, piano a induzione, un forno che scalda in fretta e una lavastoviglie fanno sentire le vacanze come a casa.', 'Per una sera tranquilla ci sono un set per la fonduta e una raclette, così dopo una giornata piena vi sedete a tavola e gustate le specialità vallesane.', 'Per il caffè scegliete tra una macchina CoffeeB rispettosa dell’ambiente e una moka classica.', 'Quando la giornata rallenta, il soggiorno diventa particolarmente comodo: un camino elettrico, una smart TV, una Xbox 360 e giochi da tavolo per grandi e piccoli. Per gli ospiti più piccoli c’è anche una cucina giocattolo.'] },
+      { titel: 'Due balconi con vista sulla montagna', absatz: ['Cosa c’è di meglio che iniziare la giornata con una tazza di caffè e la parete della Gemmi davanti?', 'L’appartamento ha due balconi. Sul primo avete l’aria di montagna, la vista e ore tranquille al sole.', 'Sul secondo c’è una griglia elettrica, un bel modo di chiudere una giornata in montagna.', 'Vi chiediamo di fumare solo sul balcone, così l’appartamento resta piacevole e senza fumo per tutti gli ospiti.'] },
+      { titel: 'Leukerbad proprio fuori dalla porta', absatz: ['Camminare, sciare, slittino, bici o riposo nell’acqua termale calda: in ogni stagione Leukerbad ha molti modi di passare le vacanze.', 'La parete della Gemmi, il paesaggio di montagna e l’atmosfera del paese rendono ogni soggiorno particolare.', 'Non vediamo l’ora di darvi il benvenuto ad Alpine Siesta.'] },
     ],
   };
 }

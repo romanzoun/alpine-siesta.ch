@@ -7,7 +7,7 @@ h1: "Familienferien in Leukerbad, ohne jeden Tag neu zu planen"
 lead: "Leukerbad liegt am Ende des Tals. Die Therme, die Gemmibahn und das Dorf sind zu Fuss da, und abends hat jedes Kind ein Bett, das nicht im Wohnzimmer steht. So bleiben Ferien Ferien."
 bild: ./leukerbad-winter-dorf-schnee-felswand.webp
 bild_alt: "Verschneites Leukerbad im Tal, Holzhäuser und ein langes helles Gebäude vor Felswänden"
-aktualisiert: 2026-10-26
+aktualisiert: 2026-11-09
 faq:
   - frage: Wie weit ist die Therme von der Wohnung?
     antwort: Von Alpine Siesta gehst du etwa zehn Minuten zu Fuss zur Leukerbad Therme. Zentrum und Sportarena sind ebenfalls etwa zehn Minuten, die Gemmibahn fünf.
@@ -38,7 +38,7 @@ Dazu kommt das Wasser. Aus den Quellen von Leukerbad kommen täglich über 3,9 M
 
 [Alpine Siesta](/wohnungen/alpine-siesta/) ist 65 Quadratmeter, im ersten Stock, mit Lift und ohne Stufen. Drei Zimmer, in jedem zwei Schlafplätze: ein Doppelzimmer, ein Kinderzimmer mit zwei Einzelbetten, und das Wohnzimmer mit einem Schlafsofa. Ein Babybett klappst du aus, wenn ihr mit einem Kleinkind reist. Wenn die Kinder im Bett sind, gehört das Wohnzimmer wieder euch. Das ist der Punkt, an dem Ferien mit Kindern entweder eng werden oder noch einen Abend haben.
 
-In der Küche steht, was ihr am Abend braucht, ohne einzukaufen zu müssen, was das Rezept verlangt: Induktion, ein Backofen, der schnell heiss wird, eine Spülmaschine und ein Becken, das die Pfannen nach dem Essen fasst. Fondue geht auf dem Herd, Raclette gibt es auch. Für den Kaffee eine CoffeeB-Maschine und eine Mokka-Kanne. Hochstuhl, Spielküche, Brettspiele und ein Schaukelpferd sind da. Zwei Balkone: einer zum Sitzen mit Blick auf die Gemmi, einer mit Elektrogrill. Geraucht wird nur draussen.
+In der Küche steht, was ihr am Abend braucht: Induktion, ein Backofen, der schnell heiss wird, eine Spülmaschine und ein Becken, das die Pfannen nach dem Essen fasst. Fondue geht auf dem Herd, Raclette gibt es auch. Für den Kaffee eine CoffeeB-Maschine und eine Mokka-Kanne. Hochstuhl, Spielküche, Brettspiele und ein Schaukelpferd sind da. Zwei Balkone: einer zum Sitzen mit Blick auf die Gemmi, einer mit Elektrogrill. Geraucht wird nur draussen.
 
 Check-in ist ab 15:00, Check-out bis 11:00. Am Anreisetag seid ihr um drei in der Wohnung, und die Therme ist dann noch drin. Der grosse Ausflug kommt am nächsten Morgen. Am Abreisetag habt ihr den Morgen. Ein Aussenparkplatz gehört dazu. Die Gästekarten liegen in der Wohnung und geben Rabatt auf Angebote in der Region.
 
@@ -55,7 +55,7 @@ Was bei uns im Winter gut funktioniert:
 - Eine Pause, bevor jemand hungrig und nass gleichzeitig ist.
 - Danach die Therme. Kalte Luft, warmes Wasser, und ihr seid zu Fuss wieder zu Hause.
 
-Die Tage mit dem Dorf und dem Bad sind oft die, an die sich die Kinder erinnern.
+Die gemütlichen Tage im Dorf und im Thermalbad sind oft die, an die sich die Kinder erinnern.
 
 ## Worauf du bei einem Skigebiet mit Kindern achtest
 
@@ -65,7 +65,7 @@ Mit Kindern zählt eine übersichtliche Anfängerzone, breite Pisten, Lifte, die
 
 Torrent erreichst du in etwa sieben Minuten mit dem Bus: breite Pisten, Anfängerzonen und die Freiheit, nach ein paar Abfahrten wieder aufzuhören. Mehr dazu auf der Seite [Skifahren mit Kindern](/leukerbad/familie/kinderfreundliche-skigebiete/).
 
-Unser Rat für den ersten Skitag: kurz bleiben. Lieber zwei Stunden, in denen das Kind noch Lust hat, als ein Tag, der in Tränen auf dem Lift endet. Die Therme am Nachmittag rettet mehr Skiferien als eine zusätzliche Piste.
+Unser Rat für den ersten Skitag: kurz bleiben. Lieber zwei Stunden, in denen das Kind noch Lust hat, als ein Tag, der in Tränen auf dem Lift endet. Manchmal ist das schönste Erlebnis der Skiferien nicht die nächste Abfahrt, sondern das gemeinsame Planschen im warmen Thermalwasser.
 
 ## Sommer: raus, und wieder zurück, bevor es zu viel wird
 
@@ -129,19 +129,19 @@ Die Zeiten gelten ab Alpine Siesta, nicht ab irgendeinem Parkplatz im Dorf.
 
 Die Gemmibahn in fünf Minuten heisst: ein Ausflug auf den Pass kann spontan sein. Er muss nicht der eine Tag sein, für den ihr früh aufsteht.
 
-## Ein Tag, der ruhig bleibt
+## Ein Familientag ganz ohne Stress
 
-So sieht ein Tag aus, der bei Familien bei uns funktioniert.
+Das Schönste an Familienferien? Einfach gemeinsam Zeit verbringen, ohne ständig auf die Uhr schauen zu müssen.
 
-Am Morgen entscheidet ihr draussen vor der Tür, nicht am Vorabend in einer Liste. Die Bäckerei an der Haltestelle La Boheme ist zwei Minuten entfernt. Danach entweder eine kurze Runde, die Bahn oder gar nichts.
+Am Morgen startet ihr gemütlich in den Tag. Frische Brötchen gibt es bei der Bäckerei La Bohème, nur zwei Minuten entfernt. Danach entscheidet ihr spontan: ein Spaziergang, ein Ausflug mit der Bergbahn oder einfach noch ein bisschen Zeit in der Ferienwohnung.
 
-Am Mittag esst ihr, bevor der Hunger die Entscheidung trifft. In der Wohnung geht das schneller als die Suche nach einem Restaurant mit einem freien Hochstuhl.
+Am Mittag macht ihr es euch leicht. In der gut ausgestatteten Küche lässt sich schnell etwas Leckeres zaubern. Und wer lieber auswärts essen möchte, findet im Dorf verschiedene Restaurants.
 
-Am Nachmittag eine Sache. Die Therme, der Spielplatz, der Schnee oder der Bach.
+Am Nachmittag wartet das nächste kleine Abenteuer: Planschen im warmen Thermalwasser, ein Besuch auf dem Spielplatz, Spass im Schnee oder eine Entdeckungstour am Bach. Ganz nach Lust, Laune und Wetter.
 
-Am Abend seid ihr drin, bevor die Kinder überdreht sind. Drei Zimmer heissen: die Kleinen können schlafen, und ihr sitzt noch am Tisch. Das Schlafsofa im Wohnzimmer ist ein Bett für zwei. Solange das Doppelzimmer frei ist, schlaft ihr dort.
+Am Abend kehrt Ruhe ein. Während die Kleinen schon schlafen, könnt ihr den Tag gemütlich ausklingen lassen. Dank der drei Zimmer findet jeder seinen Rückzugsort. Das separate Schlafzimmer und das Schlafsofa im Wohnzimmer bieten dabei flexible Schlafmöglichkeiten.
 
-Am Abreisetag ist um 11:00 Schluss. Das Gepäck ist schneller draussen, wenn der Morgen nicht noch ein Ausflug werden soll.
+Am Abreisetag bleibt noch Zeit für ein gemütliches Frühstück, bevor ihr die Wohnung bis 11:00 Uhr verlasst.
 
 ## Mit Kleinkind, mit Schulkindern, mit Grosseltern
 
@@ -153,11 +153,21 @@ Mit Schulkindern wird das Kinderzimmer wichtig. Zwei Einzelbetten, ein Regal, di
 
 Mit Grosseltern zählt dasselbe wie mit dem Kinderwagen: der Lift bis zur Wohnung, ein eigenes Zimmer, und die Möglichkeit, mittags heimzugehen, während die anderen noch draussen sind. Sechs Schlafplätze heissen, dass eine kleine Familie und ein Grosselternpaar im selben Stock schlafen. Das Sofa ist dann das sechste Bett.
 
-## Was ihr einpacken solltet
+## Was euch in der Ferienwohnung erwartet
 
-Föhn, Waage, Spülmaschine, Waschmaschine, WLAN und Fernseher sind da. Eine Xbox 360 und Brettspiele auch.
+Damit ihr euch vom ersten Moment an wohlfühlt, ist unsere Ferienwohnung bestens ausgestattet. Föhn, Waschmaschine, Spülmaschine, WLAN und Fernseher stehen euch zur Verfügung. Auch eine Waage ist vorhanden.
 
-Dazu, weil es vom Tag abhängt: Badesachen und im Winter eine Mütze fürs Aussenbecken. Schichten, weil das Tal am Morgen kalt und am Mittag in der Sonne heiss sein kann. Hausschuhe, damit der Schneematsch nicht durch die Zimmer läuft. Nasse Jacken gehören auf den Balkon. Käse fürs Fondue holt ihr im Dorf, zusammen mit Windeln und Milch. Die Bäckerei bei La Boheme ist zwei Minuten von der Tür.
+Für gemütliche Stunden und gemeinsame Familienabende sorgen eine Xbox 360 und verschiedene Brettspiele.
+
+## Was ihr für eure Ferien einpacken solltet
+
+Für entspannte Stunden im Thermalbad: Badesachen und im Winter eine warme Mütze für das Aussenbecken.
+
+Für eure Ausflüge: Bequeme Kleidung im Zwiebellook, denn morgens kann es im Tal noch frisch sein, während mittags die Sonne wärmt.
+
+Für die Wohnung: Hausschuhe, damit ihr es nach einem erlebnisreichen Tag gemütlich habt.
+
+Alles Weitere findet ihr bequem im Dorf – vom Käse für einen gemütlichen Fondueabend bis zu Dingen des täglichen Bedarfs. Frisches Brot und Gebäck gibt es bei der Bäckerei La Bohème, nur zwei Gehminuten entfernt.
 
 ## Eine Woche in eurem Tempo
 
@@ -179,11 +189,11 @@ Ihr könnt jeden Abend drin essen und den Tag beenden, wenn er zu Ende ist. Fond
 
 Frühstück ist bei euch. Die Bäckerei ist der Zwei-Minuten-Weg. Kaffee macht die Maschine oder die Mokka-Kanne, je nachdem, wer zuerst in der Küche steht.
 
-## Kurtaxe und Gästekarte, in einem Absatz
+## Kurtaxe und Gästekarte – gut zu wissen
 
 Bei einer Direktbuchung ist die Kurtaxe im Preis. Auf Booking.com und Airbnb ist sie nicht dabei und wird später fällig. Die Gästekarten liegen bereit und geben Rabatt auf Angebote in der Region.
 
-## Die Tage, und die Wohnung
+## Alles in der Nähe – und viel Platz für die Familie
 
 Die wichtigen Orte liegen zu Fuss: Therme, Gemmi, Sportarena, Bäcker. In der Wohnung schlafen sechs Personen, jedes Paar in seinem Raum: vier in den beiden Zimmern, zwei auf dem Schlafsofa, das Babybett zusätzlich.
 

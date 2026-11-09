@@ -39,7 +39,12 @@ for (const datei of seiten) {
   if (!/<link rel="canonical"/.test(html)) f('kein Canonical');
   if (!/<meta property="og:image"/.test(html)) w('kein og:image');
 
-  for (const img of html.match(/<img\b[^>]*>/g) ?? []) if (!/\salt="[^"]+"/.test(img)) f(`Bild ohne Alt-Text: ${img.slice(0, 80)}…`);
+  for (const img of html.match(/<img\b[^>]*>/g) ?? []) {
+    if (!/\salt="[^"]+"/.test(img)) f(`Bild ohne Alt-Text: ${img.slice(0, 80)}…`);
+    else if (/\ssrc="(?!data:)[^"]+"/.test(img) && !/\.svg/.test(img) && !/\ssrcset="/.test(img)) f(`Bild ohne srcset: ${img.slice(0, 100)}…`);
+  }
+  const og = text(html, /<meta property="og:image" content="([^"]*)"/);
+  if (og && !og.endsWith('/og.jpg') && !/<meta property="og:image:alt" content="[^"]+"/.test(html)) f('og:image ohne Alternativtext');
 
   for (const ld of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     try { JSON.parse(ld[1]); } catch { f('ungültiges JSON-LD'); }
@@ -53,6 +58,7 @@ for (const datei of seiten) {
 }
 for (const [t, urls] of titel) if (urls.length > 1) fehler.push(`Gleicher Titel auf ${urls.join(', ')}: «${t}»`);
 
+if (!existsSync(join(DIST, 'sitemap-images.xml'))) fehler.push('sitemap-images.xml fehlt');
 const sitemap = existsSync(join(DIST, 'sitemap-0.xml')) ? readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8') : '';
 const inSitemap = (sitemap.match(/<loc>/g) ?? []).length;
 

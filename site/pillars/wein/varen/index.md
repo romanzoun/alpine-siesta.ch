@@ -1,44 +1,68 @@
 ---
-title: "Varen, ruhiges Weindorf im Wallis"
-description: "Varen liegt über dem Rhonetal: kleine Rebberge, ein Dorf mit Kirche, und am Abend der Wein in der Wohnung in Leukerbad."
-h1: "Varen, Wein in einem ruhigen Dorf"
-kurz: "Kleine Parzellen, eine Kirche, Wege durch die Reben. Abends trinkt ihr in Leukerbad."
-reihenfolge: 3
-aktualisiert: 2026-10-27
+title: "Varen: Weindorf und Pfyfoltruweg"
+description: "Varen nahe bei Leukerbad: Familienkellereien, Pinot Noir, der Pfyfoltruweg durch die Reben und Weinfeste mit aktuellen Terminen."
+h1: "Varen – Weinkultur, Familienkellereien und wunderschöne Rebberge"
+kurz: "Familienkellereien, der Pfyfoltruweg und Weinfeste. Varen ist ein kurzer Ausflug ab Leukerbad."
+reihenfolge: 1
+aktualisiert: 2026-11-09
 bild: ./varen-herbst-reben-kurve.webp
 bild_alt: "Gelbe, rote und grüne Rebzeilen, eine Strasse schlängelt sich hindurch"
 faq:
-  - frage: Wo liegt Varen?
-    antwort: Über dem Rhonetal, ein kleines Weindorf. Von Leukerbad aus ist es ein Ausflug, der Abend bleibt in der Wohnung.
-  - frage: Ist dort viel los?
-    antwort: Weniger als in den bekannten Lagen am See. Kurze Wege durchs Dorf und durch die Reben.
-  - frage: Wann trinken wir den Wein?
-    antwort: Oft erst am Abend in der Wohnung, zum Essen, wenn die Kinder im Zimmer sind.
+  - frage: Was ist an den Kellereien in Varen besonders?
+    antwort: Es sind Familienbetriebe, in denen das Wissen über Reben und Wein oft über Generationen weitergegeben wird. Bekannt ist Varen für Pinot Noir und den Pfyfoltru-Wein.
+  - frage: Wie lang ist der Pfyfoltruweg?
+    antwort: Der Rundweg ist rund 3,5 Kilometer lang, startet bei der Kirche von Varen und dauert ungefähr eineinhalb Stunden. Details stehen beim Naturpark Pfyn-Finges.
+  - frage: Wann finden Weinfeste in Varen statt?
+    antwort: Die Termine wechseln. Aktuelle Veranstaltungen, darunter das Wii Dorf Fäscht, stehen bei Pro Varen. Feste Daten ohne Prüfung übernehmen wir nicht.
 entwurf: false
 ---
 
-Varen liegt über dem Rhonetal. Die Reben stehen in kleinen Parzellen, das Dorf ist überschaubar, und niemand muss eine Menschenmenge durchqueren, um eine Flasche mitzunehmen. Abends seid ihr in Leukerbad, und der Wein aus Varen steht auf dem Tisch.
+Sonnige Weinberge, gemütliche Dorfgassen und eine lange Weinbautradition – das kleine Weindorf Varen ist ein wunderbares Ausflugsziel für alle, die das Wallis von seiner genussvollen Seite kennenlernen möchten.
 
-## Hänge, die nach Herbst schmecken
+Nur eine kurze Fahrt von Leukerbad entfernt, erwartet euch ein charmantes Dorf oberhalb des Rhonetals, in dem Weinbau, Natur und persönliche Gastfreundschaft eng miteinander verbunden sind.
 
-Die Südhänge sind sonnig, das Klima trocken, die Betriebe klein. Bei einer Degustation erzählt jemand vom Wein, statt eine Rede zu halten. Ihr bleibt so lange, wie es für die Kinder noch leicht ist.
+## Familienkellereien – Wein mit Geschichte und Persönlichkeit
 
-![Ein Dorf mit vielen Dächern und einem Kirchturm, darum Reben und Wald](./varen-dorf-kirche-reben.webp)
+Was Varen besonders macht, sind seine familiengeführten Weinkellereien. Hier wird das Wissen über Reben und Wein oft über Generationen weitergegeben – mit viel Leidenschaft, Handarbeit und Verbundenheit zur Region.
 
-Von oben seht ihr die Dächer, den hellen Kirchturm, Reben dazwischen und ein grünes Spielfeld. Das Dorf ist klein genug, dass ein Spaziergang durch die Gassen der ganze Vormittag sein kann.
+Bei einer Weindegustation könnt ihr typische Walliser Weine entdecken, mit den Winzerinnen und Winzern ins Gespräch kommen und erfahren, was ihre Weine so besonders macht.
 
-![Schwarze Trauben im Vordergrund, dahinter Reben und ein Kirchturm](./varen-trauben-kirchturm.webp)
+Besonders bekannt ist Varen für seinen Pinot Noir und den Pfyfoltru-Wein, dessen Schmetterlingssymbol für den naturnahen Weinbau der Region steht.
 
-Im Rebberg hängen die dunklen Trauben direkt vor dem Turm. Ihr geht ein Stück den Hang hinauf und seid schnell wieder bei den Häusern. Die Weine von hier sind klare Weissweine und kräftige Rotweine, oft in kleinen Mengen.
+Ob eine gemütliche Degustation, ein Besuch im Weinkeller oder ein Walliser Apéro – hier erlebt ihr die Weinkultur direkt dort, wo sie entsteht.
 
-## Zu Fuss, und dann der Abend
+Eine Übersicht der Familienkellereien und ihrer Angebote findet ihr bei [Pro Varen – Die Weininsel im Wallis](https://leukerbad.ch/weininsel).
 
-![Vier Personen von hinten auf einem Kiesweg, links und rechts herbstliche Reben](./varen-weinwanderung-herbst.webp)
+## Pfyfoltruweg – ein idyllischer Spaziergang durch die Rebberge
 
-Ein Kiesweg zwischen gelben Reben, der Berg auf der einen Seite. Vier Personen, genug Abstand, kein Programm. Mit Kindern bleibt derselbe Weg kürzer: bis zur nächsten Biegung, dann zurück ins Dorf.
+Direkt am Dorfrand beginnt ein besonders schöner Themenweg: der Pfyfoltruweg.
 
-Wenig Verkehr, viel Ruhe. Der Wein wird oft erst später aufgemacht, bewusst, am eigenen Tisch.
+Der rund 3,5 Kilometer lange Rundweg startet bei der Kirche von Varen und führt durch sonnige Weinberge, vorbei an abwechslungsreicher Natur und mit herrlichen Ausblicken auf das Rhonetal.
 
-![Zwei Gläser Rotwein, Käse, Erdbeeren und Chips, dahinter ein Kamin](./alpine-siesta-rotwein-kamin-kaese.webp)
+Unterwegs erfahrt ihr mehr über den naturnahen Weinbau und die besondere Bedeutung der Schmetterlinge für die Region.
 
-In [Alpine Siesta](/wohnungen/alpine-siesta/) ist der Kamin an, der Käse auf dem Teller, die Kinder nebenan. Check-in ab 15:00, die Therme zehn Minuten zu Fuss. Die Terrassen am See beschreibt [Lavaux](/leukerbad/wein/lavaux/), die Sorten [Rebsorten im Wallis](/leukerbad/wein/rebsorten/). Zurück zur Übersicht: [Wein im Wallis](/leukerbad/wein/).
+Mit einer Gehzeit von ungefähr 1,5 Stunden ist der Weg auch eine schöne Möglichkeit, Varen gemeinsam mit der Familie zu entdecken.
+
+Alle Details zur Route findet ihr beim [Naturpark Pfyn-Finges – Pfyfoltruweg Varen](https://www.pfyn-finges.ch/de/naturpark-entdecken/auf-eigene-faust/wandern/offer-detail/pfyfoltru-weg-varen-4646).
+
+## Weinfeste und besondere Veranstaltungen
+
+Varen ist nicht nur für seine Weine bekannt, sondern auch für seine lebendige Dorf- und Weinkultur.
+
+Im Laufe des Jahres laden lokale Winzer zu Degustationen, kulinarischen Erlebnissen und besonderen Veranstaltungen ein. Besonders im Herbst, wenn die Weinlese beginnt, zeigt sich das Dorf von seiner genussvollen Seite.
+
+Ein besonderes Highlight ist das Wii Dorf Fäscht mit offenen Weinkellern, regionalen Spezialitäten, Musik und einem abwechslungsreichen Dorfprogramm.
+
+Wer einen Besuch plant, sollte unbedingt einen Blick auf die aktuellen Veranstaltungen werfen – vielleicht findet gerade während eurer Ferien ein schönes Weinerlebnis statt.
+
+Aktuelle Informationen und kommende Veranstaltungen findet ihr bei [Pro Varen – Veranstaltungen und Weinerlebnisse](https://leukerbad.ch/weininsel).
+
+## Varen entdecken – ein genussvoller Ausflug ab Leukerbad
+
+Ob ein Spaziergang durch die Rebberge, eine persönliche Weinprobe bei einem Familienbetrieb oder ein Besuch während eines Weinfestes – Varen verbindet wunderschöne Landschaften mit authentischer Walliser Weinkultur.
+
+Weitere Informationen zur Region findet ihr bei [Leukerbad Tourismus – Varen](https://www.leukerbad.ch/varen).
+
+Noch mehr Inspiration bieten unsere Seiten [Walliser Rebsorten](/leukerbad/wein/rebsorten/) und [Lavaux – Weinberge am Genfersee](/leukerbad/wein/lavaux/).
+
+Zurück zur Übersicht: [Wein im Wallis](/leukerbad/wein/).

@@ -15,7 +15,7 @@ const t = ui(asLocale(Astro.props.locale ?? Astro.currentLocale));
 const ansichten = await Promise.all(
   bilder.map(async (b) => {
     const gross = await getImage({ src: b.bild, width: 1800, fit: 'inside' });
-    return { src: gross.src, alt: b.alt, raum: b.raum ?? '', text: b.text ?? b.alt };
+    return { src: gross.src, alt: b.alt, raum: b.raum ?? '', text: b.text ?? b.alt, width: gross.attributes.width, height: gross.attributes.height };
   }),
 );
 const reihenfolge = ['Balkon', 'Wohnzimmer', 'Schlafzimmer', 'Küche', 'Kinderzimmer'];
@@ -69,7 +69,7 @@ const mosaik = reihenfolge.flatMap((raum) => {
     if (!(wurzel instanceof HTMLElement) || wurzel.dataset.bereit) return;
     wurzel.dataset.bereit = '1';
     const daten = JSON.parse(wurzel.querySelector('[data-daten]')!.textContent || '[]') as {
-      src: string; alt: string; raum: string; text: string;
+      src: string; alt: string; raum: string; text: string; width?: number; height?: number;
     }[];
     const dialog = wurzel.querySelector('[data-dialog]') as HTMLDialogElement;
     const bild = wurzel.querySelector('[data-bild]') as HTMLImageElement;
@@ -84,6 +84,8 @@ const mosaik = reihenfolge.flatMap((raum) => {
       const eintrag = daten[index];
       bild.src = eintrag.src;
       bild.alt = eintrag.alt;
+      if (eintrag.width) bild.width = eintrag.width;
+      if (eintrag.height) bild.height = eintrag.height;
       raum.textContent = eintrag.raum;
       raum.hidden = !eintrag.raum;
       text.textContent = eintrag.text;

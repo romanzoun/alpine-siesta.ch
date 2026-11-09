@@ -56,7 +56,7 @@ const faqSchema = {
 };
 ---
 
-<Base locale={locale} title={lokal?.title ?? seite.title} description={lokal?.description ?? seite.description} bild={hero.bild}>
+<Base locale={locale} title={lokal?.title ?? seite.title} description={lokal?.description ?? seite.description} bild={hero.bild} bildAlt={hero.alt}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
@@ -125,7 +125,7 @@ const faqSchema = {
 
   <section class="section container zweispaltig">
     <h2>{t.faq}</h2>
-    <Faq eintraege={faq} />
+    <Faq eintraege={faq} locale={locale} />
   </section>
 </Base>
 

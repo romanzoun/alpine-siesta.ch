@@ -1,15 +1,19 @@
 ---
+import { mitLocale, type Locale } from '../i18n/config';
+import { textMitLinks } from '../lib/text-html';
+
 interface Props {
   eintraege: { frage: string; antwort: string }[];
+  locale?: Locale;
 }
-const { eintraege } = Astro.props;
+const { eintraege, locale = 'de' } = Astro.props;
 ---
 
 <div class="faq">
   {eintraege.map((f) => (
     <details name="faq">
       <summary>{f.frage}</summary>
-      <p>{f.antwort}</p>
+      <p set:html={textMitLinks(f.antwort, (href) => mitLocale(locale, href))} />
     </details>
   ))}
 </div>

@@ -7,6 +7,7 @@ import Faq from '../components/Faq.astro';
 import AktivitaetenListe from '../components/AktivitaetenListe.astro';
 import BuchungsBand from '../components/BuchungsBand.astro';
 import PillarInhalt from '../components/PillarInhalt.astro';
+import { bildSchema } from '../lib/bild';
 import { artikelVon, pillarUrl, artikelUrl, hubUrl, type Artikel } from '../lib/pillars';
 import { sortiert } from '../lib/entdecken';
 import { site } from '../config';
@@ -54,7 +55,7 @@ const schema = [
     inLanguage: locale,
     author: { '@type': 'Organization', name: site.name, url: site.domain },
     ...(a.data.aktualisiert && { dateModified: a.data.aktualisiert.toISOString().slice(0, 10) }),
-    ...(a.data.bild && { image: new URL(a.data.bild.src, Astro.site).href }),
+    ...(a.data.bild && bildAlt && { image: bildSchema(a.data.bild, bildAlt, Astro.site!) }),
   },
   ...(faq.length
     ? [{
@@ -66,7 +67,7 @@ const schema = [
 ];
 ---
 
-<Base locale={locale} title={title} description={description} bild={a.data.bild} typ="article" noindex={a.data.entwurf} sprachen={sprachen}>
+<Base locale={locale} title={title} description={description} bild={a.data.bild} bildAlt={bildAlt} typ="article" noindex={a.data.entwurf} sprachen={sprachen}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
   <article class="section container guide">
     <Breadcrumbs locale={locale} pfad={[
@@ -87,7 +88,7 @@ const schema = [
   {faq.length > 0 && (
     <section class="section container">
       <h2>{t.faq}</h2>
-      <Faq eintraege={faq} />
+      <Faq eintraege={faq} locale={locale} />
     </section>
   )}
 

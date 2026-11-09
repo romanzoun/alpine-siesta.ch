@@ -1,107 +1,104 @@
 ---
-# Unterseite /leukerbad/biken/e-bike/ – Skill pillar-artikel. Quelle: inbox/biken/recherche-leukerbad-ch.md
-# Schwerpunkt E-Bike, die Übersicht /leukerbad/biken/ deckt Touren, Bahnen und Flow-Trails ab.
-# Nicht belegt und deshalb weggelassen: Ladestation in der Wohnung, Mietpreise, Regeln für E-Bikes im Bus.
-title: "E-Bike in Leukerbad: Touren, Miete und Tipps"
-description: "E-Bike in Leukerbad: wo du ein E-Mountainbike mietest, welche Touren mit Motor möglich werden und wie du Akku, Bahn und Bus kombinierst."
-h1: "E-Bike in Leukerbad: Höhenmeter ohne Bahn, Alpen ohne Eile"
-kurz: "Wo du ein E-Mountainbike mietest, welche Touren mit Motor erst möglich werden und wie du Akku, Bahn und Bus kombinierst."
-reihenfolge: 5
-aktualisiert: 2026-10-28
+# Touren und Vermieter aus der freigegebenen Neufassung. Höhenmeter und Angebote vor der Saison prüfen.
+title: "E-Bike in Leukerbad: Touren und Miete"
+description: "E-Bike in Leukerbad: Torrent Loop, Flüealp, Larschi Rundi und Sunnubärga Loop, dazu Vermietung bei Alpine Cycling und Rolis und Tipps zum Akku."
+h1: "E-Bike in Leukerbad – die Walliser Bergwelt entspannt entdecken"
+kurz: "Vier Touren mit Höhenmetern, zwei Verleihstellen und was ihr zu Akku, Wetter und Wegen wissen solltet."
+reihenfolge: 3
+aktualisiert: 2026-11-09
 bild: ./mountainbiker-aufstieg-wallis.jpg
 bild_alt: "Zwei Mountainbiker fahren auf einem steinigen Weg vor einer Felswand mit Schneefeldern"
 faq:
-  - frage: Kann ich in Leukerbad ein E-Bike mieten?
-    antwort: Ja. Die Bikevermietung im Dorf hat E-Mountainbikes, Mountainbikes und Kinderbikes, mit Service und Ersatzteilen vor Ort. Reservieren kannst du online. In Albinen gibt es zusätzlich eine mobile Bikestation.
-  - frage: Welche Touren lohnen sich mit dem E-Bike besonders?
-    antwort: Touren mit langen Aufstiegen, etwa der Torrent Loop zur Rinderhütte, die Flüealp Tour oder der Aufstieg Dala Bärgüf aus dem Rhonetal. Ohne Motor sind sie konditionell fordernd, mit Motor werden sie zu entspannten Runden.
-  - frage: Brauche ich mit dem E-Bike noch die Bahn?
-    antwort: Nicht unbedingt. Viele Abfahrten, die sonst an der Bergstation beginnen, erreichst du mit dem E-Bike auch selbst. Für lange Tage mit mehreren Abfahrten ist die Bahn trotzdem praktisch und schont den Akku.
-  - frage: Ist ein E-Bike auch für Einsteiger geeignet?
-    antwort: Für Aufstiege ja. Bergab ist ein E-Bike schwerer als ein normales Bike. Starte deshalb mit breiten Wegen und leichten Trails, bevor du technische Abfahrten fährst.
-  - frage: Wo stelle ich die Bikes in der Wohnung ab?
-    antwort: In Alpine Siesta stellst du die Bikes im Keller ab. Mieten kannst du Bikes direkt im Dorf und in Albinen.
+  - frage: Welche E-Bike-Tour hat den meisten Aufstieg?
+    antwort: Der Torrent Loop von Leukerbad zur Rinderhütte auf über 2'300 Meter, mit rund 950 Höhenmetern. Die Flüealp hat rund 750, der Sunnubärga Loop rund 840, die Larschi Rundi rund 450.
+  - frage: Wo kann man ein E-Mountainbike mieten?
+    antwort: Alpine Cycling im Dorf vermietet Mountainbikes, E-Mountainbikes und Kinderbikes und macht Service. Rolis mobile Bikestation in Albinen vermietet ebenfalls Fahrräder und bietet je nach Vereinbarung einen Transport. Im Sommer früh reservieren.
+  - frage: Reicht der Akku für eine Alpentour?
+    antwort: Lange Anstiege brauchen deutlich mehr Energie als flache Strecken. Plant Akkureserve ein und prüft Wetter und Weg. Technische Trails bleiben auch mit Motor anspruchsvoll.
 entwurf: false
 ---
 
-1000 Höhenmeter vor dem Mittagessen, und oben noch genug Kraft für den Trail zurück ins Dorf. Mit dem E-Bike in Leukerbad wird der Berg zur Nebensache. Die Felsarena, die Alpen über dem Dorf und die Sonnenhänge über dem Rhonetal sind steil, und genau dort spielt der Motor seine Stärke aus. Du fährst hinauf, wo andere die Bahn nehmen müssen, und hast oben noch Kraft für die Abfahrt. Ein E-Mountainbike mietest du direkt im Dorf. Alle Touren nach Niveau, die Bahnen und die Flow-Trails findest du auf [Biken in Leukerbad](/leukerbad/biken/).
+Grüne Alpwiesen, beeindruckende Bergpanoramen und wunderschöne Wege durch die Walliser Alpen – mit einem E-Mountainbike lässt sich die Region rund um Leukerbad auf besonders abwechslungsreiche Weise entdecken.
 
-## Warum Leukerbad für E-Bikes gemacht ist
+Dank elektrischer Unterstützung werden auch längere Anstiege angenehmer. So bleibt unterwegs mehr Energie, um die Aussicht zu geniessen, gemütlich in einer Alphütte einzukehren oder neue Wege zu erkunden.
 
-Leukerbad liegt auf rund 1400 Metern, die Rinderhütte auf Torrent auf über 2300, das Rhonetal auf gut 600. Zwischen diesen Punkten liegen Höhenunterschiede, die ohne Motor einen ganzen Tag füllen. Mit dem E-Bike werden sie zu einer Runde für den Vormittag.
+Ob eine aussichtsreiche Tour auf Torrent, ein Ausflug zur Flüealp oder eine Fahrt durch die sonnigen Bergdörfer – hier findet ihr E-Bike-Erlebnisse für unterschiedliche Fahrniveaus.
 
-Dazu kommt das Wegnetz. Rund 225 Kilometer Bikewege führen um Leukerbad, viele davon auf Alpstrassen, Forstwegen und breiten Flurwegen. Genau diese Wege sind mit dem E-Bike angenehm: gleichmässig steil, gut fahrbar, und mit Aussicht, sobald der Wald aufhört.
+## Die schönsten E-Bike-Touren rund um Leukerbad
 
-Und am Ende des Tages ist es egal, ob du 900 Höhenmeter mit Motor gefahren bist oder ohne. Die Therme ist zehn Minuten zu Fuss von der Wohnung, und das warme Wasser fühlt sich nach jedem Bike-Tag gleich gut an.
+### Torrent Loop – aus eigener Kraft zur Rinderhütte
+
+Wer die beeindruckende Bergwelt von Torrent ohne Bergbahn entdecken möchte, findet im Torrent Loop eine wunderschöne Herausforderung.
+
+Die Tour führt von Leukerbad über Bergstrassen und aussichtsreiche Wege hinauf zur Rinderhütte auf über 2'300 Meter Höhe.
+
+Mit rund 950 Höhenmetern im Aufstieg ist die elektrische Unterstützung besonders willkommen. Oben angekommen werdet ihr mit einem fantastischen Panorama auf die Walliser Viertausender belohnt.
+
+Die Rückfahrt führt über abwechslungsreiche Wege und durch die wunderschöne Berglandschaft zurück nach Leukerbad.
+
+### Flüealp Tour – Natur und Walliser Alpkultur erleben
+
+Die Flüealp Tour gehört zu den besonders schönen Ausflügen für alle, die Natur und Genuss miteinander verbinden möchten.
+
+Von Leukerbad führt die Strecke durch schattige Wälder, vorbei an grünen Bergwiesen und über die Majingalp hinauf zur Flüealp auf rund 2'000 Meter Höhe.
+
+Unterwegs erwarten euch herrliche Ausblicke und eine beeindruckende alpine Landschaft.
+
+Oben lohnt sich eine gemütliche Pause im Alpbeizli, wo ihr regionale Spezialitäten wie frischen Alpkäse und Brot geniessen könnt.
+
+Mit rund 750 Höhenmetern im Aufstieg ist diese Tour ein schönes Erlebnis für E-Mountainbiker mit etwas Bergerfahrung.
+
+### Larschi Rundi – aussichtsreich durch die Bergwelt
+
+Die Larschi Rundi startet im nahegelegenen Inden und führt über abwechslungsreiche Bergwege hinauf zur Alp Larschi.
+
+Unterwegs eröffnen sich wunderschöne Ausblicke auf die umliegenden Felswände und das Rhonetal.
+
+Die rund 450 Höhenmeter im Aufstieg lassen sich mit elektrischer Unterstützung angenehm bewältigen.
+
+Auf dem Rückweg bietet sich ein gemütlicher Zwischenstopp im Weiler Bodmen an, bevor es über abwechslungsreiche Wege zurück nach Inden geht.
+
+### Sunnubärga Loop – sonnige Hänge und Walliser Bergdörfer
+
+Wer die sonnige Seite des Rhonetals entdecken möchte, sollte sich den Sunnubärga Loop näher anschauen.
+
+Die Tour startet in Susten und führt über Leuk und Guttet durch traditionelle Walliser Bergdörfer und wunderschöne Landschaften.
+
+Mit rund 840 Höhenmetern im Aufstieg ist sie ideal für alle, die eine abwechslungsreiche E-Mountainbike-Runde suchen.
+
+Besonders im Herbst, wenn sich die Wälder und Rebberge golden färben, zeigt sich die Region von ihrer schönsten Seite.
 
 ## E-Bike mieten in Leukerbad
 
-Du musst kein eigenes E-Bike mitbringen. Im Dorf gibt es eine Bikevermietung mit E-Mountainbikes, normalen Mountainbikes und Kinderbikes. Reparaturen, Service und Ersatzteile gibt es am selben Ort. Reservieren kannst du online, in der Hochsaison lohnt sich das.
+Ihr müsst kein eigenes E-Mountainbike mitbringen, um die Region auf zwei Rädern zu erkunden.
 
-In Albinen, dem Nachbardorf, gibt es eine mobile Bikestation. Sie vermietet E-Bikes, Mountainbikes und Rennvelos, auch für eine Woche oder länger. Ein besonderes Angebot: Sie bringt Bikes und auf Wunsch auch Personen mit dem Anhänger an den Start einer Tour oder holt sie am Ziel ab.
+In Leukerbad und Umgebung gibt es verschiedene Anbieter, bei denen ihr E-Mountainbikes mieten könnt.
 
-Was wir Gästen raten:
+Alpine Cycling bietet im Dorf Mountainbikes, E-Mountainbikes und Kinderbikes sowie Service und Reparaturen an.
 
-- **Am ersten Tag einstellen lassen.** Sattel, Federung und Unterstützungsstufe machen auf einem E-Bike viel aus. Nimm dir beim Abholen fünf Minuten dafür.
-- **Mit einer Runde ab dem Dorf anfangen.** So lernst du, wie viel Akku ein Aufstieg kostet, bevor du eine lange Tour planst.
-- **Zubehör fragen.** Helm, Schloss und Ersatzakku sind bei Vermietungen oft zu haben. Frag beim Reservieren nach.
+Rolis mobile Bikestation in Albinen vermietet ebenfalls verschiedene Fahrräder und bietet je nach Vereinbarung einen Transportservice an.
 
-## Touren, die mit dem E-Bike erst richtig Spass machen
+Gerade während der Sommerferien lohnt es sich, die passenden Bikes frühzeitig zu reservieren.
 
-Fast jede Tour rund um Leukerbad geht mit dem E-Bike. Bei einigen wird sie aber zu etwas anderem. Diese hier sind ohne Motor konditionell fordernd und mit Motor ein Genuss.
+## Gut vorbereitet auf die E-Bike-Tour
 
-### Torrent Loop: zur Rinderhütte, ohne Bahn
+Ein E-Mountainbike erleichtert viele Anstiege, trotzdem lohnt sich eine gute Vorbereitung.
 
-Der Torrent Loop beginnt beim Rathaus im Dorf. Über einen Naturpfad und die Strasse Richtung Albinen geht es durch den Tunnel bei den Albinenleitern und dann auf einer schmalen Bergstrasse hinauf zur Torrentalp. Über den Panoramaweg erreichst du die Rinderhütte auf über 2300 Metern. Rund 950 Höhenmeter, technisch einfach.
+- Akku und Höhenmeter berücksichtigen: Lange Anstiege benötigen deutlich mehr Energie als flache Strecken. Plant deshalb genügend Akkureserve ein.
+- Die passende Route wählen: Auch mit elektrischer Unterstützung bleiben technische Trails anspruchsvoll. Achtet auf Schwierigkeit, Untergrund und eure Fahrtechnik.
+- Wetter und Wegverhältnisse prüfen: In den Bergen kann sich das Wetter schnell ändern. Besonders nach Regen können einzelne Wege rutschig sein.
+- Rücksicht nehmen: Viele Wege werden gemeinsam von Wandernden und Bikern genutzt. Fahrt vorausschauend und passt eure Geschwindigkeit an.
 
-Oben liegt dir das Tal zu Füssen. Hinunter geht es über eine Bergstrasse und einen Waldweg via Folljeret und das Restaurant Weidstübli zurück ins Dorf. Wer mag, steigt oben auf eine andere Abfahrt um. Achte unterwegs auf Wandernde, Trottinetts und Scooter.
+Wer längere Touren plant, sollte sich ausserdem über mögliche Transportmöglichkeiten mit Bergbahnen und öffentlichen Verkehrsmitteln informieren.
 
-### Flüealp Tour: hinauf zu Käse und Brot
+Aktuelle Informationen zu geöffneten Trails, Bergbahnen und Bikeangeboten findet ihr bei [Leukerbad Tourismus](https://leukerbad.ch/).
 
-Die Flüealp Tour führt ins östliche Seitental von Leukerbad, dorthin, wo die Dala entspringt. Durch kühlen Wald und über Bergweiden geht es zur Majingalp und weiter zur Flüealp auf gut 2000 Metern, rund 750 Höhenmeter mit stetiger Steigung. Oben betreiben die Sennen eine kleine Wirtschaft. Käse und Brot solltest du hier nicht auslassen. Ein paar Minuten weiter steht die Flüekapelle. Zurück geht es auf demselben Weg.
+## Die Berge geniessen – und danach entspannen
 
-### Larschi Rundi: unter der Felswand des Tschajetuhoru
+Ob eine gemütliche Runde durch die Bergdörfer oder eine sportliche Tour hinauf zu einer Alp – mit dem E-Mountainbike entdeckt ihr die Walliser Bergwelt auf eine besonders schöne Weise.
 
-Die Larschi Rundi beginnt beim alten Bahnhof in Inden und windet sich in vielen Kehren hinauf zur Alp Larschi, unter der steilen Felswand des Tschajetuhoru. Rund 450 Höhenmeter, technisch leicht, aber nicht ohne. Über Kluscheten geht es zum Weiler Bodmen, wo eine Pause mit Kaffee und Kuchen gut passt, und über einen lustigen Trail und den Römerweg zurück nach Inden.
+Und nach einem erlebnisreichen Tag gibt es kaum etwas Besseres, als im warmen Thermalwasser von Leukerbad zu entspannen.
 
-### Sunnubärga Loop: Sonnenhang über dem Rhonetal
+Weitere Inspiration findet ihr auf unseren Seiten [Mountainbike-Touren in Leukerbad](/leukerbad/biken/zwischen-orten/) und [Biken mit Kindern](/leukerbad/biken/mit-kindern/).
 
-Der Sunnubärga Loop startet am Bahnhof Susten und führt durch Leuk hinauf zu kleinen Weilern und nach Guttet, dann auf dem Walliser Höhenweg nach Albinen. Rund 840 Höhenmeter hinauf, eine verspielte Abfahrt durch Wald und Reben zurück nach Leuk. Die Lage ist sonnig, die Runde ist bis spät in den Herbst fahrbar.
-
-## Ins Rhonetal und aus eigener Kraft zurück
-
-Viele Touren rund um Leukerbad enden unten im Tal, in Leuk oder Susten. Ohne Motor nimmst du dann den Bus zurück. Mit dem E-Bike hast du eine zweite Möglichkeit: den Dala Bärgüf.
-
-Diese Aufstiegsroute führt von Susten durch das Städtchen Leuk, über St. Barbara und den Weiler Tschingeren nach Albinen und weiter nach Leukerbad. Rund 900 Höhenmeter auf 14,5 Kilometern, mit wenig Verkehr. Wer es abwechslungsreicher will, fährt über Varen und die Dalaschlucht nach Inden, auf einer Strasse, die in die Felsflanke gehauen ist.
-
-![Hohe Brücke über die Dalaschlucht zwischen Leuk und Varen, darauf Reiter, ein Velofahrer und eine kleine Karawane mit Kamelen](./bruecke-leuk-varen-dalaschlucht.jpg)
-
-So wird aus einer Abfahrt ins Tal eine ganze Runde, ohne Bahn und ohne Bus. Ein Tipp für das letzte Stück: Nach dem Tunnel bei den Albinenleitern bremsen und auf den Naturpfad wechseln. Er führt ohne Höhenverlust direkt ins Dorfzentrum.
-
-## Mehrere Tage im Sattel
-
-Für E-Mountainbiker mit guter Kondition gibt es eine Tour über zwei Tage. Am ersten Tag fährst du von der Lauchernalp im Lötschental über das Gebiet Torrent nach Leukerbad. Am zweiten Tag geht es über den historischen Gemmipass nach Kandersteg. Zusammen über 50 Kilometer und mehr als 2400 Höhenmeter hinauf.
-
-Dazwischen übernachtest du in Leukerbad. In [Alpine Siesta](/wohnungen/alpine-siesta/) kommen die Kleider in die Waschmaschine und du in die Badewanne. Die Gemmibahn für den zweiten Tag ist fünf Minuten zu Fuss.
-
-## Akku, Bahn und Bus richtig kombinieren
-
-Ein E-Bike macht dich unabhängig, aber der Akku ist die Grenze. Was sich in den Bergen bewährt:
-
-- **Höhenmeter rechnen, nicht Kilometer.** Ein langer Aufstieg leert den Akku schneller als jede flache Strecke. Plane die Tour nach den Höhenmetern hinauf.
-- **Sparsam starten.** Im unteren Teil eines Aufstiegs eine kleine Unterstützungsstufe wählen. Oben bist du froh um die Reserve.
-- **Bahn nutzen, wenn es passt.** Die Torrentbahn bringt dich mit dem Bike zur Rinderhütte. Für einen Tag mit mehreren Abfahrten schont das den Akku für die Gegenanstiege. Über Mittag machen die Bahnen eine Pause, und im späten Herbst fährt die Gondelbahn Flaschen nicht mehr.
-- **Bus für den Notfall.** Ist der Akku unten im Tal leer, bringt dich der Bus ab Leuk zurück. Jeder zweite Bus fährt mit Anhänger, die anderen haben einen Bikehalter. Eine Velo-Reservation über die SBB wird empfohlen.
-- **Rücksicht bergab.** Ein E-Bike ist schwer und schnell. Auf Wegen mit Wandernden, auf dem Gemmipass und auf der Torrent-Bergstrasse fährst du langsam und klingelst früh.
-
-## Nach der Tour
-
-Am Abend steht das E-Bike, und du nicht mehr lange. Die Leukerbad Therme ist zehn Minuten zu Fuss von der Wohnung. Danach gibt es auf dem Balkon den Elektrogrill oder in der Küche ein Raclette, und vom anderen Balkon siehst du noch einmal hinauf zur Gemmi, über die du morgen vielleicht fährst.
-
-## Bikes mieten und in der Wohnung abstellen
-
-Ein eigenes Bike musst du nicht mitbringen. In Leukerbad und rundherum gibt es mehrere Bikevermietungen. **Alpine Cycling** im Dorf vermietet E-Mountainbikes, Mountainbikes und Kinderbikes und kümmert sich auch um Service und Reparaturen. **Rolis mobile Bikestation** in Albinen vermietet E-Bikes, Mountainbikes und Rennvelos, auch wochenweise, und bringt das Bike auf Wunsch direkt an den Start deiner Tour.
-
-Mit dem eigenen E-Bike stellst du es in [Alpine Siesta](/wohnungen/alpine-siesta/) im Keller ab. Dort steht es geschützt über Nacht, bis die nächste Runde beginnt.
-
-*Bildnachweis, Wikimedia Commons. Titelbild: [/kallu](https://commons.wikimedia.org/wiki/File:Biking_in_Alps_-_Verbier,_Switzerland_1.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0); Brücke über die Dalaschlucht: [Reustli](https://commons.wikimedia.org/wiki/File:Br%C3%BCcke_zwischen_Leuk_und_Varen.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).*
+Zurück zur Übersicht: [Biken in Leukerbad](/leukerbad/biken/).

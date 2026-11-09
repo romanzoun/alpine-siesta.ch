@@ -5,6 +5,7 @@ import Fakten from '../components/Fakten.astro';
 import Galerie from '../components/Galerie.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Buchung from '../components/Buchung.astro';
+import { bildSchema } from '../lib/bild';
 import { site } from '../config';
 import { alleWohnungen, wohnungUrl, type Wohnung } from '../lib/wohnungen';
 import { asLocale, mitLocale, type Locale } from '../i18n/config';
@@ -40,6 +41,7 @@ const schema = {
   name: w.name,
   description: lokal?.beschreibung ?? w.beschreibung,
   url: new URL(wohnungUrl(eintrag.id, locale), Astro.site).href,
+  image: bilder.map((b) => bildSchema(b.bild, b.alt, Astro.site!)),
   address: { '@type': 'PostalAddress', addressLocality: site.ort, addressRegion: site.region, addressCountry: 'CH' },
   containsPlace: {
     '@type': 'Accommodation',
@@ -58,7 +60,7 @@ const schema = {
 };
 ---
 
-<Base locale={locale} title={lokal ? lokal.titel(w.name, site.ort) : `Die Wohnung – ${w.name} in ${site.ort}`} description={lokal?.beschreibung ?? w.beschreibung} bild={w.galerie[0]?.bild}>
+<Base locale={locale} title={lokal ? lokal.titel(w.name, site.ort) : `Die Wohnung – ${w.name} in ${site.ort}`} description={lokal?.beschreibung ?? w.beschreibung} bild={w.galerie[0]?.bild} bildAlt={bilder[0]?.alt}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <section class="section container">

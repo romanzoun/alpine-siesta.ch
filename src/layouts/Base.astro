@@ -17,6 +17,7 @@ interface Props {
   description: string;
   // Vorschaubild für Social Media; ohne Angabe /og.jpg aus site/public/
   bild?: ImageMetadata;
+  bildAlt?: string;
   typ?: 'website' | 'article';
   // Entwürfe nie indexieren (falls sie versehentlich mitgebaut werden)
   noindex?: boolean;
@@ -24,7 +25,7 @@ interface Props {
   // Sprachen, in denen diese URL wirklich existiert. Der Reiseführer ist vorerst nur Deutsch.
   sprachen?: Locale[];
 }
-const { title, description, bild, typ = 'website', noindex = false } = Astro.props;
+const { title, description, bild, bildAlt, typ = 'website', noindex = false } = Astro.props;
 const sprachen = Astro.props.sprachen ?? [...locales];
 const locale = asLocale(Astro.props.locale ?? Astro.currentLocale);
 const ogBild = bild
@@ -71,6 +72,7 @@ const rechtliches = (await getCollection('rechtliches')).sort((a, b) => a.data.r
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogBild} />
+    {bildAlt && <meta property="og:image:alt" content={bildAlt} />}
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />

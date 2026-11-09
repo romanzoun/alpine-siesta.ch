@@ -7,6 +7,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { naechsterTermin, saisonsVon, terminText, themenUrl, themenH1 } from '../../lib/entdecken';
 import { terminNochBevorstehend } from '../../lib/zeit';
 import * as L from '../../lib/labels';
+import { bildSchema } from '../../lib/bild';
 import { site } from '../../config';
 import { buchungsZiel } from '../../lib/wohnungen';
 
@@ -57,7 +58,7 @@ const fakten = [
 ];
 
 const ort = { '@type': 'Place', name: a.veranstaltungsort ?? a.ort, address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' } };
-const bildUrl = a.bild ? new URL(a.bild.src, Astro.site).href : undefined;
+const bildDaten = a.bild && a.bild_alt ? bildSchema(a.bild, a.bild_alt, Astro.site!) : undefined;
 const schema = istEvent
   ? kommende.map((t) => ({
       '@context': 'https://schema.org',
@@ -70,7 +71,7 @@ const schema = istEvent
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       location: ort,
-      ...(bildUrl && { image: bildUrl }),
+      ...(bildDaten && { image: bildDaten }),
       isAccessibleForFree: a.preis === 'gratis',
     }))
   : {
@@ -81,12 +82,12 @@ const schema = istEvent
       url: new URL(`/entdecken/${eintrag.id}/`, Astro.site).href,
       isAccessibleForFree: a.preis === 'gratis',
       address: { '@type': 'PostalAddress', addressLocality: a.ort, addressCountry: 'CH' },
-      ...(bildUrl && { image: bildUrl }),
+      ...(bildDaten && { image: bildDaten }),
       ...(a.website && { sameAs: a.website }),
     };
 ---
 
-<Base title={`${a.title} | ${site.name}`} description={a.description} bild={a.bild}>
+<Base title={`${a.title} | ${site.name}`} description={a.description} bild={a.bild} bildAlt={a.bild_alt}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <article class="section container">

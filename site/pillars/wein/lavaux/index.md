@@ -1,42 +1,80 @@
 ---
-title: "Lavaux, Rebterrassen am See"
-description: "Lavaux ist ein Tagesausflug ab Leukerbad: Rebterrassen über dem See, kurze Wege, und abends wieder das Glas in der Wohnung."
-h1: "Lavaux, Terrassen, See und ein Tag"
-kurz: "Rebterrassen über dem See, ein Weg, der kurz bleiben darf, und am Abend wieder Leukerbad."
-reihenfolge: 2
-aktualisiert: 2026-10-27
+title: "Lavaux: Weinberge am Genfersee"
+description: "Lavaux als Tagesausflug ab Leukerbad: UNESCO-Rebterrassen, Weindörfer wie Saint-Saphorin und Chasselas mit Blick auf den Genfersee."
+h1: "Lavaux – Weinberge mit traumhaftem Blick auf den Genfersee"
+kurz: "UNESCO-Rebterrassen, Weindörfer und Chasselas. Ein Tagesausflug ab Leukerbad an den Genfersee."
+reihenfolge: 3
+aktualisiert: 2026-11-09
 bild: ./lavaux-rebterrassen-dorf-see.webp
 bild_alt: "Grüne Rebterrassen, ein Dorf und ein See, dahinter Berge"
 faq:
   - frage: Liegt Lavaux im Wallis?
-    antwort: Nein. Lavaux liegt am See. Von Leukerbad aus ist es ein Ausflug für einen Tag, der Abend gehört der Wohnung.
-  - frage: Kann man dort mit Kindern gehen?
-    antwort: Ja, auf kurzen Wegen zwischen Reben und Dörfern. Ihr kehrt um, wenn es reicht.
-  - frage: Welcher Wein passt zu Lavaux?
-    antwort: Vor allem Chasselas, im Wallis heisst dieselbe Sorte oft Fendant. Leicht, und gut zum Essen am Abend.
+    antwort: Nein. Die Rebterrassen liegen am Genfersee zwischen Lausanne und Montreux, im Kanton Waadt. Von Leukerbad aus ist es ein Tagesausflug.
+  - frage: Seit wann gehört Lavaux zum UNESCO-Welterbe?
+    antwort: Seit 2007. Die offizielle Beschreibung steht auf der UNESCO-Seite zum Eintrag Lavaux.
+  - frage: Welcher Wein ist typisch für Lavaux?
+    antwort: "Chasselas. Im Wallis heisst dieselbe Traube Fendant. Mehr dazu steht bei den [Walliser Rebsorten](/leukerbad/wein/rebsorten/)."
 entwurf: false
 ---
 
-Lavaux ist der Tag, an dem Reben, Wasser und Berge in einem Blick liegen. Die Terrassen ziehen sich über dem See. Abends seid ihr wieder in Leukerbad, und das Glas steht auf eurem Tisch.
+Sonnenverwöhnte Rebterrassen, malerische Weindörfer und ein atemberaubender Blick über den Genfersee bis zu den Alpen – Lavaux gehört zu den schönsten Weinlandschaften der Schweiz.
 
-## Terrassen, die zum Ort gehören
+Die zum UNESCO-Welterbe gehörenden Rebterrassen erstrecken sich zwischen Lausanne und Montreux entlang des Genfersees. Hier verbinden sich jahrhundertealte Weinbautradition, beeindruckende Natur und gemütliche Dorfatmosphäre zu einem besonderen Ausflugsziel.
 
-Die Rebterrassen von Lavaux gehören zum UNESCO-Welterbe. Wein wächst hier seit dem Mittelalter, auf Mauern, die den Hang halten. Es ist kein Fest, es ist die Landschaft.
+Ein wunderbarer Ort für alle, die während ihrer Ferien im Wallis auch die Weinregion am Genfersee entdecken möchten.
 
-![Gebogene Rebzeilen und ein Weg, dahinter ein See und Berge](./lavaux-rebterrassen-see-weg.webp)
+## UNESCO-Welterbe – eine einzigartige Weinlandschaft
 
-Ein Weg schwingt sich durch die Zeilen, der See liegt dahinter, rechts ein Ort am Ufer. Ihr geht so weit, wie die kürzesten Beine wollen. Picknickplätze und Dörfer mit kleinen Kellern liegen am Weg. Eine Etappe reicht.
+Seit Jahrhunderten prägen die kunstvoll angelegten Rebterrassen das Landschaftsbild von Lavaux. Kleine Steinmauern stützen die Weinberge, während sich schmale Wege durch die Reben schlängeln und immer wieder fantastische Ausblicke auf den See eröffnen.
 
-![Dächer und kahle Rebzeilen über einem blauen See, Schneeberge dahinter](./lavaux-dorf-see-reben.webp)
+Besonders schön ist die Region im Frühling, wenn die Natur erwacht, und im Herbst, wenn sich die Weinberge in warme Gold- und Rottöne verwandeln.
 
-Im kälteren Licht sind die Reben braun, die Dächer rot, der See dunkelblau, die Berge noch weiss. Derselbe Ort, eine andere Jahreszeit. Der Turm im Dorf bleibt der Halt, an dem ihr euch orientiert.
+Seit 2007 gehört diese einzigartige Kulturlandschaft zum UNESCO-Welterbe.
 
-## Chasselas, und der Abend zu Hause
+Mehr über die Region erfahrt ihr auf der [offiziellen UNESCO-Seite zu Lavaux](https://whc.unesco.org/en/list/1243/).
 
-![Eine dichte Traube heller Beeren an einem Rebholz](./wallis-weisse-trauben.webp)
+## Die schönsten Weindörfer entdecken
 
-Lavaux ist bekannt für frische Weissweine, vor allem Chasselas: leicht, mineralisch, gut zum Essen. Im Wallis heisst die Sorte oft Fendant. Ihr müsst sie nicht vor Ort leeren. Eine Flasche kommt mit nach Leukerbad und wird aufgemacht, wenn die Kinder spielen oder schlafen.
+Entlang der Rebterrassen liegen zahlreiche charmante Dörfer, die zu einem gemütlichen Spaziergang einladen.
 
-![Zwei Betten, rotes Schaukelpferd und ein weisses Regal mit Spielen](./alpine-siesta-kinderzimmer-schaukelpferd-regal.webp)
+Saint-Saphorin begeistert mit seinen engen Gassen, traditionellen Steinhäusern und einer besonders romantischen Atmosphäre.
 
-In [Alpine Siesta](/wohnungen/alpine-siesta/) wartet das Kinderzimmer: zwei Betten, Schaukelpferd, Regal. Die Therme ist zehn Minuten zu Fuss, falls der Tag am See lang war. Wie die Sorten im Wallis heissen, steht bei [Rebsorten](/leukerbad/wein/rebsorten/). Das ruhige Dorf über der Rhone ist [Varen](/leukerbad/wein/varen/). Die Übersicht ist [Wein im Wallis](/leukerbad/wein/).
+Epesses liegt mitten in den Rebbergen und bietet wunderschöne Ausblicke über den Genfersee. Hier könnt ihr die besondere Weinbautradition der Region hautnah erleben.
+
+Grandvaux ist bekannt für seine beeindruckenden Panoramablicke und eignet sich wunderbar als Ausgangspunkt für einen Spaziergang durch die Weinberge.
+
+Ob bei einem Kaffee auf einer sonnigen Terrasse oder beim gemütlichen Schlendern durch die Dorfgassen – Lavaux lädt dazu ein, die Landschaft in aller Ruhe zu geniessen.
+
+## Wandern durch die Rebterrassen
+
+Eine der schönsten Möglichkeiten, Lavaux kennenzulernen, ist ein Spaziergang auf den zahlreichen Wegen durch die Weinberge.
+
+Besonders beliebt ist die Strecke zwischen Saint-Saphorin und Lutry, die durch malerische Dörfer, vorbei an alten Steinmauern und immer wieder mit herrlichem Blick auf den Genfersee führt.
+
+Wer eine kürzere Wanderung bevorzugt, kann einzelne Abschnitte auswählen und die Landschaft ganz nach Lust und Laune entdecken.
+
+Unterwegs laden kleine Weinkeller, gemütliche Terrassen und wunderschöne Aussichtspunkte zu einer Pause ein.
+
+Weitere Informationen zu Wanderwegen und Ausflugsmöglichkeiten findet ihr bei [Montreux Riviera – Lavaux](https://www.montreuxriviera.com/).
+
+## Chasselas – der Wein von Lavaux
+
+Lavaux ist besonders für seine eleganten Weissweine aus der Chasselas-Traube bekannt.
+
+Das Zusammenspiel von sonnigen Terrassen, den besonderen Böden und dem Einfluss des Genfersees verleiht den Weinen ihren charakteristischen Stil.
+
+Je nach Herkunft zeigen sich frische, fruchtige oder mineralische Noten, die wunderbar zu Fischgerichten, Käse und regionalen Spezialitäten passen.
+
+Wer die Weine direkt vor Ort kennenlernen möchte, findet in den zahlreichen Weinkellern Gelegenheit zu einer Degustation. Am besten informiert ihr euch vorab über die Besuchsmöglichkeiten.
+
+Übrigens: Im Wallis wird Chasselas unter dem Namen Fendant angebaut. Mehr darüber erfahrt ihr auf unserer Seite [Walliser Rebsorten](/leukerbad/wein/rebsorten/).
+
+## Lavaux als Tagesausflug ab Leukerbad
+
+Die Weinlandschaft von Lavaux lässt sich wunderbar bei einem Tagesausflug entdecken.
+
+Ob eine gemütliche Wanderung durch die Rebterrassen, ein Besuch in einem der malerischen Weindörfer oder eine Weindegustation mit Blick auf den Genfersee – hier erwartet euch eine besondere Kombination aus Natur, Kultur und Genuss.
+
+Ein Ausflug nach Lavaux bietet einen wunderschönen Kontrast zur alpinen Bergwelt von Leukerbad und zeigt eine weitere faszinierende Seite der Schweiz.
+
+Weitere Weinideen findet ihr auf unseren Seiten [Varen – Walliser Weinkultur erleben](/leukerbad/wein/varen/) und [Wein im Wallis](/leukerbad/wein/).
