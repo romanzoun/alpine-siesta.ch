@@ -11,7 +11,8 @@
     "build:entwuerfe": "PUBLIC_ENTWUERFE=true astro build",
     "merch:export": "node merch/export.mjs",
     "seo-check": "node scripts/seo-check.mjs",
-    "katalog:sync": "node scripts/katalog-sync.mjs"
+    "katalog:sync": "node scripts/katalog-sync.mjs",
+    "katalog:e2e": "node scripts/katalog-e2e.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

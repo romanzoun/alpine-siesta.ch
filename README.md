@@ -40,6 +40,18 @@ KATALOG_DIR=../trizoun-katalog npm run katalog:sync   # aus lokalem Checkout
 
 Täglich läuft `.github/workflows/katalog-sync.yml`: API-Sync, Build und SEO-Check, dann ein PR mit den Änderungen. Dafür braucht das Repo die Variablen `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` sowie die Discovery-Freischaltung für die Organisation. Ohne API-Konfiguration nutzt der Übergangsweg das Secret `KATALOG_TOKEN` (nur Lesezugriff auf `trizoun-katalog`). Anpassungen pro Website: `site/entdecken.yaml`; eigene Aktivitäten: `site/aktivitaeten/`.
 
+Den kompletten Datenweg lokal und ohne Produktionsschlüssel prüfen:
+
+```sh
+git submodule update --init --recursive
+npm ci
+npm ci --prefix trizoun-travel
+npm ci --prefix trizoun-katalog/backoffice
+npm run katalog:e2e
+```
+
+Der Test importiert einen echten Katalogeintrag in eine temporäre Travel-Testdatenbank und prüft Discovery-Freigabe, API-Abruf, Bild und Website-Sync. Er ändert keine Live-Daten. Für einen Website-Build mit Aktivitäten `module.entdecken` in `site/site.config.ts` einschalten, `npm run katalog:sync` und danach `npm run build` ausführen. Dafür braucht der echte Sync entweder die Travel-API mit freigeschaltetem Discovery-Modul oder den lokalen Katalog über `KATALOG_DIR=trizoun-katalog`.
+
 ## Online-Buchung
 
 Das Buchungs-Widget (`src/components/Buchung.astro`, auf jeder Wohnungsseite unter `#buchen`) zeigt freie Tage, berechnet den Preis und leitet zur Beds24-Buchungsseite weiter. Die Daten kommen von **Trizoun Travel** (Repo `trizoun-travel`), wo Beds24 verbunden ist. Konfiguration in `.env`: `PUBLIC_TRIZOUN_API_URL`, `PUBLIC_TRIZOUN_KEY`. Ohne diese Werte zeigt das Widget die Mail-Anfrage.
