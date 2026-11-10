@@ -4,13 +4,13 @@ Inhalte dieser Website sind Markdown-Dateien mit strengem Frontmatter-Schema. Be
 
 **Alles Website-spezifische liegt in `site/`** (Einstellungen in `site/site.config.ts`, Inhalte, Bilder, `public/`). Übersicht: `site/README.md`. Der Code in `src/` muss für jede Website funktionieren: keine Namen, Orte oder Texte von Alpine Siesta in `src/` fest einbauen, sondern aus `site` lesen. Offene Punkte: `npm run checkliste`.
 
-**Phase 1 (aktuell):** Wohnung, Pillar Pages, Kontaktformular (`src/components/Anfrage.astro`, ohne Backend als vorausgefüllte E-Mail) und Links zu Booking.com/Airbnb (`plattformen` pro Wohnung). «Entdecken» ist mit `module.entdecken` in `site/site.config.ts` ausgeschaltet; Online-Buchung kommt erst mit Trizoun Travel (`.env`). Neue Bausteine immer abschaltbar bauen.
+Bausteine in `site/site.config.ts` (`module`) ein-/ausschaltbar halten. Trizoun anbinden (welche API wofür, Dashboard, `.env`): **`docs/TRIZOUN.md`**.
 
 Vision der Gesamtplattform (Website → Trizoun Travel mit Mandanten und Payment-Layer → dahinter Trizoun Katalog): `docs/VISION.md` im Repo `trizoun-travel`. Getroffene Entscheide: Skill `produkt-kompass` – vor grösseren neuen Features damit prüfen. Massgebliche Fassung im Repo `trizoun-travel`, hier eine Kopie.
 
 ## Neue Aktivität anlegen
 
-**«Entdecken» ist ein Zusatzdienst**: Aktivitäten und Events der Region kommen aus dem zentralen Git-Repo `trizoun-katalog` (`regionen/<region>/`), das zentrale KI-Jobs pflegen. `npm run katalog:sync` spiegelt die Region nach `site/katalog/` (nie von Hand ändern); der Workflow `.github/workflows/katalog-sync.yml` macht das täglich und öffnet einen PR. Gebaut wird alles statisch (`src/lib/entdecken-loader.ts`).
+**«Entdecken» ist ein Zusatzdienst**: Inhalte kommen live aus Trizoun Travel (Modul `discovery`) über SSR in `src/modules/entdecken/` (Node-Adapter). `npm run katalog:sync` spiegelt optional nach `site/katalog/` (nie von Hand ändern) für Sitemap/Pillars – bevorzugt per API, sonst Git/`KATALOG_DIR`. Workflow `.github/workflows/katalog-sync.yml` täglich mit PR. Content-Collection/`entdecken-loader` bleibt für Pillar-Verlinkungen. Operator-Schritte: `docs/TRIZOUN.md`.
 
 - **Regionale Inhalte** (für alle Websites der Region) gehören ins Katalog-Repo, nicht hierher. Events (`typ: event`) brauchen `termine` und `quelle`; vergangene Events fallen beim Build automatisch weg.
 - **Pro Website**: `site/entdecken.yaml` – Katalogeinträge ausblenden, eigenen Tipp anhängen, Anreise ab der Wohnung, Geheimtipp.
@@ -28,7 +28,7 @@ Rohinhalte (Texte + Bilder) in `inbox/aktivitaeten/` verarbeitet der Skill `.cla
 
 1. Ordner `site/wohnungen/alpine-siesta/` kopieren nach `site/wohnungen/<slug>/`. URL wird `/wohnungen/<slug>/`.
 2. Bilder im selben Ordner ersetzen bzw. ergänzen und in `galerie` eintragen.
-3. `reihenfolge` setzen. Online-Buchung: In Trizoun Travel eine Wohnung mit gleichem Kurznamen (= Ordnername) anlegen und mit Beds24 verknüpfen; abweichender Name → `trizounSlug`. Die Website braucht nur `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` (siehe `.env.example`).
+3. `reihenfolge` setzen. Online-Buchung: In Trizoun Travel eine Wohnung mit gleichem Kurznamen (= Ordnername) anlegen und mit Beds24 verknüpfen; abweichender Name → `trizounSlug`. Website: `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` (`.env.example`, Checkliste in `docs/TRIZOUN.md`).
 4. Startseite, Navigation («Wohnung» → «Wohnungen») und Übersicht `/wohnungen/` passen sich automatisch an.
 
 ## Pillar Pages

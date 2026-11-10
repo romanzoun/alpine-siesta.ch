@@ -1,0 +1,65 @@
+---
+import { entdeckenUi } from '../ui';
+
+interface Props {
+  sprache?: string;
+}
+const { sprache = 'de' } = Astro.props;
+const t = entdeckenUi(sprache);
+---
+
+<div class="wartet" data-wartet data-sprache={sprache} data-sprueche={JSON.stringify(t.sprueche)} data-fehler={t.ladenFehler} role="status" aria-live="polite" aria-busy="true">
+  <p class="spruch" data-spruch>{t.sprueche[0]}</p>
+  <div class="balken" aria-hidden="true"><span></span></div>
+  <button type="button" class="erneut" data-erneut hidden>{t.nochmal}</button>
+  <noscript>
+    <p>Für die Aktivitäten auf dieser Seite brauchst du JavaScript. <a href="/entdecken/inhalt/">Liste direkt öffnen</a></p>
+  </noscript>
+</div>
+
+<script>
+  import { starteWarten } from '../client/warten';
+  const root = document.querySelector<HTMLElement>('[data-wartet]');
+  if (root) starteWarten(root);
+</script>
+
+<style>
+  .wartet { padding-block: 2.5rem 3rem; border-top: 2px solid var(--text); }
+  .wartet[hidden] { display: none; }
+  .spruch {
+    margin: 0;
+    max-width: 16ch;
+    font-stretch: 62%;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 5vw, 3.1rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .balken { margin-top: 1.5rem; height: 3px; background: var(--rule); overflow: hidden; max-width: 18rem; }
+  .balken span {
+    display: block;
+    height: 100%;
+    width: 35%;
+    background: var(--accent);
+    animation: laden 1.15s var(--ease-out) infinite;
+  }
+  @keyframes laden {
+    from { transform: translateX(-120%); }
+    to { transform: translateX(380%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .balken span { animation: none; width: 100%; opacity: 0.45; }
+  }
+  .erneut {
+    margin-top: 1.25rem;
+    font: inherit;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  noscript p { margin: 1rem 0 0; }
+</style>

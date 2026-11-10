@@ -1,0 +1,27 @@
+---
+export const prerender = false;
+
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { site } from '../../config';
+import { asLocale, mitLocale } from '../../i18n/config';
+import EntdeckenWartet from '../../modules/entdecken/components/EntdeckenWartet.astro';
+import { entdeckenUi } from '../../modules/entdecken/ui';
+
+interface Props { locale?: string }
+
+if (!site.module.entdecken) return new Response(null, { status: 404 });
+const sprache = asLocale(Astro.props.locale ?? Astro.currentLocale);
+const t = entdeckenUi(sprache);
+const pfad = mitLocale(sprache, '/entdecken/');
+---
+
+<Base title={t.title(site.ort, site.name)} description={t.description(site.ort)} locale={sprache}>
+  <section class="section container">
+    <Breadcrumbs pfad={[{ name: 'Entdecken', href: pfad }]} />
+    <h1>{t.h1(site.ort)}</h1>
+    <p class="lead">{t.lead}</p>
+    <EntdeckenWartet sprache={sprache} />
+    <div data-entdecken-ziel></div>
+  </section>
+</Base>

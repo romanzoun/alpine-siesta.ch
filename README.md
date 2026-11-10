@@ -23,18 +23,22 @@ Die Website wächst in Stufen; was aktiv ist, steht in `site/site.config.ts`:
 3. **Online-Buchung:** Trizoun Travel mit Beds24 (`.env`), Kalender ersetzt das Anfrageformular; Plattform-Links bleiben als «Auch buchbar auf».
 4. **Shop.**
 
+## Trizoun Travel (API)
+
+Welche öffentlichen Endpunkte die Website nutzt, Dashboard-Checkliste, lokal und live: **[docs/TRIZOUN.md](docs/TRIZOUN.md)**. Kurz: `.env` mit `PUBLIC_TRIZOUN_API_URL` und `PUBLIC_TRIZOUN_KEY` (`tt_pk_…`), Wohnung und Module im Büro freischalten – kein eigener Backend-Code auf der Website.
+
 ## Kontaktformular
 
-`src/components/Anfrage.astro` (Wohnungsseite und `/kontakt/`). Ohne `site.kontakt.endpunkt` öffnet «E-Mail vorbereiten» eine fertig ausgefüllte E-Mail an `site.email` – kein Server nötig. Sobald das Backend läuft, dort die URL eintragen: das Formular sendet dann JSON (`name`, `email`, `nachricht`, `wohnung`, `anreise`, `abreise`, `gaeste`, `t`, `website` = Spam-Falle) und erwartet `{ ok: true }`.
+`src/components/Anfrage.astro` (Wohnungsseite und `/kontakt/`). Mit Trizoun-Key und Feature `emailBuchung` geht die Anfrage an `POST /v1/public/listings/:slug/kontakt` (siehe [docs/TRIZOUN.md](docs/TRIZOUN.md)). Ohne Key und ohne `site.kontakt.endpunkt` öffnet «E-Mail vorbereiten» eine fertig ausgefüllte E-Mail an `site.email`. Optionaler eigener Endpunkt: JSON (`name`, `email`, `nachricht`, `wohnung`, `anreise`, `abreise`, `gaeste`, `t`, `website` = Spam-Falle) und Antwort `{ ok: true }`.
 
 ## Entdecken (Aktivitäten)
 
 Ausgeschaltet, solange `module.entdecken: false` (keine Seiten, kein Menüpunkt, Sync macht nichts).
 
-Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) werden zentral in **Trizoun Travel** gespeichert. Der Katalog-Sync holt sie bei aktivem Discovery-Modul per API und rendert sie statisch – mit Filter, Themenseiten und Detailseite pro Eintrag. Ohne API-Konfiguration bleibt der Git-Sync als Übergang verfügbar.
+Zusatzdienst «Entdecken»: Aktivitäten und Events der Region (mit Quelle) liegen in **Trizoun Travel**. Die Website rendert Übersicht, Filter, Themenseiten und Detail **serverseitig** aus der Public-API (`src/modules/entdecken/`, Node-Adapter). Optional spiegelt `katalog:sync` die Region nach `site/katalog/` (Sitemap, Pillars, Offline). Einrichtung: [docs/TRIZOUN.md](docs/TRIZOUN.md).
 
 ```sh
-npm run katalog:sync                          # Region aus site.config.ts (katalog) nach site/katalog/ spiegeln
+npm run katalog:sync                          # optional: Region nach site/katalog/ spiegeln
 KATALOG_DIR=../trizoun-katalog npm run katalog:sync   # aus lokalem Checkout
 ```
 
@@ -54,7 +58,7 @@ Der Test importiert einen echten Katalogeintrag in eine temporäre Travel-Testda
 
 ## Online-Buchung
 
-Das Buchungs-Widget (`src/components/Buchung.astro`, auf jeder Wohnungsseite unter `#buchen`) zeigt freie Tage, berechnet den Preis und leitet zur Beds24-Buchungsseite weiter. Die Daten kommen von **Trizoun Travel** (Repo `trizoun-travel`), wo Beds24 verbunden ist. Konfiguration in `.env`: `PUBLIC_TRIZOUN_API_URL`, `PUBLIC_TRIZOUN_KEY`. Ohne diese Werte zeigt das Widget die Mail-Anfrage.
+Das Buchungs-Widget (`src/components/Buchung.astro`, auf jeder Wohnungsseite unter `#buchen`) zeigt freie Tage, berechnet den Preis und leitet zur Beds24-Buchungsseite weiter. Die Daten kommen von **Trizoun Travel**, wo Beds24 verbunden ist. Konfiguration und Checkliste: [docs/TRIZOUN.md](docs/TRIZOUN.md). Ohne `PUBLIC_TRIZOUN_API_URL` / `PUBLIC_TRIZOUN_KEY` zeigt das Widget die Mail-Anfrage.
 
 ```sh
 npm run checkliste        # was fehlt noch? (Platzhalter, [TODO], Pillar Pages, Rechtliches …)

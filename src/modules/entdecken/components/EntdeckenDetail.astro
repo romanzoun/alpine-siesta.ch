@@ -1,0 +1,182 @@
+---
+import * as L from '../labels';
+import { entdeckenUi } from '../ui';
+import { bildUrl } from '../api';
+import { saisonsVon, themenH1, themenUrl } from '../dimensionen';
+import { markdownZuHtml } from '../markdown';
+import { kommendeTermine, terminText } from '../termine';
+import type { Eintrag } from '../typen';
+import EntdeckenZeile from './EntdeckenZeile.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { buchungsZiel } from '../../../lib/wohnungen';
+import { asLocale, mitLocale } from '../../../i18n/config';
+import { ortszeit } from '../../../lib/zeit';
+
+interface Props {
+  eintrag: Eintrag;
+  aehnlich: Eintrag[];
+  sprache?: string;
+}
+const { eintrag: e, aehnlich, sprache = 'de' } = Astro.props;
+const t = entdeckenUi(sprache);
+const buchenZiel = await buchungsZiel();
+const html = markdownZuHtml(e.markdown ?? '');
+const hauptThema = e.kategorien[0];
+const schlagworte = [
+  ...saisonsVon(e).map((w) => ({ href: mitLocale(asLocale(sprache), themenUrl('saison', w)), label: L.saisons[w] })),
+  ...e.zielgruppen.map((w) => ({ href: mitLocale(asLocale(sprache), themenUrl('fuer', w)), label: t.zielgruppen[w as keyof typeof t.zielgruppen] ?? w })),
+  ...e.kategorien.map((w) => ({ href: mitLocale(asLocale(sprache), themenUrl('thema', w)), label: t.kategorien[w as keyof typeof t.kategorien] ?? w })),
+];
+const istEvent = e.typ === 'event';
+const kommende = istEvent ? kommendeTermine(e) : [];
+const fakten = [
+  ...(istEvent
+    ? ([[t.fakten.wann, kommende.map(terminText).join(' · ')], ...(e.veranstaltungsort ? [[t.fakten.wo, e.veranstaltungsort]] : [])] as [string, string][])
+    : ([[t.fakten.saison, e.monate.length === 12 ? t.ganzjaehrig : e.monate.map((m) => t.monate[m - 1]).join(', ')]] as [string, string][])),
+  [t.fakten.fuer, e.zielgruppen.map((z) => t.zielgruppen[z as keyof typeof t.zielgruppen] ?? z).join(', ')],
+  [t.fakten.dauer, t.dauer[e.dauer as keyof typeof t.dauer] ?? e.dauer],
+  [t.fakten.anstrengung, t.anstrengung[e.anstrengung as keyof typeof t.anstrengung] ?? e.anstrengung],
+  [t.fakten.preis, t.preis[e.preis as keyof typeof t.preis] ?? e.preis],
+  [t.fakten.wetter, t.wetter[e.wetter as keyof typeof t.wetter] ?? e.wetter],
+  [t.fakten.anreise, `${e.anreise_min} min ${e.anreise_wie}`],
+  [t.fakten.kinderwagen, e.kinderwagen ? t.fakten.ja : t.fakten.nein],
+  [t.fakten.hunde, e.hund ? t.fakten.erlaubt : t.fakten.nicht],
+] as [string, string][];
+const seitenUrl = new URL(mitLocale(asLocale(sprache), `/entdecken/${e.slug}/`), Astro.site).href;
+
+const ort = { '@type': 'Place', name: e.veranstaltungsort ?? e.ort, address: { '@type': 'PostalAddress', addressLocality: e.ort, addressCountry: 'CH' } };
+const bildAbsolut = new URL(bildUrl(e.slug), Astro.site).href;
+const schema = istEvent
+  ? kommende.map((t) => ({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: e.title,
+      description: e.description,
+      url: seitenUrl,
+      startDate: ortszeit(t.beginn).toISOString(),
+      ...(t.ende && { endDate: ortszeit(t.ende).toISOString() }),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: ort,
+      image: bildAbsolut,
+      isAccessibleForFree: e.preis === 'gratis',
+    }))
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'TouristAttraction',
+      name: e.title,
+      description: e.description,
+      url: seitenUrl,
+      isAccessibleForFree: e.preis === 'gratis',
+      address: { '@type': 'PostalAddress', addressLocality: e.ort, addressCountry: 'CH' },
+      image: bildAbsolut,
+      ...(e.website && { sameAs: e.website }),
+    };
+
+const abgerufen = e.quelle?.abgerufen
+  ? new Date(e.quelle.abgerufen).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<article class="section container">
+  <Breadcrumbs pfad={[
+    { name: 'Entdecken', href: mitLocale(asLocale(sprache), '/entdecken/') },
+    ...(hauptThema ? [{ name: themenH1('thema', hauptThema), href: mitLocale(asLocale(sprache), themenUrl('thema', hauptThema)) }] : []),
+    { name: e.title, href: mitLocale(asLocale(sprache), `/entdecken/${e.slug}/`) },
+  ]} />
+  <h1 style={`view-transition-name: titel-${e.slug}`}>{e.title}</h1>
+  <p class="lead">{e.kurz}</p>
+  <figure class="titelbild-rahmen">
+    <img
+      src={bildUrl(e.slug)}
+      alt={e.bildAlt}
+      width="1400"
+      height="933"
+      loading="eager"
+      decoding="async"
+      class="titelbild"
+      style={`view-transition-name: bild-${e.slug}`}
+    />
+    {e.bildQuelle && (
+      <figcaption class="bildnachweis">
+        {e.bildKi ? 'KI-Illustration: ' : 'Foto: '}
+        {e.bildQuelle.urheber && `${e.bildQuelle.urheber}, `}
+        <a href={e.bildQuelle.url} rel="nofollow noopener" target="_blank">{e.bildQuelle.name}</a>
+        {e.bildQuelle.lizenz && (
+          <> · {e.bildQuelle.lizenz_url ? <a href={e.bildQuelle.lizenz_url} rel="nofollow noopener" target="_blank">{e.bildQuelle.lizenz}</a> : e.bildQuelle.lizenz}</>
+        )}
+        {e.bildKi && <> · Symbolische Darstellung</>}
+      </figcaption>
+    )}
+  </figure>
+
+  <div class="zweispaltig">
+    <div class="prose">
+      <div set:html={html} />
+      {e.quelle && (
+        <p class="quelle">
+          Quelle: <a href={e.quelle.url} rel="nofollow noopener" target="_blank">{e.quelle.name}</a>{abgerufen && <>, Stand {abgerufen}</>}.
+          {istEvent && ' Angaben ohne Gewähr – Details und Änderungen beim Veranstalter.'}
+        </p>
+      )}
+      {e.galerie.length > 0 && (
+        <ul class="galerie">
+          {e.galerie.map((g) => (
+            <li>
+              <figure>
+                <img src={bildUrl(e.slug, g.dateiname)} alt={g.alt} width="800" height="600" loading="lazy" decoding="async" />
+                <figcaption class="bildnachweis">
+                  Foto: {g.quelle.urheber && `${g.quelle.urheber}, `}
+                  <a href={g.quelle.url} rel="nofollow noopener" target="_blank">{g.quelle.name}</a>
+                  {g.quelle.lizenz && <> · {g.quelle.lizenz_url ? <a href={g.quelle.lizenz_url} rel="nofollow noopener" target="_blank">{g.quelle.lizenz}</a> : g.quelle.lizenz}</>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <aside class="fakten">
+      <dl>
+        {fakten.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+      </dl>
+      {e.website && <p><a href={e.website} rel="noopener">Offizielle Website</a></p>}
+      <ul class="schlagworte">{schlagworte.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul>
+      <a class="btn" href={buchenZiel}>{t.buchen}</a>
+    </aside>
+  </div>
+</article>
+
+{aehnlich.length > 0 && (
+  <section class="section container">
+    <h2>{t.aehnlich}</h2>
+    <ul class="liste aehnlich">
+      {aehnlich.map((x) => (
+        <li><EntdeckenZeile eintrag={x} tags={false} sprache={sprache} /></li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .schlagworte { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .9rem; }
+  .schlagworte a { display: inline-block; padding: .25rem .65rem; border-radius: var(--radius); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--text); text-decoration: none; }
+  .schlagworte a:hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+  .galerie { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .5rem; grid-template-columns: repeat(2, 1fr); }
+  .galerie img { border-radius: var(--radius); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; height: auto; }
+  .fakten { border-top: 2px solid var(--text); padding-top: 1rem; }
+  .quelle { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .9rem; color: var(--muted); }
+  .aehnlich { list-style: none; padding: 0; margin: 0; }
+  .aehnlich > li { border-top: 2px solid var(--text); padding-block: 1.25rem 1.5rem; }
+  .titelbild-rahmen, .galerie figure { margin: 0; }
+  .titelbild-rahmen { margin-block: 1.5rem; }
+  .titelbild { border-radius: var(--radius); width: 100%; height: auto; }
+  .bildnachweis { display: block; margin-top: .35rem; color: var(--muted); font-size: .8rem; line-height: 1.4; }
+  .zweispaltig { display: grid; gap: 2rem; margin-top: 1.5rem; }
+  @media (min-width: 60rem) { .zweispaltig { grid-template-columns: 1fr 20rem; align-items: start; } }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0 0 1rem; font-size: .95rem; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+</style>

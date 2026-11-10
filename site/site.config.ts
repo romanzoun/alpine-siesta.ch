@@ -36,11 +36,11 @@ export const site = {
     reisetipps: 'Anreise & Wallis-Ausflüge',
   },
 
-  // Bausteine, die schrittweise dazukommen. Phase 1: Wohnung, Reiseführer, Kontaktformular,
+  // Bausteine, die schrittweise dazukommen. Wohnung, Reiseführer, Kontaktformular,
   // Links zu Booking.com/Airbnb (pro Wohnung in site/wohnungen/<slug>/index.md unter «plattformen»).
   module: {
     // «Entdecken» (Aktivitäten + Events aus dem Katalog, Zusatzdienst von Trizoun Travel)
-    entdecken: false,
+    entdecken: true,
   },
   // Besucherstatistik. Lädt erst, wenn der Gast im Banner zustimmt (eine Wahl für alle Dienste). Leer = aus.
   statistik: {

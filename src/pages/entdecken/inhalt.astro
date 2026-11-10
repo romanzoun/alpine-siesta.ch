@@ -1,0 +1,38 @@
+---
+export const prerender = false;
+
+import { site } from '../../config';
+import { asLocale } from '../../i18n/config';
+import { fetchRegion, KatalogFehler } from '../../modules/entdecken/api';
+import EntdeckenUebersicht from '../../modules/entdecken/components/EntdeckenUebersicht.astro';
+import EntdeckenThemenLinks from '../../modules/entdecken/components/EntdeckenThemenLinks.astro';
+import { entdeckenUi } from '../../modules/entdecken/ui';
+
+if (!site.module.entdecken) return new Response(null, { status: 404 });
+
+const sprache = asLocale(Astro.url.searchParams.get('sprache') ?? undefined);
+const t = entdeckenUi(sprache);
+
+Astro.response.headers.set('X-Robots-Tag', 'noindex');
+Astro.response.headers.set('Cache-Control', 'private, no-cache');
+
+let eintraege;
+try {
+  eintraege = await fetchRegion(sprache);
+} catch (err) {
+  const status = err instanceof KatalogFehler && (err.status === 403 || err.status === 401) ? 404 : 502;
+  return new Response(null, { status });
+}
+---
+
+<div data-entdecken-inhalt>
+  <EntdeckenUebersicht eintraege={eintraege} filter sprache={sprache} />
+  <section class="themen-block">
+    <h2>{t.themen}</h2>
+    <EntdeckenThemenLinks eintraege={eintraege} lokal />
+  </section>
+</div>
+
+<style>
+  .themen-block { margin-top: 3rem; }
+</style>

@@ -1,0 +1,85 @@
+---
+import EntdeckenFilter from './EntdeckenFilter.astro';
+import EntdeckenZeile from './EntdeckenZeile.astro';
+import { extrasVon, letzterTerminTag } from '../filter';
+import { entdeckenUi } from '../ui';
+import type { Eintrag } from '../typen';
+
+interface Props {
+  eintraege: Eintrag[];
+  filter?: boolean;
+  sprache?: string;
+}
+const { eintraege, filter = false, sprache = 'de' } = Astro.props;
+const t = entdeckenUi(sprache);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: eintraege.map((e, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(`/entdecken/${e.slug}/`, Astro.site).href,
+    name: e.title,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<div class="entdecken" data-entdecken>
+  {filter && <EntdeckenFilter anzahl={eintraege.length} sprache={sprache} />}
+
+  <ul class="liste">
+    {eintraege.map((e) => {
+      const suche = [
+        e.title,
+        e.kurz,
+        e.description,
+        ...e.kategorien.map((k) => t.kategorien[k as keyof typeof t.kategorien] ?? k),
+        ...e.zielgruppen.map((z) => t.zielgruppen[z as keyof typeof t.zielgruppen] ?? z),
+      ].join(' ').toLowerCase();
+      return (
+        <li
+          data-zeile
+          data-typ={e.typ}
+          data-monate={e.monate.join(' ')}
+          data-fuer={e.zielgruppen.join(' ')}
+          data-thema={e.kategorien.join(' ')}
+          data-extra={extrasVon(e).join(' ')}
+          data-suche={suche}
+          data-letzter-termin={letzterTerminTag(e)}
+        >
+          <EntdeckenZeile eintrag={e} tagsLokal={filter} sprache={sprache} />
+        </li>
+      );
+    })}
+  </ul>
+
+  {filter && (
+    <div class="leer" data-leer hidden>
+      <h3>{t.leerTitel}</h3>
+      <p class="muted">{t.leerText}</p>
+      <button type="button" class="btn btn--ghost" data-zuruecksetzen>{t.reset}</button>
+    </div>
+  )}
+</div>
+
+<script>
+  import { entdeckenFilterInit } from '../client/filter';
+  for (const root of document.querySelectorAll<HTMLElement>('[data-entdecken]')) {
+    entdeckenFilterInit(root);
+  }
+</script>
+
+<style>
+  .liste { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; grid-template-columns: 1fr; }
+  .liste > li {
+    border-top: 2px solid var(--text);
+    padding-block: 1.25rem 1.5rem;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 8rem;
+  }
+  .liste > li[hidden] { display: none; }
+  .leer { padding-block: 2rem; }
+</style>

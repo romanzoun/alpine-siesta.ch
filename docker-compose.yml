@@ -1,8 +1,13 @@
-# Lokale Website, wie sie nach dem Build ausgeliefert wird: http://127.0.0.1:4321/
-# Die localhost-Werte stehen in .env.local. Astro liest sie beim Build.
+# Lokale Website mit SSR (Entdecken): http://127.0.0.1:4321/
+# Die localhost-Werte stehen in .env.local (Build + Laufzeit für Trizoun).
 # Start: docker compose up --build
 services:
   web:
     build: .
     ports:
       - "127.0.0.1:4321:4321"
+    env_file:
+      - .env.local
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4321

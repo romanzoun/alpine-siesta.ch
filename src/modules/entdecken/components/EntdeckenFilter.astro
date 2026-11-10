@@ -1,0 +1,108 @@
+---
+import { entdeckenUi } from '../ui';
+
+interface Props {
+  anzahl: number;
+  sprache?: string;
+}
+const { anzahl, sprache } = Astro.props;
+const t = entdeckenUi(sprache);
+---
+
+<form class="filter" data-filter>
+  <div class="suche">
+    <label for="entdecken-q">{t.suche}</label>
+    <input id="entdecken-q" type="search" name="q" placeholder={t.suchePlatz} autocomplete="off" />
+  </div>
+  <fieldset>
+    <legend>{t.was}</legend>
+    <div class="chips">
+      {Object.entries(t.typen).map(([k, v]) => (
+        <label><input type="checkbox" name="typ" value={k} /><span>{v}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>{t.wann}</legend>
+    <div class="chips">
+      {t.monate.map((m, i) => (
+        <label><input type="checkbox" name="monat" value={i + 1} /><span>{m}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>{t.wer}</legend>
+    <div class="chips">
+      {Object.entries(t.zielgruppen).map(([k, v]) => (
+        <label><input type="checkbox" name="fuer" value={k} /><span>{v}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>{t.lust}</legend>
+    <div class="chips">
+      {Object.entries(t.kategorien).map(([k, v]) => (
+        <label><input type="checkbox" name="thema" value={k} /><span>{v}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>{t.wichtig}</legend>
+    <div class="chips">
+      {Object.entries(t.extras).map(([k, v]) => (
+        <label><input type="checkbox" name="extra" value={k} /><span>{v}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <p class="stand">
+    <span aria-live="polite"><strong data-anzahl>{anzahl}</strong> {t.treffer}</span>
+    <button type="reset" class="zuruecksetzen">{t.reset}</button>
+  </p>
+</form>
+
+<style>
+  .filter { display: grid; gap: 1.25rem; margin-block: 2rem 2.5rem; padding-block: 1.5rem; border-block: 2px solid var(--text); }
+  .suche { display: grid; gap: .4rem; max-width: 28rem; }
+  .suche label { font-stretch: 62%; font-weight: 800; font-size: 1.35rem; }
+  .suche input {
+    font: inherit;
+    padding: .65rem .85rem;
+    border: 0;
+    border-radius: var(--radius);
+    box-shadow: inset 0 0 0 1.5px var(--rule);
+    background: var(--bg);
+    color: var(--text);
+  }
+  .suche input:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { font-stretch: 62%; font-weight: 800; font-size: 1.35rem; margin-bottom: .6rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .chips span {
+    display: inline-block;
+    padding: .4rem .85rem;
+    border-radius: var(--radius);
+    box-shadow: inset 0 0 0 1.5px var(--rule);
+    font-size: .95rem;
+    transition: background-color .15s, color .15s, box-shadow .15s;
+  }
+  .chips label:hover span { box-shadow: inset 0 0 0 1.5px var(--text); }
+  .chips input:checked + span { background: var(--text); color: var(--bg); box-shadow: none; }
+  .chips input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 40rem) {
+    .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -1rem; padding-inline: 1rem; }
+    .chips span { white-space: nowrap; }
+  }
+  .stand { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; }
+  .zuruecksetzen {
+    font: inherit;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: .2em;
+    cursor: pointer;
+  }
+</style>
