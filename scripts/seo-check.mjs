@@ -7,10 +7,12 @@ if (!existsSync(DIST)) {
   console.error('dist/ fehlt – zuerst npm run build');
   process.exit(1);
 }
+// Beim Node-Server liegen die fertigen Seiten in dist/client, nicht direkt in dist/.
+const wurzel = existsSync(join(DIST, 'client', 'index.html')) ? join(DIST, 'client') : DIST;
 const dateien = (d) => readdirSync(d).flatMap((n) => (statSync(join(d, n)).isDirectory() ? dateien(join(d, n)) : [join(d, n)]));
-const alle = dateien(DIST);
+const alle = dateien(wurzel);
 const seiten = alle.filter((p) => p.endsWith('.html') && !p.endsWith('404.html'));
-const vorhanden = new Set(alle.map((p) => '/' + relative(DIST, p).replace(/index\.html$/, '')));
+const vorhanden = new Set(alle.map((p) => '/' + relative(wurzel, p).replace(/index\.html$/, '')));
 
 const fehler = [];
 const warnungen = [];
@@ -53,13 +55,15 @@ for (const datei of seiten) {
   // Interne Links müssen existieren
   for (const [, href] of html.matchAll(/<a\b[^>]*href="(\/[^"#?]*)/g)) {
     const ziel = href.endsWith('/') ? href : `${href}`;
-    if (!vorhanden.has(ziel) && !vorhanden.has(ziel + '/') && !existsSync(join(DIST, href))) f(`toter Link → ${href}`);
+    const serverSeite = /^\/(?:(?:en|fr|it)\/)?entdecken(?:\/|$)/.test(href);
+    if (!serverSeite && !vorhanden.has(ziel) && !vorhanden.has(ziel + '/') && !existsSync(join(wurzel, href))) f(`toter Link → ${href}`);
   }
 }
 for (const [t, urls] of titel) if (urls.length > 1) fehler.push(`Gleicher Titel auf ${urls.join(', ')}: «${t}»`);
 
 if (!existsSync(join(DIST, 'sitemap-images.xml'))) fehler.push('sitemap-images.xml fehlt');
-const sitemap = existsSync(join(DIST, 'sitemap-0.xml')) ? readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8') : '';
+const sitemapDatei = [join(wurzel, 'sitemap-0.xml'), join(DIST, 'sitemap-0.xml')].find((p) => existsSync(p));
+const sitemap = sitemapDatei ? readFileSync(sitemapDatei, 'utf8') : '';
 const inSitemap = (sitemap.match(/<loc>/g) ?? []).length;
 
 console.log(`SEO-Check: ${seiten.length} Seiten, ${inSitemap} in der Sitemap\n`);
