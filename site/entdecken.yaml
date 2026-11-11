@@ -9,7 +9,7 @@ ausblenden: []
 
 # Pro Aktivität (Ordnername): eigener Tipp, Anreise ab der Wohnung, Geheimtipp
 anpassungen:
-  leukerbad-therme:
+  leukerbad-therme-thermalbad-mit-rutschen-und-sauna:
     anreise_min: 5        # [TODO] Gehzeit ab Alpine Siesta
     anreise_wie: zu Fuss
     # tipp: |
