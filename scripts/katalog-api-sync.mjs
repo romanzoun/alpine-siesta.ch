@@ -1,12 +1,18 @@
 // Holt den freigegebenen Regionenkatalog über Trizoun Travel für den statischen Astro-Build.
-import { cpSync, existsSync, mkdirSync, mkdtempSync, renameSync, rmSync, writeFileSync } from 'node:fs';
-import { randomUUID } from 'node:crypto';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash, randomUUID } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import YAML from 'yaml';
 
 const segment = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const bildpfad = /^\.\/[a-zA-Z0-9_-]+\.(jpe?g|png|webp)$/;
+
+/** Gleicher Fingerabdruck wie katalogRevision in Trizoun Travel. */
+export function katalogRevision(eintraege) {
+  const text = [...eintraege].sort((a, b) => a.slug.localeCompare(b.slug)).map((e) => `${e.slug} ${e.inhaltSha256}`).join('\n');
+  return createHash('sha256').update(text).digest('hex');
+}
 
 export async function katalogVonApi({ apiUrl, key, region, ziel = 'site/katalog', http = fetch }) {
   if (!segment.test(region)) throw new Error('Ungültige Katalogregion');
@@ -19,7 +25,13 @@ export async function katalogVonApi({ apiUrl, key, region, ziel = 'site/katalog'
     if (!r.ok) throw new Error(`Trizoun-Katalog: HTTP ${r.status} bei ${pfad || '/'}`);
     return r;
   };
-  const { data } = await (await hole('')).json();
+  // spiegel=1 behält alle Sprachen. Ohne diesen Parameter liefert die API nur eine Sprache.
+  const liste = await (await hole('?spiegel=1')).json();
+  const data = liste.data;
+  const revision = liste.meta?.revision ?? (Array.isArray(data) ? katalogRevision(data) : '');
+  const standDatei = join(ziel, 'STAND.md');
+  const alteRevision = existsSync(standDatei) ? readFileSync(standDatei, 'utf8').match(/^Revision: ([a-f0-9]{64})$/m)?.[1] : undefined;
+  if (revision && alteRevision === revision) return data.length;
   if (!Array.isArray(data)) throw new Error('Trizoun-Katalog: ungültige Liste');
   if (!data.length) throw new Error('Trizoun-Katalog: leere Region; vorhandene Website-Inhalte bleiben erhalten');
   const temp = mkdtempSync(join(tmpdir(), 'trizoun-katalog-api-'));
@@ -43,7 +55,8 @@ export async function katalogVonApi({ apiUrl, key, region, ziel = 'site/katalog'
         writeFileSync(join(ordner, b.pfad.slice(2)), Buffer.from(await antwort.arrayBuffer()));
       }
     }
-    writeFileSync(join(temp, 'STAND.md'), `# Automatisch aus Trizoun Travel geladen\n\nRegion: ${region}\nEinträge: ${data.length}\n\nAnpassungen für diese Website: site/entdecken.yaml.\n`);
+    const aktualisiert = liste.meta?.aktualisiert ? `\nAktualisiert: ${liste.meta.aktualisiert}` : '';
+    writeFileSync(join(temp, 'STAND.md'), `# Automatisch aus Trizoun Travel geladen\n\nRegion: ${region}\nEinträge: ${data.length}\nRevision: ${revision}${aktualisiert}\n\nAnpassungen für diese Website: site/entdecken.yaml.\n`);
     cpSync(temp, staging, { recursive: true });
     if (existsSync(ziel)) renameSync(ziel, backup);
     try { renameSync(staging, ziel); }

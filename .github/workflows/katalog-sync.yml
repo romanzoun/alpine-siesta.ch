@@ -1,5 +1,5 @@
-# Discovery: holt die Region über Trizoun Travel nach site/katalog/ (Git als Übergang),
-# baut und prüft die Website und schlägt die Änderungen als Pull Request vor.
+# Discovery: holt die Region über Trizoun Travel nach site/katalog/.
+# Ein Pull Request entsteht nur, wenn die Katalog-Revision neuer ist als in site/katalog/STAND.md.
 name: Katalog-Sync
 
 on:

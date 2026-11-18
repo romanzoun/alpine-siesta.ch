@@ -15,7 +15,7 @@ if (!site.module?.entdecken) {
 }
 if (process.env.PUBLIC_TRIZOUN_API_URL && process.env.PUBLIC_TRIZOUN_KEY) {
   const anzahl = await katalogVonApi({ apiUrl: process.env.PUBLIC_TRIZOUN_API_URL, key: process.env.PUBLIC_TRIZOUN_KEY, region: site.katalog.region });
-  console.log(`Katalog «${site.katalog.region}» aus Trizoun Travel: ${anzahl} Einträge.`);
+  console.log(`Katalog «${site.katalog.region}» aus Trizoun Travel: ${anzahl} Einträge. Unveränderte Revision wird nicht neu geschrieben.`);
   process.exit(0);
 }
 const { region, ref } = site.katalog;
